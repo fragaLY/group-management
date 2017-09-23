@@ -20,12 +20,20 @@ public class Person {
         this.id = builder.id;
         this.contacts = builder.contacts;
         this.personalData = builder.personalData;
+        this.login = builder.login;
+        this.password = builder.password;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
+    private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private PersonRole role;
@@ -70,6 +78,22 @@ public class Person {
         this.personalData = personalData;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +104,8 @@ public class Person {
 
         return new EqualsBuilder()
                 .append(id, person.id)
+                .append(login, person.login)
+                .append(password, person.password)
                 .append(role, person.role)
                 .append(contacts, person.contacts)
                 .append(personalData, person.personalData)
@@ -90,6 +116,8 @@ public class Person {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .append(id)
+                .append(login)
+                .append(password)
                 .append(role)
                 .append(contacts)
                 .append(personalData)
@@ -100,6 +128,8 @@ public class Person {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("login", login)
+                .append("password", password)
                 .append("role", role)
                 .append("contacts", contacts)
                 .append("personalData", personalData)
@@ -111,6 +141,8 @@ public class Person {
         private Integer id;
         private Contacts contacts;
         private PersonalData personalData;
+        private String login;
+        private String password;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -124,6 +156,16 @@ public class Person {
 
         public Builder setPersonalData(final PersonalData personalData) {
             this.personalData = personalData;
+            return this;
+        }
+
+        public Builder setLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
             return this;
         }
 

@@ -1,20 +1,23 @@
-package gm.vk.core.domain.data.contacts;
+package gm.vk.core.dto.data.contacts;
 
-import gm.vk.core.domain.data.contacts.address.Address;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import gm.vk.core.dto.data.contacts.address.AddressDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
-@Entity
-@Table(name = "contacts")
-public class Contacts {
+public class ContactsDto {
 
-    public Contacts() {
+    private static final String PHONE_REGEXP = "[+]\\d{3}[(]\\d{2}[)]\\d{3}[\\-]\\d{4}";
+    private static final String EMAIL_REGEXP = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
+    private static final String SKYPE_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
+
+    public ContactsDto() {
     }
 
-    private Contacts(final Builder builder) {
+    private ContactsDto(final Builder builder) {
         this.id = builder.id;
         this.phone = builder.phone;
         this.skype = builder.skype;
@@ -22,23 +25,19 @@ public class Contacts {
         this.address = builder.address;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @JsonProperty("ContactsId")
     private Integer id;
 
-    @Column(name = "phone", unique = true, nullable = false)
+    @Pattern(regexp = PHONE_REGEXP)
     private String phone;
 
-    @Column(name = "skype", unique = true)
+    @Pattern(regexp = SKYPE_REGEXP)
     private String skype;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Pattern(regexp = EMAIL_REGEXP)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    private AddressDto address;
 
     public Integer getId() {
         return id;
@@ -72,11 +71,11 @@ public class Contacts {
         this.email = email;
     }
 
-    public Address getAddress() {
+    public AddressDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDto address) {
         this.address = address;
     }
 
@@ -84,16 +83,16 @@ public class Contacts {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof Contacts)) return false;
+        if (!(o instanceof ContactsDto)) return false;
 
-        Contacts contacts = (Contacts) o;
+        ContactsDto that = (ContactsDto) o;
 
         return new EqualsBuilder()
-                .append(id, contacts.id)
-                .append(phone, contacts.phone)
-                .append(skype, contacts.skype)
-                .append(email, contacts.email)
-                .append(address, contacts.address)
+                .append(id, that.id)
+                .append(phone, that.phone)
+                .append(skype, that.skype)
+                .append(email, that.email)
+                .append(address, that.address)
                 .isEquals();
     }
 
@@ -107,6 +106,7 @@ public class Contacts {
                 .append(address)
                 .toHashCode();
     }
+
 
     @Override
     public String toString() {
@@ -125,7 +125,7 @@ public class Contacts {
         private String phone;
         private String skype;
         private String email;
-        private Address address;
+        private AddressDto address;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -147,13 +147,13 @@ public class Contacts {
             return this;
         }
 
-        public Builder setAddress(final Address address) {
+        public Builder setAddress(final AddressDto address) {
             this.address = address;
             return this;
         }
 
-        public Contacts build() {
-            return new Contacts(this);
+        public ContactsDto build() {
+            return new ContactsDto(this);
         }
 
     }
