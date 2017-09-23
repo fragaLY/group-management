@@ -1,4 +1,4 @@
-package gm.vk.core.domain.examination.ExaminationType;
+package gm.vk.core.domain.subject.examination.examinationType;
 
 import java.util.Arrays;
 import java.util.Optional;

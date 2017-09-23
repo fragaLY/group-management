@@ -1,25 +1,25 @@
-package gm.vk.core.domain.examination.ExaminationType;
+package gm.vk.core.domain.subject.examination;
 
-import gm.vk.core.domain.examination.Examination;
+import gm.vk.core.domain.subject.examination.examinationType.ExaminationType;
+import gm.vk.core.domain.subject.examination.grade.Grade;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "examinationType")
-public class ExaminationType {
+@Table(name = "examination")
+public class Examination {
 
-    public ExaminationType() {
+    public Examination() {
     }
 
-    public ExaminationType(final Type type) {
+    public Examination(final ExaminationType type) {
         this.type = type;
     }
 
-    public ExaminationType(final Integer id, final Type type) {
+    public Examination(final Integer id, final ExaminationType type) {
         this.id = id;
         this.type = type;
     }
@@ -29,12 +29,13 @@ public class ExaminationType {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "type")
-    private Type type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
+    private ExaminationType type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examinationType", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private List<Examination> examinations;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id")
+    private Grade grade;
 
     public Integer getId() {
         return id;
@@ -44,29 +45,21 @@ public class ExaminationType {
         this.id = id;
     }
 
-    public Type getType() {
+    public ExaminationType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(ExaminationType type) {
         this.type = type;
-    }
-
-    public List<Examination> getExaminations() {
-        return examinations;
-    }
-
-    public void setExaminations(List<Examination> examinations) {
-        this.examinations = examinations;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof ExaminationType)) return false;
+        if (!(o instanceof Examination)) return false;
 
-        ExaminationType that = (ExaminationType) o;
+        Examination that = (Examination) o;
 
         return new EqualsBuilder()
                 .append(id, that.id)

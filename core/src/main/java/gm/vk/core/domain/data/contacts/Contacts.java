@@ -1,13 +1,11 @@
 package gm.vk.core.domain.data.contacts;
 
 import gm.vk.core.domain.data.contacts.address.Address;
-import gm.vk.core.domain.person.Person;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "contacts")
@@ -38,11 +36,9 @@ public class Contacts {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
     private Address address;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contacts", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private Person person;
 
     public Integer getId() {
         return id;
@@ -82,14 +78,6 @@ public class Contacts {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     @Override

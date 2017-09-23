@@ -21,7 +21,7 @@ public class PersonRole {
     @Column(name = "role")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalRole", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalRole")
     private List<Person> persons;
 
     public Integer getId() {

@@ -1,6 +1,5 @@
 package gm.vk.core.domain.data.personal;
 
-import gm.vk.core.domain.person.Person;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,9 +29,6 @@ public class PersonalData {
 
     @Column(name = "secondName")
     private String secondName;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "personalData", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private Person person;
 
     public Integer getId() {
         return id;

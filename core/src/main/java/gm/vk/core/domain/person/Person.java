@@ -3,7 +3,6 @@ package gm.vk.core.domain.person;
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.domain.person.role.PersonRole;
-import gm.vk.core.domain.subject.Subject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,13 +13,13 @@ import javax.persistence.*;
 @Table(name = "person")
 public class Person {
 
-    public Person(){
+    public Person() {
     }
 
-    private Person(final Builder builder){
-       this.id = builder.id;
-       this.contacts = builder.contacts;
-       this.personalData = builder.personalData;
+    private Person(final Builder builder) {
+        this.id = builder.id;
+        this.contacts = builder.contacts;
+        this.personalData = builder.personalData;
     }
 
     @Id
@@ -31,14 +30,13 @@ public class Person {
     @ManyToOne(fetch = FetchType.LAZY)
     private PersonRole role;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "contacts_id")
     private Contacts contacts;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "personaldata_id")
     private PersonalData personalData;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private Subject subject;
 
     public Integer getId() {
         return id;
@@ -108,7 +106,7 @@ public class Person {
                 .toString();
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private Integer id;
         private Contacts contacts;
@@ -129,7 +127,7 @@ public class Person {
             return this;
         }
 
-        public Person build(){
+        public Person build() {
             return new Person(this);
         }
 

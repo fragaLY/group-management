@@ -1,6 +1,5 @@
 package gm.vk.core.domain.data.contacts.address;
 
-import gm.vk.core.domain.data.contacts.Contacts;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,7 +20,6 @@ public class Address {
         this.street = builder.street;
         this.home = builder.home;
         this.apartmentNumber = builder.apartmentNumber;
-        this.contacts = builder.contacts;
     }
 
     @Id
@@ -43,9 +41,6 @@ public class Address {
 
     @Column(name = "apartmentNumber")
     private String apartmentNumber;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "contacts", cascade = CascadeType.ALL)
-    private Contacts contacts;
 
     public Integer getId() {
         return id;
@@ -95,13 +90,6 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
     }
 
-    public Contacts getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Contacts contacts) {
-        this.contacts = contacts;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -118,7 +106,6 @@ public class Address {
                 .append(street, address.street)
                 .append(home, address.home)
                 .append(apartmentNumber, address.apartmentNumber)
-                .append(contacts, address.contacts)
                 .isEquals();
     }
 
@@ -131,7 +118,6 @@ public class Address {
                 .append(street)
                 .append(home)
                 .append(apartmentNumber)
-                .append(contacts)
                 .toHashCode();
     }
 
@@ -144,7 +130,6 @@ public class Address {
                 .append("street", street)
                 .append("home", home)
                 .append("apartmentNumber", apartmentNumber)
-                .append("contacts", contacts)
                 .toString();
     }
 
@@ -156,7 +141,6 @@ public class Address {
         private String street;
         private String home;
         private String apartmentNumber;
-        private Contacts contacts;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -185,11 +169,6 @@ public class Address {
 
         public Builder setApartmentNumber(final String apartmentNumber) {
             this.apartmentNumber = apartmentNumber;
-            return this;
-        }
-
-        public Builder setContacts(final Contacts contacts) {
-            this.contacts = contacts;
             return this;
         }
 
