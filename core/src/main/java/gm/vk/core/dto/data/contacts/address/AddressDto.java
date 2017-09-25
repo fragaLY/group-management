@@ -1,15 +1,18 @@
-package gm.vk.core.domain.data.contacts.address;
+package gm.vk.core.dto.data.contacts.address;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity
-@Table(name = "address")
-public class Address {
+import javax.validation.constraints.Size;
 
-    public Address() {
+public class AddressDto {
+
+    public AddressDto(){
     }
 
-    private Address(final Builder builder) {
+    private AddressDto(final Builder builder) {
         this.id = builder.id;
         this.country = builder.country;
         this.city = builder.city;
@@ -18,24 +21,22 @@ public class Address {
         this.apartmentNumber = builder.apartmentNumber;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @JsonProperty("AddressId")
     private Integer id;
 
-    @Column(name = "country")
+    @Size(min = 2, max = 50)
     private String country;
 
-    @Column(name = "city")
+    @Size(min = 2, max = 50)
     private String city;
 
-    @Column(name = "street")
+    @Size(min = 2, max = 50)
     private String street;
 
-    @Column(name = "home")
+    @Size(min = 1, max = 10)
     private String home;
 
-    @Column(name = "apartmentNumber")
+    @Size(min = 1, max = 10)
     private String apartmentNumber;
 
     public Integer getId() {
@@ -86,6 +87,48 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof AddressDto)) return false;
+
+        AddressDto that = (AddressDto) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(country, that.country)
+                .append(city, that.city)
+                .append(street, that.street)
+                .append(home, that.home)
+                .append(apartmentNumber, that.apartmentNumber)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(country)
+                .append(city)
+                .append(street)
+                .append(home)
+                .append(apartmentNumber)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("country", country)
+                .append("city", city)
+                .append("street", street)
+                .append("home", home)
+                .append("apartmentNumber", apartmentNumber)
+                .toString();
+    }
+
     public static class Builder {
 
         private Integer id;
@@ -125,10 +168,9 @@ public class Address {
             return this;
         }
 
-        public Address build() {
-            return new Address(this);
+        public AddressDto build() {
+            return new AddressDto(this);
         }
 
     }
-
 }

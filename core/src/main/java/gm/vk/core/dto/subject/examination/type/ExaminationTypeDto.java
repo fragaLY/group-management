@@ -1,40 +1,29 @@
-package gm.vk.core.domain.subject.examination.examinationType;
+package gm.vk.core.dto.subject.examination.type;
 
-import gm.vk.core.domain.subject.examination.Examination;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import gm.vk.core.domain.subject.examination.type.Type;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "examinationType")
-public class ExaminationType {
+public class ExaminationTypeDto {
 
-    public ExaminationType() {
+    public ExaminationTypeDto() {
     }
 
-    public ExaminationType(final Type type) {
-        this.type = type;
-    }
-
-    public ExaminationType(final Integer id, final Type type) {
+    public ExaminationTypeDto(final Integer id, final Type type) {
         this.id = id;
         this.type = type;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @JsonProperty("ExaminationTypeId")
     private Integer id;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "type")
+    @NotNull
     private Type type;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examinationType")
-    private List<Examination> examinations;
 
     public Integer getId() {
         return id;
@@ -52,21 +41,13 @@ public class ExaminationType {
         this.type = type;
     }
 
-    public List<Examination> getExaminations() {
-        return examinations;
-    }
-
-    public void setExaminations(List<Examination> examinations) {
-        this.examinations = examinations;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof ExaminationType)) return false;
+        if (!(o instanceof ExaminationTypeDto)) return false;
 
-        ExaminationType that = (ExaminationType) o;
+        ExaminationTypeDto that = (ExaminationTypeDto) o;
 
         return new EqualsBuilder()
                 .append(id, that.id)
@@ -89,5 +70,4 @@ public class ExaminationType {
                 .append("type", type)
                 .toString();
     }
-
 }
