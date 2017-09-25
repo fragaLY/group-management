@@ -9,10 +9,10 @@ public class PersonalData {
     public PersonalData() {
     }
 
-    private PersonalData(final Builder builder) {
-        this.id = builder.id;
-        this.firstName = builder.firstName;
-        this.secondName = builder.secondName;
+    public PersonalData(final Integer id, final String firstName, final String secondName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
     }
 
     @Id
@@ -48,33 +48,6 @@ public class PersonalData {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
-    }
-
-    public static class Builder {
-
-        private Integer id;
-        private String firstName;
-        private String secondName;
-
-        public Builder setId(final Integer id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setFirstName(final String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder setSecondName(final String secondName) {
-            this.secondName = secondName;
-            return this;
-        }
-
-        public PersonalData build() {
-            return new PersonalData(this);
-        }
-
     }
 
 }

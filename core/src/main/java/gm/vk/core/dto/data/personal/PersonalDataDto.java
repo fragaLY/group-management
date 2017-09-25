@@ -15,7 +15,7 @@ public class PersonalDataDto {
     public PersonalDataDto() {
     }
 
-    private PersonalDataDto(final Integer id, final String firstName, final String secondName) {
+    public PersonalDataDto(final Integer id, final String firstName, final String secondName) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
