@@ -9,6 +9,15 @@ import java.util.List;
 @Table(name = "personalRole")
 public class PersonRole {
 
+    public PersonRole() {
+    }
+
+    public PersonRole(Integer id, Role role, List<Person> persons) {
+        this.id = id;
+        this.role = role;
+        this.persons = persons;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)

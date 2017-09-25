@@ -27,9 +27,17 @@ public class Examination {
     @JoinColumn(name = "type_id")
     private ExaminationType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id")
     private Grade grade;
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
 
     public Integer getId() {
         return id;
