@@ -1,9 +1,5 @@
 package gm.vk.core.domain.data.personal;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import javax.persistence.*;
 
 @Entity
@@ -52,39 +48,6 @@ public class PersonalData {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof PersonalData)) return false;
-
-        PersonalData that = (PersonalData) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(firstName, that.firstName)
-                .append(secondName, that.secondName)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(firstName)
-                .append(secondName)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("firstName", firstName)
-                .append("secondName", secondName)
-                .toString();
     }
 
     public static class Builder {

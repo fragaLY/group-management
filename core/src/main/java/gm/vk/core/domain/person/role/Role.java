@@ -3,7 +3,7 @@ package gm.vk.core.domain.person.role;
 import java.util.Arrays;
 import java.util.Optional;
 
-enum Role {
+public enum Role {
 
     LECTURER("LECTURER"), STUDENT("STUDENT"), ADMIN("ADMIN");
 

@@ -36,7 +36,7 @@ public class ContactsDto {
 
     @Pattern(regexp = EMAIL_REGEXP)
     private String email;
-
+    
     private AddressDto address;
 
     public Integer getId() {

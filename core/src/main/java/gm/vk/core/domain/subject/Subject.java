@@ -1,9 +1,6 @@
 package gm.vk.core.domain.subject;
 
 import gm.vk.core.domain.subject.examination.Examination;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
@@ -14,10 +11,10 @@ public class Subject {
     public Subject() {
     }
 
-    private Subject(final Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
-        this.examination = builder.examination;
+    public Subject(final Integer id, final String name, final Examination examination) {
+        this.id = id;
+        this.name = name;
+        this.examination = examination;
     }
 
     @Id
@@ -53,66 +50,6 @@ public class Subject {
 
     public void setExamination(Examination examination) {
         this.examination = examination;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Subject)) return false;
-
-        Subject subject = (Subject) o;
-
-        return new EqualsBuilder()
-                .append(id, subject.id)
-                .append(name, subject.name)
-                .append(examination, subject.examination)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(name)
-                .append(examination)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("name", name)
-                .append("examination", examination)
-                .toString();
-    }
-
-    public static class Builder {
-
-        private Integer id;
-        private String name;
-        private Examination examination;
-
-        public Builder setId(Integer id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder setExamination(Examination examination) {
-            this.examination = examination;
-            return this;
-        }
-
-        public Subject build() {
-            return new Subject(this);
-        }
-
     }
 
 }

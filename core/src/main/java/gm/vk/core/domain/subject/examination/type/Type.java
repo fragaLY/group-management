@@ -1,9 +1,9 @@
-package gm.vk.core.domain.subject.examination.examinationType;
+package gm.vk.core.domain.subject.examination.type;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-enum Type {
+public enum Type {
 
     EXAM("EXAM"), CREDIT("CREDIT"), NOTHING("NOTHING");
 

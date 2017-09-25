@@ -3,9 +3,6 @@ package gm.vk.core.domain.person;
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.domain.person.role.PersonRole;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
@@ -92,48 +89,6 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Person)) return false;
-
-        Person person = (Person) o;
-
-        return new EqualsBuilder()
-                .append(id, person.id)
-                .append(login, person.login)
-                .append(password, person.password)
-                .append(role, person.role)
-                .append(contacts, person.contacts)
-                .append(personalData, person.personalData)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(login)
-                .append(password)
-                .append(role)
-                .append(contacts)
-                .append(personalData)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("login", login)
-                .append("password", password)
-                .append("role", role)
-                .append("contacts", contacts)
-                .append("personalData", personalData)
-                .toString();
     }
 
     public static class Builder {

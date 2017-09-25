@@ -1,40 +1,35 @@
-package gm.vk.core.domain.subject.examination.examinationType;
+package gm.vk.core.dto.subject.examination.type;
 
-import gm.vk.core.domain.subject.examination.Examination;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import gm.vk.core.domain.subject.examination.type.Type;
+import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Entity
-@Table(name = "examinationType")
-public class ExaminationType {
+public class ExaminationTypeDto {
 
-    public ExaminationType() {
+    public ExaminationTypeDto() {
     }
 
-    public ExaminationType(final Type type) {
-        this.type = type;
-    }
-
-    public ExaminationType(final Integer id, final Type type) {
+    public ExaminationTypeDto(Integer id, Type type, List<ExaminationDto> examinations) {
         this.id = id;
         this.type = type;
+        this.examinations = examinations;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+    @JsonProperty("ExaminationTypeId")
     private Integer id;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "type")
+    @NotNull
     private Type type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examinationType")
-    private List<Examination> examinations;
+    @NotNull
+    private List<ExaminationDto> examinations;
 
     public Integer getId() {
         return id;
@@ -52,11 +47,11 @@ public class ExaminationType {
         this.type = type;
     }
 
-    public List<Examination> getExaminations() {
+    public List<ExaminationDto> getExaminations() {
         return examinations;
     }
 
-    public void setExaminations(List<Examination> examinations) {
+    public void setExaminations(List<ExaminationDto> examinations) {
         this.examinations = examinations;
     }
 
@@ -64,13 +59,14 @@ public class ExaminationType {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof ExaminationType)) return false;
+        if (!(o instanceof ExaminationTypeDto)) return false;
 
-        ExaminationType that = (ExaminationType) o;
+        ExaminationTypeDto that = (ExaminationTypeDto) o;
 
         return new EqualsBuilder()
                 .append(id, that.id)
                 .append(type, that.type)
+                .append(examinations, that.examinations)
                 .isEquals();
     }
 
@@ -79,6 +75,7 @@ public class ExaminationType {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(type)
+                .append(examinations)
                 .toHashCode();
     }
 
@@ -87,7 +84,7 @@ public class ExaminationType {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("type", type)
+                .append("examinations", examinations)
                 .toString();
     }
-
 }

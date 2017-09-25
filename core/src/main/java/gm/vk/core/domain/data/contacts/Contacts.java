@@ -1,9 +1,6 @@
 package gm.vk.core.domain.data.contacts;
 
 import gm.vk.core.domain.data.contacts.address.Address;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
@@ -78,45 +75,6 @@ public class Contacts {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Contacts)) return false;
-
-        Contacts contacts = (Contacts) o;
-
-        return new EqualsBuilder()
-                .append(id, contacts.id)
-                .append(phone, contacts.phone)
-                .append(skype, contacts.skype)
-                .append(email, contacts.email)
-                .append(address, contacts.address)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(phone)
-                .append(skype)
-                .append(email)
-                .append(address)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("phone", phone)
-                .append("skype", skype)
-                .append("email", email)
-                .append("address", address)
-                .toString();
     }
 
     public static class Builder {

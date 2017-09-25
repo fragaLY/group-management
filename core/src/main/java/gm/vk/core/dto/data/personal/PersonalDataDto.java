@@ -15,10 +15,10 @@ public class PersonalDataDto {
     public PersonalDataDto() {
     }
 
-    private PersonalDataDto(final Builder builder) {
-        this.id = builder.id;
-        this.firstName = builder.firstName;
-        this.secondName = builder.secondName;
+    private PersonalDataDto(final Integer id, final String firstName, final String secondName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
     }
 
     @JsonProperty("PersonalDataId")
@@ -89,30 +89,4 @@ public class PersonalDataDto {
                 .toString();
     }
 
-    public static class Builder {
-
-        private Integer id;
-        private String firstName;
-        private String secondName;
-
-        public Builder setId(final Integer id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setFirstName(final String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder setSecondName(final String secondName) {
-            this.secondName = secondName;
-            return this;
-        }
-
-        public PersonalDataDto build() {
-            return new PersonalDataDto(this);
-        }
-
-    }
 }
