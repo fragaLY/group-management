@@ -9,7 +9,7 @@ public interface PersonalDataDao extends JpaRepository<PersonalData, Integer> {
 
     List<PersonalData> findAll();
 
-    PersonalData findOne(final Integer integer);
+    PersonalData findOne(final Integer id);
 
     PersonalData save(final PersonalData data);
 

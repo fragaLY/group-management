@@ -6,6 +6,7 @@ import gm.vk.core.dto.subject.SubjectDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Component("subjectDtoConverter")
@@ -15,7 +16,7 @@ public class SubjectDtoConverter implements Function<SubjectDto, Subject> {
     private ExaminationDtoConverter examinationDtoConverter;
 
     @Override
-    public Subject apply(final SubjectDto subjectDto) {
+    public Subject apply(@NotNull final SubjectDto subjectDto) {
         return new Subject(subjectDto.getId(), subjectDto.getName(), examinationDtoConverter.apply(subjectDto.getExamination()));
     }
 }

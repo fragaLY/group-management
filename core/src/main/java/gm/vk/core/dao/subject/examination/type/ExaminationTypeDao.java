@@ -1,6 +1,5 @@
 package gm.vk.core.dao.subject.examination.type;
 
-import gm.vk.core.domain.subject.examination.Examination;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,9 +9,9 @@ public interface ExaminationTypeDao extends JpaRepository<ExaminationType, Integ
 
     List<ExaminationType> findAll();
 
-    ExaminationType findOne(final Integer integer);
+    ExaminationType findOne(final Integer id);
 
-    Examination save(final ExaminationType type);
+    ExaminationType save(final ExaminationType type);
 
     void delete(final ExaminationType type);
 

@@ -9,7 +9,7 @@ public interface PersonRoleDao extends JpaRepository<PersonRole, Integer> {
 
     List<PersonRole> findAll();
 
-    PersonRole findOne(final Integer integer);
+    PersonRole findOne(final Integer id);
 
     PersonRole save(final PersonRole role);
 

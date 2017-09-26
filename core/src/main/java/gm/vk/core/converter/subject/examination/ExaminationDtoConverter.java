@@ -7,6 +7,7 @@ import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Component("examinationDtoConverter")
@@ -19,7 +20,7 @@ public class ExaminationDtoConverter implements Function<ExaminationDto, Examina
     private GradeDtoConverter gradeDtoConverter;
 
     @Override
-    public Examination apply(final ExaminationDto examinationDto) {
+    public Examination apply(@NotNull final ExaminationDto examinationDto) {
         return new Examination(examinationDto.getId(), examinationTypeDtoConverter.apply(examinationDto.getType()), gradeDtoConverter.apply(examinationDto.getGrade()));
     }
 }

@@ -7,6 +7,7 @@ import gm.vk.core.dto.person.role.PersonRoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class PersonRoleConverter implements Function<PersonRole, PersonRoleDto>{
     private PersonConverter personConverter;
 
     @Override
-    public PersonRoleDto apply(final PersonRole personRole) {
+    public PersonRoleDto apply(@NotNull final PersonRole personRole) {
 
         final List<PersonDto> personDtos = personRole.getPersons().stream().map(personConverter).collect(Collectors.toList());
 

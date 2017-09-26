@@ -4,13 +4,14 @@ import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.dto.data.personal.PersonalDataDto;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Component("personalDataConverter")
 public class PersonalDataConverter implements Function<PersonalData, PersonalDataDto> {
 
     @Override
-    public PersonalDataDto apply(final PersonalData personalData) {
+    public PersonalDataDto apply(@NotNull final PersonalData personalData) {
         return new PersonalDataDto(personalData.getId(), personalData.getFirstName(), personalData.getSecondName());
     }
 

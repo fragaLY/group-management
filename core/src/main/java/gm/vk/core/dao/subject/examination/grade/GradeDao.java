@@ -9,7 +9,7 @@ public interface GradeDao extends JpaRepository<Grade, Integer> {
 
     List<Grade> findAll();
 
-    Grade findOne(final Integer integer);
+    Grade findOne(final Integer id);
 
     Grade save(final Grade grade);
 

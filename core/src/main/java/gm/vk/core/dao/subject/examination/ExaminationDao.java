@@ -9,7 +9,7 @@ public interface ExaminationDao extends JpaRepository<Examination, Integer> {
 
     List<Examination> findAll();
 
-    Examination findOne(final Integer integer);
+    Examination findOne(final Integer id);
 
     Examination save(final Examination examination);
 

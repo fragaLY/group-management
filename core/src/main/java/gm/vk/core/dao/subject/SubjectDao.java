@@ -9,7 +9,7 @@ public interface SubjectDao extends JpaRepository<Subject, Integer> {
 
     List<Subject> findAll();
 
-    Subject findOne(final Integer integer);
+    Subject findOne(final Integer id);
 
     Subject save(final Subject subject);
 

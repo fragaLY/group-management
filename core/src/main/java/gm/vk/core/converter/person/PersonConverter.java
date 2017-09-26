@@ -2,11 +2,13 @@ package gm.vk.core.converter.person;
 
 import gm.vk.core.converter.data.contacts.ContactsConverter;
 import gm.vk.core.converter.data.personal.PersonalDataConverter;
+import gm.vk.core.converter.person.role.PersonRoleConverter;
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.dto.person.PersonDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Component("personConverter")
@@ -18,15 +20,15 @@ public class PersonConverter implements Function<Person, PersonDto> {
     @Autowired
     private PersonalDataConverter personalDataConverter;
 
+    @Autowired
+    private PersonRoleConverter personRoleConverter;
+
     @Override
-    public PersonDto apply(final Person person) {
-        return new PersonDto.Builder()
-                .setId(person.getId())
-                .setLogin(person.getLogin())
-                .setPassword(person.getPassword())
-                .setContacts(contactsConverter.apply(person.getContacts()))
-                .setPersonalData(personalDataConverter.apply(person.getPersonalData()))
-                .build();
+    public PersonDto apply(@NotNull final Person person) {
+        return new PersonDto(person.getId(),
+                contactsConverter.apply(person.getContacts()),
+                personalDataConverter.apply(person.getPersonalData()),
+                personRoleConverter.apply(person.getRole()));
     }
 
 }

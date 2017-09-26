@@ -9,7 +9,7 @@ public interface AddressDao extends JpaRepository<Address, Integer> {
 
     List<Address> findAll();
 
-    Address findOne(final Integer integer);
+    Address findOne(final Integer id);
 
     Address save(final Address address);
 

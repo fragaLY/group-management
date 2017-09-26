@@ -9,7 +9,7 @@ public interface PersonDao extends JpaRepository<Person, Integer> {
 
     List<Person> findAll();
 
-    Person findOne(final Integer integer);
+    Person findOne(final Integer id);
 
     Person save(final Person person);
 

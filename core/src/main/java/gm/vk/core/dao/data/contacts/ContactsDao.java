@@ -9,7 +9,7 @@ public interface ContactsDao extends JpaRepository<Contacts, Integer> {
 
     List<Contacts> findAll();
 
-    Contacts findOne(final Integer integer);
+    Contacts findOne(final Integer id);
 
     Contacts save(final Contacts contacts);
 

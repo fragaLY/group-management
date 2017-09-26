@@ -6,6 +6,7 @@ import gm.vk.core.dto.data.contacts.ContactsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Component("contactsConverter")
@@ -15,7 +16,7 @@ public class ContactsConverter implements Function<Contacts, ContactsDto> {
     private AddressConverter addressConverter;
 
     @Override
-    public ContactsDto apply(final Contacts contacts) {
+    public ContactsDto apply(@NotNull final Contacts contacts) {
         return new ContactsDto.Builder()
                 .setId(contacts.getId())
                 .setEmail(contacts.getEmail())
