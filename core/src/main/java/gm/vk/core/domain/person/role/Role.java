@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public enum Role {
 
-    LECTURER("LECTURER"), STUDENT("STUDENT"), ADMIN("ADMIN");
+    LECTURER("LECTURER"), STUDENT("STUDENT"), ADMIN("ADMIN"), SURFER("SURFER");
 
     Role(final String role) {
         this.role = role;
