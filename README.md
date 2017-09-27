@@ -21,4 +21,8 @@ Subject: RDBMS
 * 3rd party libraries: Apache: Guava, Commons;
 
 ### Authors
-**[Vadzim Kavalkou](https://github.com/fragaLY)** - *Development* 
+**Vadzim Kavalkou** - *Software Engineer at 'EPAM Systems'* 
+* [Github](https://github.com/fragaLY)
+* [LinkedIn](https://www.linkedin.com/in/vadzimkavalkou/) 
+* [Facebook](https://www.facebook.com/ohmyoga)
+
