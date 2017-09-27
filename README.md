@@ -1,10 +1,10 @@
 # Vadzim Kavalkou's course project.
-Student group management
+_'Student group management'_
 
 ### Belarusian-Russian University.
 Subject: RDBMS
 
-### What I've used for project.
+### What I've used for project:
 * Database: MS SQL.
 * Tools IDE: IntelliJ IDEA;
 * RDBMS: SQL Server 2016 S1;
