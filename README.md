@@ -21,6 +21,7 @@ Subject: RDBMS
 * Database: MS SQL;
 * Logging: log4j (logback, slf4j);
 * 3rd party libraries: Apache: Guava, Commons;
+* [Travis-CI](https://travis-ci.org/)
 
 ### Authors
 **Vadzim Kavalkou** - *Software Engineer at 'EPAM Systems'* 
