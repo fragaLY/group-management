@@ -1,6 +1,8 @@
 # Vadzim Kavalkou's course project.
 _'Student group management'_
 
+[![Build Status](https://travis-ci.org/fragaLY/group-management.svg?branch=master)](https://travis-ci.org/fragaLY/group-management)
+
 ### Belarusian-Russian University.
 Subject: RDBMS
 
