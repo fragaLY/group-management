@@ -1,4 +1,4 @@
-# Vadzim Kavalkou's course project.
+# Vadzim Kavalkou's project.
 _'Student group management'_
 
 [![Build Status](https://travis-ci.org/fragaLY/group-management.svg?branch=master)](https://travis-ci.org/fragaLY/group-management)
