@@ -1,9 +1,3 @@
 language: java
 jdk:
 - oraclejdk8
-install:
-- ./gradlew assemble -PossrhUsername="${ossrhUsername}" -PossrhPassword="${ossrhPassword}"
-script:
-- ./gradlew check -PossrhUsername="${ossrhUsername}" -PossrhPassword="${ossrhPassword}"
-after_success:
-- ./gradlew jacocoTestReport coveralls -PossrhUsername="${ossrhUsername}" -PossrhPassword="${ossrhPassword}"
