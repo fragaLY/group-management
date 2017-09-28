@@ -71,8 +71,4 @@ log.txt
 /*.log
 
 # oh-my-zsh gradle plugin
-.gradletasknameca
-
-*/gradle-wrapper.jar
-*/gradle-wrapper.properties
 classes/production/*
