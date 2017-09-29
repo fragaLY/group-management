@@ -2,7 +2,7 @@
 _'Student group management'_
 
 [![Build Status](https://travis-ci.org/fragaLY/group-management.svg?branch=master)](https://travis-ci.org/fragaLY/group-management)
-
+[![Waffle.io - Issues in progress](https://badge.waffle.io/fragaLY/group-management.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/fragaLY/group-management)
 ### Belarusian-Russian University.
 Subject: RDBMS
 
@@ -22,6 +22,7 @@ Subject: RDBMS
 * Logging: log4j (logback, slf4j);
 * 3rd party libraries: Apache: Guava, Commons;
 * [Travis-CI](https://travis-ci.org/)
+* [Waffle](http://waffle.io/fragaLY/group-management)
 
 ### Authors
 **Vadzim Kavalkou** - *Software Engineer at 'EPAM Systems'* 
