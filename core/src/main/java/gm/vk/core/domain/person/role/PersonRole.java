@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "personalRole")
+@Table(name = "personRole")
 public class PersonRole {
 
     public PersonRole() {
@@ -27,7 +27,8 @@ public class PersonRole {
     @Column(name = "role")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personalRole")
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")//todo vk: fix
+    @Column(name = "persons")
     private List<Person> persons;
 
     public Integer getId() {

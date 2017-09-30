@@ -1,4 +1,4 @@
 rootProject.name = 'group-management'
 include 'core'
 include 'service'
-
+include 'web'

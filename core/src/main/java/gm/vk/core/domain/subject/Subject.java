@@ -25,7 +25,8 @@ public class Subject {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "subject", cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "subject", cascade = CascadeType.ALL) todo vk: fix it
+    @Column(name = "examination")
     private Examination examination;
 
     public Integer getId() {
