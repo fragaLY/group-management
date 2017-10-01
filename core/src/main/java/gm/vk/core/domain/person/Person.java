@@ -3,6 +3,9 @@ package gm.vk.core.domain.person;
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.domain.person.role.PersonRole;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
@@ -13,7 +16,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(Integer id, PersonRole role, Contacts contacts, PersonalData personalData) {
+    public Person(final Integer id, final PersonRole role, final Contacts contacts, final PersonalData personalData) {
         this.id = id;
         this.role = role;
         this.contacts = contacts;
@@ -25,12 +28,12 @@ public class Person {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "role")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "personrole_id")
     private PersonRole role;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "contacts_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contacts_id", unique = true)
     private Contacts contacts;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -69,4 +72,39 @@ public class Person {
         this.personalData = personalData;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Person)) return false;
+
+        Person person = (Person) o;
+
+        return new EqualsBuilder()
+                .append(id, person.id)
+                .append(role, person.role)
+                .append(contacts, person.contacts)
+                .append(personalData, person.personalData)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(role)
+                .append(contacts)
+                .append(personalData)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("role", role)
+                .append("contacts", contacts)
+                .append("personalData", personalData)
+                .toString();
+    }
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,7 +21,7 @@ public class PersonRoleConverter implements Function<PersonRole, PersonRoleDto>{
     @Override
     public PersonRoleDto apply(@NotNull final PersonRole personRole) {
 
-        final List<PersonDto> personDtos = personRole.getPersons().stream().map(personConverter).collect(Collectors.toList());
+        final Set<PersonDto> personDtos = personRole.getPersons().stream().map(personConverter).collect(Collectors.toSet());
 
         return new PersonRoleDto(personRole.getId(), personRole.getRole(), personDtos);
     }

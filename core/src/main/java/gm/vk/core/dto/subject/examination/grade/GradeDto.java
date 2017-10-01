@@ -1,24 +1,36 @@
 package gm.vk.core.dto.subject.examination.grade;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.internal.Nullable;
+import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.Set;
 
 public class GradeDto {
 
     public GradeDto() {
     }
 
-    public GradeDto(final Integer id, final Integer grade) {
+    public GradeDto(final Integer id, final Integer grade, final Set<ExaminationDto> examinations) {
         this.id = id;
         this.grade = grade;
+        this.examinations = examinations;
     }
 
     @JsonProperty("GradeId")
     private Integer id;
 
+    @Min(value = 0, message = "The grade should be greater or equals to 0 and less or equals to 10")
+    @Max(value = 10, message = "The grade should be greater or equals to 0 and less or equals to 10")
     private Integer grade;
+
+    @Nullable
+    private Set<ExaminationDto> examinations;
 
     public Integer getId() {
         return id;
@@ -36,6 +48,14 @@ public class GradeDto {
         this.grade = grade;
     }
 
+    public Set<ExaminationDto> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(Set<ExaminationDto> examinations) {
+        this.examinations = examinations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,6 +67,7 @@ public class GradeDto {
         return new EqualsBuilder()
                 .append(id, gradeDto.id)
                 .append(grade, gradeDto.grade)
+                .append(examinations, gradeDto.examinations)
                 .isEquals();
     }
 
@@ -55,6 +76,7 @@ public class GradeDto {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(grade)
+                .append(examinations)
                 .toHashCode();
     }
 
@@ -63,6 +85,7 @@ public class GradeDto {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("grade", grade)
+                .append("examinations", examinations)
                 .toString();
     }
 }

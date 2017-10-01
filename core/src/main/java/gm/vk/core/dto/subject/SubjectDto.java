@@ -22,10 +22,10 @@ public class SubjectDto {
     @JsonProperty("SubjectId")
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "The name of examination could not be empty")
     private String name;
 
-    @NotNull
+    @NotNull(message = "The examination could not be empty")
     private ExaminationDto examination;
 
     public Integer getId() {

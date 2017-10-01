@@ -1,6 +1,12 @@
 package gm.vk.core.domain.data.contacts.address;
 
+import gm.vk.core.domain.data.contacts.Contacts;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -16,6 +22,7 @@ public class Address {
         this.street = builder.street;
         this.home = builder.home;
         this.apartmentNumber = builder.apartmentNumber;
+        this.contacts = builder.contacts;
     }
 
     @Id
@@ -23,20 +30,23 @@ public class Address {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "country")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "street")
+    @Column(name = "street", nullable = false)
     private String street;
 
-    @Column(name = "home")
+    @Column(name = "home", nullable = false)
     private String home;
 
-    @Column(name = "apartmentNumber")
+    @Column(name = "apartmentNumber", nullable = false)
     private String apartmentNumber;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    private Set<Contacts> contacts;
 
     public Integer getId() {
         return id;
@@ -86,6 +96,59 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
     }
 
+    public Set<Contacts> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Set<Contacts> contacts) {
+        this.contacts = contacts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Address)) return false;
+
+        Address address = (Address) o;
+
+        return new EqualsBuilder()
+                .append(id, address.id)
+                .append(country, address.country)
+                .append(city, address.city)
+                .append(street, address.street)
+                .append(home, address.home)
+                .append(apartmentNumber, address.apartmentNumber)
+                .append(contacts, address.contacts)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(country)
+                .append(city)
+                .append(street)
+                .append(home)
+                .append(apartmentNumber)
+                .append(contacts)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("country", country)
+                .append("city", city)
+                .append("street", street)
+                .append("home", home)
+                .append("apartmentNumber", apartmentNumber)
+                .append("contacts", contacts)
+                .toString();
+    }
+
     public static class Builder {
 
         private Integer id;
@@ -94,6 +157,7 @@ public class Address {
         private String street;
         private String home;
         private String apartmentNumber;
+        private Set<Contacts> contacts;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -122,6 +186,11 @@ public class Address {
 
         public Builder setApartmentNumber(final String apartmentNumber) {
             this.apartmentNumber = apartmentNumber;
+            return this;
+        }
+
+        public Builder setContacts(final Set<Contacts> contacts) {
+            this.contacts = contacts;
             return this;
         }
 

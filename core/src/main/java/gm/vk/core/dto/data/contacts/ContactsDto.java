@@ -1,12 +1,16 @@
 package gm.vk.core.dto.data.contacts;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.internal.Nullable;
 import gm.vk.core.dto.data.contacts.address.AddressDto;
+import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 public class ContactsDto {
 
@@ -23,21 +27,26 @@ public class ContactsDto {
         this.skype = builder.skype;
         this.email = builder.email;
         this.address = builder.address;
+        this.persons = builder.persons;
     }
 
     @JsonProperty("ContactsId")
     private Integer id;
 
-    @Pattern(regexp = PHONE_REGEXP)
+    @Pattern(regexp = PHONE_REGEXP, message = "Enter the phone in international format (e.g. +111(22)333-4444)")
     private String phone;
 
-    @Pattern(regexp = SKYPE_REGEXP)
+    @Pattern(regexp = SKYPE_REGEXP, message = "Invalid skype account")
     private String skype;
 
-    @Pattern(regexp = EMAIL_REGEXP)
+    @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email")
     private String email;
-    
+
+    @Nullable
     private AddressDto address;
+
+    @NotNull(message = "Contacts has no any person")
+    private Set<PersonDto> persons;
 
     public Integer getId() {
         return id;
@@ -79,6 +88,14 @@ public class ContactsDto {
         this.address = address;
     }
 
+    public Set<PersonDto> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<PersonDto> persons) {
+        this.persons = persons;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,6 +110,7 @@ public class ContactsDto {
                 .append(skype, that.skype)
                 .append(email, that.email)
                 .append(address, that.address)
+                .append(persons, that.persons)
                 .isEquals();
     }
 
@@ -104,9 +122,9 @@ public class ContactsDto {
                 .append(skype)
                 .append(email)
                 .append(address)
+                .append(persons)
                 .toHashCode();
     }
-
 
     @Override
     public String toString() {
@@ -116,6 +134,7 @@ public class ContactsDto {
                 .append("skype", skype)
                 .append("email", email)
                 .append("address", address)
+                .append("persons", persons)
                 .toString();
     }
 
@@ -126,6 +145,7 @@ public class ContactsDto {
         private String skype;
         private String email;
         private AddressDto address;
+        private Set<PersonDto> persons;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -149,6 +169,11 @@ public class ContactsDto {
 
         public Builder setAddress(final AddressDto address) {
             this.address = address;
+            return this;
+        }
+
+        public Builder setPersons(Set<PersonDto> persons) {
+            this.persons = persons;
             return this;
         }
 

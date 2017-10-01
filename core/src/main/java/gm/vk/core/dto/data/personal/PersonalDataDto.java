@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 public class PersonalDataDto {
 
-    private static final String NAME_REGEXP = "[A-Za-z]+";
+    private static final String NAME_REGEXP = "([a-z]+[,.]?[ ]?|[a-z]+['-]?)+";
 
     public PersonalDataDto() {
     }
@@ -24,12 +24,12 @@ public class PersonalDataDto {
     @JsonProperty("PersonalDataId")
     private Integer id;
 
-    @Pattern(regexp = NAME_REGEXP)
-    @Size(min = 2, max = 100)
+    @Pattern(regexp = NAME_REGEXP, message = "Invalid firstname")
+    @Size(max = 100, message = "The firstname could not be greater than 100 literals")
     private String firstName;
 
-    @Pattern(regexp = NAME_REGEXP)
-    @Size(min = 2, max = 100)
+    @Pattern(regexp = NAME_REGEXP, message = "Invalid secondname")
+    @Size(max = 100, message = "The secondname could not be greater than 100 literals")
     private String secondName;
 
     public Integer getId() {

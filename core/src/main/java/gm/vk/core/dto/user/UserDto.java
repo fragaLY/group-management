@@ -29,15 +29,15 @@ public class UserDto {
     @JsonProperty("UserId")
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "The user should be an any person")
     private PersonDto person;
 
-    @Pattern(regexp = LOGIN_REGEXP)
-    @Size(min = 3, max = 25)
+    @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login")
+    @Size(min = 3, max = 31)
     private String login;
 
     @JsonIgnore
-    @Pattern(regexp = PASSWORD_REGEXP)
+    @Pattern(regexp = PASSWORD_REGEXP, message = "Password should contains at least one upper case literal, one lower case literal, one symbol and number.")
     private String password;
 
     public Integer getId() {

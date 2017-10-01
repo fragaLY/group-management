@@ -2,21 +2,25 @@ package gm.vk.core.dto.subject.examination.type;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.internal.Nullable;
 import gm.vk.core.domain.subject.examination.type.Type;
+import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 public class ExaminationTypeDto {
 
     public ExaminationTypeDto() {
     }
 
-    public ExaminationTypeDto(final Integer id, final Type type) {
+    public ExaminationTypeDto(final Integer id, final Type type, final Set<ExaminationDto> examinations) {
         this.id = id;
         this.type = type;
+        this.examinations = examinations;
     }
 
     @JsonProperty("ExaminationTypeId")
@@ -24,6 +28,9 @@ public class ExaminationTypeDto {
 
     @NotNull
     private Type type;
+
+    @Nullable
+    private Set<ExaminationDto> examinations;
 
     public Integer getId() {
         return id;
@@ -41,6 +48,15 @@ public class ExaminationTypeDto {
         this.type = type;
     }
 
+
+    public Set<ExaminationDto> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(Set<ExaminationDto> examinations) {
+        this.examinations = examinations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,6 +68,7 @@ public class ExaminationTypeDto {
         return new EqualsBuilder()
                 .append(id, that.id)
                 .append(type, that.type)
+                .append(examinations, that.examinations)
                 .isEquals();
     }
 
@@ -60,6 +77,7 @@ public class ExaminationTypeDto {
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(type)
+                .append(examinations)
                 .toHashCode();
     }
 
@@ -68,6 +86,7 @@ public class ExaminationTypeDto {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("type", type)
+                .append("examinations", examinations)
                 .toString();
     }
 }

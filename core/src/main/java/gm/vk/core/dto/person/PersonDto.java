@@ -1,6 +1,7 @@
 package gm.vk.core.dto.person;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.internal.Nullable;
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import gm.vk.core.dto.data.personal.PersonalDataDto;
 import gm.vk.core.dto.person.role.PersonRoleDto;
@@ -25,13 +26,13 @@ public class PersonDto {
     @JsonProperty("PersonId")
     private Integer id;
 
-    @NotNull
+    @Nullable
     private ContactsDto contacts;
 
-    @NotNull
+    @Nullable
     private PersonalDataDto personalData;
 
-    @NotNull
+    @NotNull(message = "Person's role missed")
     private PersonRoleDto role;
 
     public Integer getId() {

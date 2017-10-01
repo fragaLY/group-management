@@ -1,9 +1,12 @@
 package gm.vk.core.domain.person.role;
 
 import gm.vk.core.domain.person.Person;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "personRole")
@@ -12,7 +15,7 @@ public class PersonRole {
     public PersonRole() {
     }
 
-    public PersonRole(Integer id, Role role, List<Person> persons) {
+    public PersonRole(final Integer id, final Role role, final Set<Person> persons) {
         this.id = id;
         this.role = role;
         this.persons = persons;
@@ -24,12 +27,11 @@ public class PersonRole {
     private Integer id;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", unique = true, nullable = false)
     private Role role;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")//todo vk: fix
-    @Column(name = "persons")
-    private List<Person> persons;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personRole")
+    private Set<Person> persons;
 
     public Integer getId() {
         return id;
@@ -47,12 +49,44 @@ public class PersonRole {
         this.role = role;
     }
 
-    public List<Person> getPersons() {
+    public Set<Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(List<Person> persons) {
+    public void setPersons(Set<Person> persons) {
         this.persons = persons;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof PersonRole)) return false;
+
+        PersonRole that = (PersonRole) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(role, that.role)
+                .append(persons, that.persons)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(role)
+                .append(persons)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("role", role)
+                .append("persons", persons)
+                .toString();
+    }
 }

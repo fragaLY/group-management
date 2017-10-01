@@ -1,11 +1,14 @@
 package gm.vk.core.dto.data.contacts.address;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gm.vk.core.dto.data.contacts.ContactsDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 public class AddressDto {
 
@@ -19,25 +22,33 @@ public class AddressDto {
         this.street = builder.street;
         this.home = builder.home;
         this.apartmentNumber = builder.apartmentNumber;
+        this.contacts = builder.contacts;
     }
 
     @JsonProperty("AddressId")
     private Integer id;
 
-    @Size(min = 2, max = 50)
+    @Size(max = 50, message = "The name of country could not be greater than 50 literals")
+    @NotNull(message = "Please chose country")
     private String country;
 
-    @Size(min = 2, max = 50)
+    @Size(max = 50, message = "The name of city could not be greater than 50 literals")
+    @NotNull(message = "Please add city")
     private String city;
 
-    @Size(min = 2, max = 50)
+    @Size(max = 50, message = "The name of street could not be greater than 50 literals")
+    @NotNull(message = "Please add street")
     private String street;
 
-    @Size(min = 1, max = 10)
+    @Size(max = 10, message = "The home could not be greater than 10 literals")
+    @NotNull(message = "Please add home number")
     private String home;
 
-    @Size(min = 1, max = 10)
+    @Size(max = 10, message = "The apartments could not be greater than 50 literals")
+    @NotNull(message = "Please add apartment number")
     private String apartmentNumber;
+
+    private Set<ContactsDto> contacts;
 
     public Integer getId() {
         return id;
@@ -87,6 +98,14 @@ public class AddressDto {
         this.apartmentNumber = apartmentNumber;
     }
 
+    public Set<ContactsDto> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Set<ContactsDto> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,6 +121,7 @@ public class AddressDto {
                 .append(street, that.street)
                 .append(home, that.home)
                 .append(apartmentNumber, that.apartmentNumber)
+                .append(contacts, that.contacts)
                 .isEquals();
     }
 
@@ -114,6 +134,7 @@ public class AddressDto {
                 .append(street)
                 .append(home)
                 .append(apartmentNumber)
+                .append(contacts)
                 .toHashCode();
     }
 
@@ -126,6 +147,7 @@ public class AddressDto {
                 .append("street", street)
                 .append("home", home)
                 .append("apartmentNumber", apartmentNumber)
+                .append("contacts", contacts)
                 .toString();
     }
 
@@ -137,6 +159,7 @@ public class AddressDto {
         private String street;
         private String home;
         private String apartmentNumber;
+        private Set<ContactsDto> contacts;
 
         public Builder setId(final Integer id) {
             this.id = id;
@@ -165,6 +188,11 @@ public class AddressDto {
 
         public Builder setApartmentNumber(final String apartmentNumber) {
             this.apartmentNumber = apartmentNumber;
+            return this;
+        }
+
+        public Builder setContacts(final Set<ContactsDto> contacts) {
+            this.contacts = contacts;
             return this;
         }
 
