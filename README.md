@@ -25,7 +25,7 @@ Subject: RDBMS
 * [Waffle](http://waffle.io/fragaLY/group-management)
 
 ### The 'Group Management' scheme
-![image](https://raw.github.com/fragaLY/management/master/GroupManagement.png) 
+![Scheme of 'Group Management'](https://raw.github.com/fragaLY/management/master/GroupManagement.png) 
 made with [DbDesigner](http://dbdesigner.net)
 
 
