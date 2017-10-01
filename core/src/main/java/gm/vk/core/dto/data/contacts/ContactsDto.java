@@ -1,7 +1,6 @@
 package gm.vk.core.dto.data.contacts;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import gm.vk.core.dto.data.contacts.address.AddressDto;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -42,7 +41,6 @@ public class ContactsDto {
     @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email")
     private String email;
 
-    @Nullable
     private AddressDto address;
 
     @NotNull(message = "Contacts has no any person")

@@ -1,7 +1,6 @@
 package gm.vk.core.dto.subject.examination;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import gm.vk.core.dto.subject.examination.grade.GradeDto;
 import gm.vk.core.dto.subject.examination.type.ExaminationTypeDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,7 +26,6 @@ public class ExaminationDto {
     @NotNull(message = "Examination type could not be a null")
     private ExaminationTypeDto type;
 
-    @Nullable
     private GradeDto grade;
 
     public Integer getId() {

@@ -1,7 +1,6 @@
 package gm.vk.core.dto.subject.examination.grade;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -29,7 +28,6 @@ public class GradeDto {
     @Max(value = 10, message = "The grade should be greater or equals to 0 and less or equals to 10")
     private Integer grade;
 
-    @Nullable
     private Set<ExaminationDto> examinations;
 
     public Integer getId() {

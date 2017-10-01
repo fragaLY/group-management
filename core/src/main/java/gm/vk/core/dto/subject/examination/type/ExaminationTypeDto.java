@@ -2,7 +2,6 @@ package gm.vk.core.dto.subject.examination.type;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import gm.vk.core.domain.subject.examination.type.Type;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -29,7 +28,6 @@ public class ExaminationTypeDto {
     @NotNull
     private Type type;
 
-    @Nullable
     private Set<ExaminationDto> examinations;
 
     public Integer getId() {

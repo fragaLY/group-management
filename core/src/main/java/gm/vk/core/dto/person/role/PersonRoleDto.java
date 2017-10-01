@@ -1,7 +1,6 @@
 package gm.vk.core.dto.person.role;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import gm.vk.core.domain.person.role.Role;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -28,7 +27,6 @@ public class PersonRoleDto {
     @NotNull(message = "Invalid role")
     private Role role;
 
-    @Nullable
     private Set<PersonDto> persons;
 
     public Integer getId() {
