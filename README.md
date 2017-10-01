@@ -24,6 +24,11 @@ Subject: RDBMS
 * [Travis-CI](https://travis-ci.org/)
 * [Waffle](http://waffle.io/fragaLY/group-management)
 
+### The 'Group Management' scheme
+![image](https://raw.github.com/fragaLY/management/master/GroupManagement.png) 
+made with [DbDesigner](http://dbdesigner.net)
+
+
 ### Authors
 **Vadzim Kavalkou** - *Software Engineer at 'EPAM Systems'* 
 * [Github](https://github.com/fragaLY)
