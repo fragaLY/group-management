@@ -25,6 +25,7 @@ import java.util.Properties;
         "gm.vk.core.dao.data.contacts",
         "gm.vk.core.dao.data.personal",
         "gm.vk.core.dao.person.role",
+        "gm.vk.core.dao.person",
         "gm.vk.core.dao.subject.examination.grade",
         "gm.vk.core.dao.subject.examination.type",
         "gm.vk.core.dao.subject.examination",
@@ -67,14 +68,20 @@ public class HibernateConfiguration {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
         LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
 
         emfb.setDataSource(getDataSource());
-        emfb.setPackagesToScan("gm.vk.core.domain.data",
+        emfb.setPackagesToScan("gm.vk.core.domain.data.contacts",
+                "gm.vk.core.domain.data.contacts.address",
+                "gm.vk.core.domain.data.personal",
                 "gm.vk.core.domain.person",
+                "gm.vk.core.domain.person.role",
                 "gm.vk.core.domain.subject",
+                "gm.vk.core.domain.subject.examination",
+                "gm.vk.core.domain.subject.examination.grade",
+                "gm.vk.core.domain.subject.examination.type",
                 "gm.vk.core.domain.user");
         emfb.setJpaVendorAdapter(getJpaVendorAdapter());
         emfb.setJpaProperties(getHibernateProperties());
@@ -95,7 +102,7 @@ public class HibernateConfiguration {
     public PlatformTransactionManager transactionManager() {
 
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(getLocalContainerEntityManagerFactory().getObject());
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return transactionManager;
     }

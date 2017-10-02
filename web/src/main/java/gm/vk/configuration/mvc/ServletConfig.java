@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.http.MediaType;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -29,7 +28,6 @@ import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @ComponentScan("gm.vk.controllers")
 public class ServletConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 

@@ -28,7 +28,7 @@ public class Subject {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "subject", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "examination_id", nullable = false)
     private Examination examination;
 

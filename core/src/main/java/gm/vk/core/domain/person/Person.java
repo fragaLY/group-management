@@ -29,11 +29,11 @@ public class Person {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "personrole_id")
+    @JoinColumn(name = "personrole_id", referencedColumnName = "id")
     private PersonRole role;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contacts_id", unique = true)
+    @JoinColumn(name = "contacts_id", referencedColumnName = "id")
     private Contacts contacts;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

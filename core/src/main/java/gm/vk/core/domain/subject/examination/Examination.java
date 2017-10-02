@@ -27,11 +27,11 @@ public class Examination {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "examinationtype_id")
+    @JoinColumn(name = "examinationtype_id", referencedColumnName = "id")
     private ExaminationType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grade_id")
+    @JoinColumn(name = "grade_id", referencedColumnName = "id")
     private Grade grade;
 
     public Grade getGrade() {

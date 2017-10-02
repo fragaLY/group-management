@@ -30,7 +30,7 @@ public class PersonRole {
     @Column(name = "role", unique = true, nullable = false)
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personRole")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
     private Set<Person> persons;
 
     public Integer getId() {

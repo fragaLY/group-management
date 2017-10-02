@@ -30,7 +30,7 @@ public class ExaminationType {
     @Column(name = "type", unique = true, nullable = false)
     private Type type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examinationType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
     private Set<Examination> examinations;
 
     public Integer getId() {

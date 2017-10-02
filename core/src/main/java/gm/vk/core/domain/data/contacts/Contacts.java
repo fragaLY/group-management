@@ -39,7 +39,7 @@ public class Contacts {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
     @JoinColumn(name = "address_id")
     private Address address;
 
