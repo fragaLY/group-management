@@ -1,11 +1,14 @@
 package gm.vk.core.domain.subject;
 
+import gm.vk.core.domain.group.Group;
+import gm.vk.core.domain.person.Person;
 import gm.vk.core.domain.subject.examination.Examination;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "subject")
@@ -14,10 +17,12 @@ public class Subject {
     public Subject() {
     }
 
-    public Subject(final Integer id, final String name, final Examination examination) {
+    public Subject(final Integer id, final String name, final Examination examination, final Set<Person> persons, final Set<Group> groups) {
         this.id = id;
         this.name = name;
         this.examination = examination;
+        this.persons = persons;
+        this.groups = groups;
     }
 
     @Id
@@ -31,6 +36,12 @@ public class Subject {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "examination_id", nullable = false)
     private Examination examination;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    private Set<Person> persons;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    private Set<Group> groups;
 
     public Integer getId() {
         return id;
@@ -56,6 +67,22 @@ public class Subject {
         this.examination = examination;
     }
 
+    public Set<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,6 +95,8 @@ public class Subject {
                 .append(id, subject.id)
                 .append(name, subject.name)
                 .append(examination, subject.examination)
+                .append(persons, subject.persons)
+                .append(groups, subject.groups)
                 .isEquals();
     }
 
@@ -77,6 +106,8 @@ public class Subject {
                 .append(id)
                 .append(name)
                 .append(examination)
+                .append(persons)
+                .append(groups)
                 .toHashCode();
     }
 
@@ -86,6 +117,8 @@ public class Subject {
                 .append("id", id)
                 .append("name", name)
                 .append("examination", examination)
+                .append("persons", persons)
+                .append("groups", groups)
                 .toString();
     }
 }

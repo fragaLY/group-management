@@ -30,6 +30,9 @@ import java.util.Properties;
         "gm.vk.core.dao.subject.examination.type",
         "gm.vk.core.dao.subject.examination",
         "gm.vk.core.dao.subject",
+        "gm.vk.core.dao.group",
+        "gm.vk.core.dao.group.course",
+        "gm.vk.core.dao.group.faculty",
         "gm.vk.core.dao.user"})
 @PropertySource("classpath:properties/jdbc.properties")
 @ComponentScan({"gm.vk.core",
@@ -82,6 +85,9 @@ public class HibernateConfiguration {
                 "gm.vk.core.domain.subject.examination",
                 "gm.vk.core.domain.subject.examination.grade",
                 "gm.vk.core.domain.subject.examination.type",
+                "gm.vk.core.domain.group",
+                "gm.vk.core.domain.group.course",
+                "gm.vk.core.domain.group.faculty",
                 "gm.vk.core.domain.user");
         emfb.setJpaVendorAdapter(getJpaVendorAdapter());
         emfb.setJpaProperties(getHibernateProperties());
