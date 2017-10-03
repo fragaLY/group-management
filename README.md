@@ -23,6 +23,7 @@ Subject: RDBMS
 * 3rd party libraries: Apache: Guava, Commons;
 * [Travis-CI](https://travis-ci.org/)
 * [Waffle](http://waffle.io/fragaLY/group-management)
+* [GoogleJavaFormater](https://github.com/google/google-java-format)
 
 ### The 'Group Management' scheme
 ![Scheme of 'Group Management'](https://github.com/fragaLY/group-management/blob/master/GroupManagement.png?raw=true) 
