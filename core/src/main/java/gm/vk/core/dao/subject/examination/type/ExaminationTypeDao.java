@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ExaminationTypeDao extends JpaRepository<ExaminationType, Integer> {
 
-    List<ExaminationType> findAll();
+  List<ExaminationType> findAll();
 
-    ExaminationType findOne(final Integer id);
+  ExaminationType findOne(final Integer id);
 
-    ExaminationType save(final ExaminationType type);
+  ExaminationType save(final ExaminationType type);
 
-    void delete(final ExaminationType type);
+  void delete(final ExaminationType type);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

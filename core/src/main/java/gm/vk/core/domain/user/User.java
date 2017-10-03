@@ -11,96 +11,92 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
 
-    public User() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "person_id", unique = true)
+  private Person person;
+  @Column(name = "login", unique = true, nullable = false)
+  private String login;
+  @Column(name = "password", nullable = false)
+  private String password;
 
-    public User(Integer id, Person person, String login, String password) {
-        this.id = id;
-        this.person = person;
-        this.login = login;
-        this.password = password;
-    }
+  public User() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+  public User(Integer id, Person person, String login, String password) {
+    this.id = id;
+    this.person = person;
+    this.login = login;
+    this.password = password;
+  }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id", unique = true)
-    private Person person;
+  public Integer getId() {
+    return id;
+  }
 
-    @Column(name = "login", unique = true, nullable = false)
-    private String login;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    @Column(name = "password", nullable = false)
-    private String password;
+  public Person getPerson() {
+    return person;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setPerson(Person person) {
+    this.person = person;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public String getLogin() {
+    return login;
+  }
 
-    public Person getPerson() {
-        return person;
-    }
+  public void setLogin(String login) {
+    this.login = login;
+  }
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getLogin() {
-        return login;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public String getPassword() {
-        return password;
-    }
+    if (!(o instanceof User)) return false;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    User user = (User) o;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    return new EqualsBuilder()
+        .append(id, user.id)
+        .append(person, user.person)
+        .append(login, user.login)
+        .append(password, user.password)
+        .isEquals();
+  }
 
-        if (!(o instanceof User)) return false;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(id)
+        .append(person)
+        .append(login)
+        .append(password)
+        .toHashCode();
+  }
 
-        User user = (User) o;
-
-        return new EqualsBuilder()
-                .append(id, user.id)
-                .append(person, user.person)
-                .append(login, user.login)
-                .append(password, user.password)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(person)
-                .append(login)
-                .append(password)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("person", person)
-                .append("login", login)
-                .append("password", password)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("person", person)
+        .append("login", login)
+        .append("password", password)
+        .toString();
+  }
 }

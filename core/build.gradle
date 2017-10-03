@@ -27,19 +27,19 @@ ext {
 dependencies {
 
     //Spring
-    compile ('org.springframework.data:spring-data-jpa:1.11.1.RELEASE') {
+    compile('org.springframework.data:spring-data-jpa:1.11.1.RELEASE') {
         exclude group: "org.springframework"
         exclude group: "org.slf4j"
     }
 
-    compile ('org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE'){
+    compile('org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE') {
         exclude group: "org.springframework"
         exclude group: "org.slf4j"
     }
 
     compile group: 'org.springframework', name: 'spring-web', version: springVersion
 
-    compile ('org.springframework:spring-context:' + springVersion){
+    compile('org.springframework:spring-context:' + springVersion) {
         exclude group: "org.springframework"
     }
 

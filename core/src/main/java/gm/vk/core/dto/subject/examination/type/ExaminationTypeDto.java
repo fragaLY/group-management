@@ -1,6 +1,5 @@
 package gm.vk.core.dto.subject.examination.type;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.subject.examination.type.Type;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
@@ -13,78 +12,75 @@ import java.util.Set;
 
 public class ExaminationTypeDto {
 
-    public ExaminationTypeDto() {
-    }
+  @JsonProperty("ExaminationTypeId")
+  private Integer id;
+  @NotNull private Type type;
+  private Set<ExaminationDto> examinations;
 
-    public ExaminationTypeDto(final Integer id, final Type type, final Set<ExaminationDto> examinations) {
-        this.id = id;
-        this.type = type;
-        this.examinations = examinations;
-    }
+  public ExaminationTypeDto() {}
 
-    @JsonProperty("ExaminationTypeId")
-    private Integer id;
+  public ExaminationTypeDto(Integer id, Type type) {
+    this.id = id;
+    this.type = type;
+  }
 
-    @NotNull
-    private Type type;
+  public ExaminationTypeDto(
+      final Integer id, final Type type, final Set<ExaminationDto> examinations) {
+    this.id = id;
+    this.type = type;
+    this.examinations = examinations;
+  }
 
-    private Set<ExaminationDto> examinations;
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Type getType() {
+    return type;
+  }
 
-    public Type getType() {
-        return type;
-    }
+  public void setType(Type type) {
+    this.type = type;
+  }
 
-    public void setType(Type type) {
-        this.type = type;
-    }
+  public Set<ExaminationDto> getExaminations() {
+    return examinations;
+  }
 
+  public void setExaminations(Set<ExaminationDto> examinations) {
+    this.examinations = examinations;
+  }
 
-    public Set<ExaminationDto> getExaminations() {
-        return examinations;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public void setExaminations(Set<ExaminationDto> examinations) {
-        this.examinations = examinations;
-    }
+    if (!(o instanceof ExaminationTypeDto)) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    ExaminationTypeDto that = (ExaminationTypeDto) o;
 
-        if (!(o instanceof ExaminationTypeDto)) return false;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(type, that.type)
+        .append(examinations, that.examinations)
+        .isEquals();
+  }
 
-        ExaminationTypeDto that = (ExaminationTypeDto) o;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(type).append(examinations).toHashCode();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(type, that.type)
-                .append(examinations, that.examinations)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(type)
-                .append(examinations)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("type", type)
-                .append("examinations", examinations)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("type", type)
+        .append("examinations", examinations)
+        .toString();
+  }
 }

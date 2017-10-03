@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class UserController {
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<?> getAllClients() {
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public ResponseEntity<?> getAllClients() {
 
-        final HttpHeaders responseHeader = new HttpHeaders();
+    final HttpHeaders responseHeader = new HttpHeaders();
 
-
-        return new ResponseEntity<>("There are clients believe me my friend.", responseHeader, HttpStatus.OK);
-
-    }
-
+    return new ResponseEntity<>(
+        "There are clients believe me my friend.", responseHeader, HttpStatus.OK);
+  }
 }

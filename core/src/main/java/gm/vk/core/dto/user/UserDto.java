@@ -13,98 +13,98 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    private static final String LOGIN_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
-    private static final String PASSWORD_REGEXP = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,50})";
+  private static final String LOGIN_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
+  private static final String PASSWORD_REGEXP =
+      "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,50})";
+  @JsonProperty("UserId")
+  private Integer id;
+  @NotNull(message = "The user should be an any person")
+  private PersonDto person;
+  @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login")
+  @Size(min = 3, max = 31)
+  private String login;
+  @JsonIgnore
+  @Pattern(
+    regexp = PASSWORD_REGEXP,
+    message =
+        "Password should contains at least one upper case literal, one lower case literal, one symbol and number."
+  )
+  private String password;
 
-    public UserDto() {
-    }
+  public UserDto() {}
 
-    public UserDto(Integer id, PersonDto person, String login, String password) {
-        this.id = id;
-        this.person = person;
-        this.login = login;
-        this.password = password;
-    }
+  public UserDto(Integer id, PersonDto person, String login, String password) {
+    this.id = id;
+    this.person = person;
+    this.login = login;
+    this.password = password;
+  }
 
-    @JsonProperty("UserId")
-    private Integer id;
+  public Integer getId() {
+    return id;
+  }
 
-    @NotNull(message = "The user should be an any person")
-    private PersonDto person;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login")
-    @Size(min = 3, max = 31)
-    private String login;
+  public PersonDto getPerson() {
+    return person;
+  }
 
-    @JsonIgnore
-    @Pattern(regexp = PASSWORD_REGEXP, message = "Password should contains at least one upper case literal, one lower case literal, one symbol and number.")
-    private String password;
+  public void setPerson(PersonDto person) {
+    this.person = person;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public String getLogin() {
+    return login;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setLogin(String login) {
+    this.login = login;
+  }
 
-    public PersonDto getPerson() {
-        return person;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPerson(PersonDto person) {
-        this.person = person;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getLogin() {
-        return login;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+    if (!(o instanceof UserDto)) return false;
 
-    public String getPassword() {
-        return password;
-    }
+    UserDto userDto = (UserDto) o;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    return new EqualsBuilder()
+        .append(id, userDto.id)
+        .append(person, userDto.person)
+        .append(login, userDto.login)
+        .append(password, userDto.password)
+        .isEquals();
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(id)
+        .append(person)
+        .append(login)
+        .append(password)
+        .toHashCode();
+  }
 
-        if (!(o instanceof UserDto)) return false;
-
-        UserDto userDto = (UserDto) o;
-
-        return new EqualsBuilder()
-                .append(id, userDto.id)
-                .append(person, userDto.person)
-                .append(login, userDto.login)
-                .append(password, userDto.password)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(person)
-                .append(login)
-                .append(password)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("person", person)
-                .append("login", login)
-                .append("password", password)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("person", person)
+        .append("login", login)
+        .append("password", password)
+        .toString();
+  }
 }

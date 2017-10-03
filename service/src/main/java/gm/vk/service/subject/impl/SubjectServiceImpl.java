@@ -21,49 +21,51 @@ import java.util.stream.Collectors;
 @Service("subjectService")
 public class SubjectServiceImpl implements SubjectService {
 
-    @Autowired
-    private SubjectDao subjectDao;
+  @Autowired private SubjectDao subjectDao;
 
-    @Autowired
-    private SubjectConverter subjectConverter;
+  @Autowired private SubjectConverter subjectConverter;
 
-    @Autowired
-    private SubjectDtoConverter subjectDtoConverter;
+  @Autowired private SubjectDtoConverter subjectDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<SubjectDto> findAll() {
-        return subjectDao.findAll().stream().filter(Objects::nonNull).map(subjectConverter).collect(Collectors.toList());
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public List<SubjectDto> findAll() {
+    return subjectDao
+        .findAll()
+        .stream()
+        .filter(Objects::nonNull)
+        .map(subjectConverter)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public SubjectDto findOne(@NotNull final Integer id) {
+    final Optional<Subject> subject = Optional.ofNullable(subjectDao.findOne(id));
+
+    if (subject.isPresent()) {
+      return subjectConverter.apply(subject.get());
+    } else {
+      throw new SubjectNotFoundException("Subject was not found");
     }
+  }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public SubjectDto findOne(@NotNull final Integer id) {
-        final Optional<Subject> subject = Optional.ofNullable(subjectDao.findOne(id));
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public SubjectDto save(@NotNull final SubjectDto subject) {
+    subjectDao.save(subjectDtoConverter.apply(subject));
+    return subject;
+  }
 
-        if (subject.isPresent()) {
-            return subjectConverter.apply(subject.get());
-        } else {
-            throw new SubjectNotFoundException("Subject was not found");
-        }
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final SubjectDto subject) {
+    subjectDao.delete(subjectDtoConverter.apply(subject));
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public SubjectDto save(@NotNull final SubjectDto subject) {
-        subjectDao.save(subjectDtoConverter.apply(subject));
-        return subject;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final SubjectDto subject) {
-        subjectDao.delete(subjectDtoConverter.apply(subject));
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
-        subjectDao.delete(id);
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final Integer id) {
+    subjectDao.delete(id);
+  }
 }

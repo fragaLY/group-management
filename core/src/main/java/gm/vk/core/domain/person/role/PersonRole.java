@@ -12,81 +12,79 @@ import java.util.Set;
 @Table(name = "personRole")
 public class PersonRole {
 
-    public PersonRole() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "role", unique = true, nullable = false)
+  private Role role;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+  private Set<Person> persons;
 
-    public PersonRole(final Integer id, final Role role, final Set<Person> persons) {
-        this.id = id;
-        this.role = role;
-        this.persons = persons;
-    }
+  public PersonRole() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+  public PersonRole(Integer id, Role role) {
+    this.id = id;
+    this.role = role;
+  }
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "role", unique = true, nullable = false)
-    private Role role;
+  public PersonRole(final Integer id, final Role role, final Set<Person> persons) {
+    this.id = id;
+    this.role = role;
+    this.persons = persons;
+  }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    private Set<Person> persons;
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Role getRole() {
+    return role;
+  }
 
-    public Role getRole() {
-        return role;
-    }
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+  public Set<Person> getPersons() {
+    return persons;
+  }
 
-    public Set<Person> getPersons() {
-        return persons;
-    }
+  public void setPersons(Set<Person> persons) {
+    this.persons = persons;
+  }
 
-    public void setPersons(Set<Person> persons) {
-        this.persons = persons;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    if (!(o instanceof PersonRole)) return false;
 
-        if (!(o instanceof PersonRole)) return false;
+    PersonRole that = (PersonRole) o;
 
-        PersonRole that = (PersonRole) o;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(role, that.role)
+        .append(persons, that.persons)
+        .isEquals();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(role, that.role)
-                .append(persons, that.persons)
-                .isEquals();
-    }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(role).append(persons).toHashCode();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(role)
-                .append(persons)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("role", role)
-                .append("persons", persons)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("role", role)
+        .append("persons", persons)
+        .toString();
+  }
 }

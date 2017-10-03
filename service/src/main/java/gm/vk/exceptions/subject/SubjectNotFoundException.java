@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class SubjectNotFoundException extends RuntimeException {
 
-    public SubjectNotFoundException() {
-    }
+  public SubjectNotFoundException() {}
 
-    public SubjectNotFoundException(final String message) {
-        super(message);
-    }
+  public SubjectNotFoundException(final String message) {
+    super(message);
+  }
 }

@@ -12,77 +12,75 @@ import java.util.Set;
 
 public class PersonRoleDto {
 
-    public PersonRoleDto() {
-    }
+  @JsonProperty("PersonRoleId")
+  private Integer id;
+  @NotNull(message = "Invalid role")
+  private Role role;
+  private Set<PersonDto> persons;
 
-    public PersonRoleDto(final Integer id, final Role role, final Set<PersonDto> persons) {
-        this.id = id;
-        this.role = role;
-        this.persons = persons;
-    }
+  public PersonRoleDto() {}
 
-    @JsonProperty("PersonRoleId")
-    private Integer id;
+  public PersonRoleDto(Integer id, Role role) {
+    this.id = id;
+    this.role = role;
+  }
 
-    @NotNull(message = "Invalid role")
-    private Role role;
+  public PersonRoleDto(final Integer id, final Role role, final Set<PersonDto> persons) {
+    this.id = id;
+    this.role = role;
+    this.persons = persons;
+  }
 
-    private Set<PersonDto> persons;
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Role getRole() {
+    return role;
+  }
 
-    public Role getRole() {
-        return role;
-    }
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+  public Set<PersonDto> getPersons() {
+    return persons;
+  }
 
-    public Set<PersonDto> getPersons() {
-        return persons;
-    }
+  public void setPersons(Set<PersonDto> persons) {
+    this.persons = persons;
+  }
 
-    public void setPersons(Set<PersonDto> persons) {
-        this.persons = persons;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    if (!(o instanceof PersonRoleDto)) return false;
 
-        if (!(o instanceof PersonRoleDto)) return false;
+    PersonRoleDto that = (PersonRoleDto) o;
 
-        PersonRoleDto that = (PersonRoleDto) o;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(role, that.role)
+        .append(persons, that.persons)
+        .isEquals();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(role, that.role)
-                .append(persons, that.persons)
-                .isEquals();
-    }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(role).append(persons).toHashCode();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(role)
-                .append(persons)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("role", role)
-                .append("persons", persons)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("role", role)
+        .append("persons", persons)
+        .toString();
+  }
 }

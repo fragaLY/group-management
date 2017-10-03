@@ -10,9 +10,9 @@ import java.util.function.Function;
 @Component("personalDataConverter")
 public class PersonalDataConverter implements Function<PersonalData, PersonalDataDto> {
 
-    @Override
-    public PersonalDataDto apply(@NotNull final PersonalData personalData) {
-        return new PersonalDataDto(personalData.getId(), personalData.getFirstName(), personalData.getSecondName());
-    }
-
+  @Override
+  public PersonalDataDto apply(@NotNull final PersonalData personalData) {
+    return new PersonalDataDto(
+        personalData.getId(), personalData.getFirstName(), personalData.getSecondName());
+  }
 }

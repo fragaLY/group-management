@@ -21,52 +21,53 @@ import java.util.stream.Collectors;
 @Service("examinationTypeService")
 public class ExaminationTypeServiceImpl implements ExaminationTypeService {
 
-    @Autowired
-    private ExaminationTypeDao examinationTypeDao;
+  @Autowired private ExaminationTypeDao examinationTypeDao;
 
-    @Autowired
-    private ExaminationTypeConverter examinationTypeConverter;
+  @Autowired private ExaminationTypeConverter examinationTypeConverter;
 
-    @Autowired
-    private ExaminationTypeDtoConverter examinationTypeDtoConverter;
+  @Autowired private ExaminationTypeDtoConverter examinationTypeDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<ExaminationTypeDto> findAll() {
-        return examinationTypeDao.findAll().stream().filter(Objects::nonNull).map(examinationTypeConverter).collect(Collectors.toList());
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public List<ExaminationTypeDto> findAll() {
+    return examinationTypeDao
+        .findAll()
+        .stream()
+        .filter(Objects::nonNull)
+        .map(examinationTypeConverter)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public ExaminationTypeDto findOne(@NotNull final Integer id) {
+
+    final Optional<ExaminationType> examinationType =
+        Optional.ofNullable(examinationTypeDao.findOne(id));
+
+    if (examinationType.isPresent()) {
+      return examinationTypeConverter.apply(examinationType.get());
+    } else {
+      throw new ExaminationTypeNotFoundException("ExaminationType was not found");
     }
+  }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public ExaminationTypeDto findOne(@NotNull final Integer id) {
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public ExaminationTypeDto save(@NotNull final ExaminationTypeDto examination) {
+    examinationTypeDao.save(examinationTypeDtoConverter.apply(examination));
+    return examination;
+  }
 
-        final Optional<ExaminationType> examinationType = Optional.ofNullable(examinationTypeDao.findOne(id));
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final ExaminationTypeDto examination) {
+    examinationTypeDao.delete(examinationTypeDtoConverter.apply(examination));
+  }
 
-        if (examinationType.isPresent()) {
-            return examinationTypeConverter.apply(examinationType.get());
-        } else {
-            throw new ExaminationTypeNotFoundException("ExaminationType was not found");
-        }
-
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public ExaminationTypeDto save(@NotNull final ExaminationTypeDto examination) {
-        examinationTypeDao.save(examinationTypeDtoConverter.apply(examination));
-        return examination;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final ExaminationTypeDto examination) {
-        examinationTypeDao.delete(examinationTypeDtoConverter.apply(examination));
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
-        examinationTypeDao.delete(id);
-    }
-
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final Integer id) {
+    examinationTypeDao.delete(id);
+  }
 }

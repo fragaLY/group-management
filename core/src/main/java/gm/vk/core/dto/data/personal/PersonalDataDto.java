@@ -10,83 +10,74 @@ import javax.validation.constraints.Size;
 
 public class PersonalDataDto {
 
-    private static final String NAME_REGEXP = "([a-z]+[,.]?[ ]?|[a-z]+['-]?)+";
+  private static final String NAME_REGEXP = "([a-z]+[,.]?[ ]?|[a-z]+['-]?)+";
+  @JsonProperty("PersonalDataId")
+  private Integer id;
+  @Pattern(regexp = NAME_REGEXP, message = "Invalid firstname")
+  @Size(max = 100, message = "The firstname could not be greater than 100 literals")
+  private String firstName;
+  @Pattern(regexp = NAME_REGEXP, message = "Invalid secondname")
+  @Size(max = 100, message = "The secondname could not be greater than 100 literals")
+  private String secondName;
 
-    public PersonalDataDto() {
-    }
+  public PersonalDataDto() {}
 
-    public PersonalDataDto(final Integer id, final String firstName, final String secondName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-    }
+  public PersonalDataDto(final Integer id, final String firstName, final String secondName) {
+    this.id = id;
+    this.firstName = firstName;
+    this.secondName = secondName;
+  }
 
-    @JsonProperty("PersonalDataId")
-    private Integer id;
+  public Integer getId() {
+    return id;
+  }
 
-    @Pattern(regexp = NAME_REGEXP, message = "Invalid firstname")
-    @Size(max = 100, message = "The firstname could not be greater than 100 literals")
-    private String firstName;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    @Pattern(regexp = NAME_REGEXP, message = "Invalid secondname")
-    @Size(max = 100, message = "The secondname could not be greater than 100 literals")
-    private String secondName;
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public String getSecondName() {
+    return secondName;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public void setSecondName(String secondName) {
+    this.secondName = secondName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public String getSecondName() {
-        return secondName;
-    }
+    if (!(o instanceof PersonalDataDto)) return false;
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
+    PersonalDataDto that = (PersonalDataDto) o;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(firstName, that.firstName)
+        .append(secondName, that.secondName)
+        .isEquals();
+  }
 
-        if (!(o instanceof PersonalDataDto)) return false;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(firstName).append(secondName).toHashCode();
+  }
 
-        PersonalDataDto that = (PersonalDataDto) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(firstName, that.firstName)
-                .append(secondName, that.secondName)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(firstName)
-                .append(secondName)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("firstName", firstName)
-                .append("secondName", secondName)
-                .toString();
-    }
-
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("firstName", firstName)
+        .append("secondName", secondName)
+        .toString();
+  }
 }

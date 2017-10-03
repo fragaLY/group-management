@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class GradeNotFoundException extends RuntimeException {
 
-    public GradeNotFoundException() {
-    }
+  public GradeNotFoundException() {}
 
-    public GradeNotFoundException(final String message) {
-        super(message);
-    }
+  public GradeNotFoundException(final String message) {
+    super(message);
+  }
 }

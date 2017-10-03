@@ -7,14 +7,13 @@ import java.util.List;
 
 public interface SubjectDao extends JpaRepository<Subject, Integer> {
 
-    List<Subject> findAll();
+  List<Subject> findAll();
 
-    Subject findOne(final Integer id);
+  Subject findOne(final Integer id);
 
-    Subject save(final Subject subject);
+  Subject save(final Subject subject);
 
-    void delete(final Subject subject);
+  void delete(final Subject subject);
 
-    void delete(final Integer id);
-
+  void delete(final Integer id);
 }

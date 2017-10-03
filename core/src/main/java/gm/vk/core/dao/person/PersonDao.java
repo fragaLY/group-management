@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface PersonDao extends JpaRepository<Person, Integer> {
 
-    List<Person> findAll();
+  List<Person> findAll();
 
-    Person findOne(final Integer id);
+  Person findOne(final Integer id);
 
-    Person save(final Person person);
+  Person save(final Person person);
 
-    void delete(final Person person);
+  void delete(final Person person);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

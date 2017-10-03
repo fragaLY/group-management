@@ -31,117 +31,120 @@ import java.util.Locale;
 @ComponentScan("gm.vk.controllers")
 public class ServletConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
-    private ApplicationContext applicationContext;
+  private ApplicationContext applicationContext;
 
-    /**
-     * Set the ApplicationContext that this object runs in.
-     * Normally this call will be used to initialize the object.
-     * <p>Invoked after population of normal bean properties but before an init callback such
-     * as {@link InitializingBean#afterPropertiesSet()}
-     * or a custom init-method. Invoked after {@link ResourceLoaderAware#setResourceLoader},
-     * {@link ApplicationEventPublisherAware#setApplicationEventPublisher} and
-     * {@link MessageSourceAware}, if applicable.
-     *
-     * @param applicationContext the ApplicationContext object to be used by this object
-     * @throws ApplicationContextException in case of context initialization errors
-     * @throws BeansException              if thrown by application context methods
-     * @see BeanInitializationException
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
+  /**
+   * Set the ApplicationContext that this object runs in. Normally this call will be used to
+   * initialize the object.
+   *
+   * <p>Invoked after population of normal bean properties but before an init callback such as
+   * {@link InitializingBean#afterPropertiesSet()} or a custom init-method. Invoked after {@link
+   * ResourceLoaderAware#setResourceLoader}, {@link
+   * ApplicationEventPublisherAware#setApplicationEventPublisher} and {@link MessageSourceAware}, if
+   * applicable.
+   *
+   * @param applicationContext the ApplicationContext object to be used by this object
+   * @throws ApplicationContextException in case of context initialization errors
+   * @throws BeansException if thrown by application context methods
+   * @see BeanInitializationException
+   */
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    this.applicationContext = applicationContext;
+  }
 
-    @Bean
-    public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
+  @Bean
+  public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
 
-        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+    ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 
-        resolver.setContentNegotiationManager(cnm);
-        resolver.setApplicationContext(applicationContext);
-        resolver.setOrder(1);
-        resolver.setDefaultViews(Lists.newArrayList(getJsonView()));
+    resolver.setContentNegotiationManager(cnm);
+    resolver.setApplicationContext(applicationContext);
+    resolver.setOrder(1);
+    resolver.setDefaultViews(Lists.newArrayList(getJsonView()));
 
-        return resolver;
-    }
+    return resolver;
+  }
 
-    private MappingJackson2JsonView getJsonView() {
+  private MappingJackson2JsonView getJsonView() {
 
-        MappingJackson2JsonView view = new MappingJackson2JsonView();
+    MappingJackson2JsonView view = new MappingJackson2JsonView();
 
-        view.setPrettyPrint(true);
-        view.setEncoding(JsonEncoding.UTF8);
+    view.setPrettyPrint(true);
+    view.setEncoding(JsonEncoding.UTF8);
 
-        return view;
-    }
+    return view;
+  }
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+  @Override
+  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 
-        final MediaType json = MediaType.APPLICATION_JSON;
+    final MediaType json = MediaType.APPLICATION_JSON;
 
-        configurer.favorPathExtension(true)
-                .favorParameter(false)
-                .ignoreAcceptHeader(true)
-                .useJaf(false)
-                .defaultContentType(json)
-                .parameterName("mediaType")
-                .mediaType("json", json);
-    }
+    configurer
+        .favorPathExtension(true)
+        .favorParameter(false)
+        .ignoreAcceptHeader(true)
+        .useJaf(false)
+        .defaultContentType(json)
+        .parameterName("mediaType")
+        .mediaType("json", json);
+  }
 
-    @Bean
-    public LocalValidatorFactoryBean getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setParameterNameDiscoverer(new LocalVariableTableParameterNameDiscoverer());
-        return validator;
+  @Bean
+  public LocalValidatorFactoryBean getValidator() {
+    LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+    validator.setParameterNameDiscoverer(new LocalVariableTableParameterNameDiscoverer());
+    return validator;
+  }
 
-    }
+  @Bean
+  @Autowired
+  public MethodValidationPostProcessor getValidationPostProcessor(
+      LocalValidatorFactoryBean validator) {
+    MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+    processor.setValidator(validator);
+    return processor;
+  }
 
-    @Bean
-    @Autowired
-    public MethodValidationPostProcessor getValidationPostProcessor(LocalValidatorFactoryBean validator) {
-        MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
-        processor.setValidator(validator);
-        return processor;
-    }
+  @Bean(name = "messageSource")
+  public MessageSource messageSource() {
 
-    @Bean(name = "messageSource")
-    public MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource =
+        new ReloadableResourceBundleMessageSource();
 
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    messageSource.setBasename("i18n");
+    messageSource.setDefaultEncoding("UTF-8");
+    messageSource.setCacheSeconds(1800);
 
-        messageSource.setBasename("i18n");
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setCacheSeconds(1800);
+    return messageSource;
+  }
 
-        return messageSource;
-    }
+  @Bean(name = "localeResolver")
+  public LocaleResolver localeResolver() {
 
-    @Bean(name = "localeResolver")
-    public LocaleResolver localeResolver() {
+    CookieLocaleResolver resolver = new CookieLocaleResolver();
 
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
+    resolver.setDefaultLocale(new Locale("en"));
+    resolver.setCookieName("localCookie");
+    resolver.setCookieMaxAge(1800);
 
-        resolver.setDefaultLocale(new Locale("en"));
-        resolver.setCookieName("localCookie");
-        resolver.setCookieMaxAge(1800);
+    return resolver;
+  }
 
-        return resolver;
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
 
-        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+    interceptor.setParamName("locale");
+    registry.addInterceptor(interceptor);
+  }
 
-        interceptor.setParamName("locale");
-        registry.addInterceptor(interceptor);
-    }
-
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-
-
+  @Override
+  public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    registry
+        .addResourceHandler("/webjars/**")
+        .addResourceLocations("classpath:/META-INF/resources/webjars/");
+  }
 }

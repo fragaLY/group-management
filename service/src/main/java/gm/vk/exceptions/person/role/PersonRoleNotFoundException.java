@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class PersonRoleNotFoundException extends RuntimeException {
 
-    public PersonRoleNotFoundException() {
-    }
+  public PersonRoleNotFoundException() {}
 
-    public PersonRoleNotFoundException(final String message) {
-        super(message);
-    }
+  public PersonRoleNotFoundException(final String message) {
+    super(message);
+  }
 }

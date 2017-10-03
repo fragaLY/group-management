@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface GradeService {
 
-    List<GradeDto> findAll();
+  List<GradeDto> findAll();
 
-    GradeDto findOne(final Integer id);
+  GradeDto findOne(final Integer id);
 
-    GradeDto save(final GradeDto grade);
+  GradeDto save(final GradeDto grade);
 
-    void delete(final GradeDto grade);
+  void delete(final GradeDto grade);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

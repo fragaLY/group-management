@@ -21,51 +21,52 @@ import java.util.stream.Collectors;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+  @Autowired private UserDao userDao;
 
-    @Autowired
-    private UserConverter userConverter;
+  @Autowired private UserConverter userConverter;
 
-    @Autowired
-    private UserDtoConverter userDtoConverter;
+  @Autowired private UserDtoConverter userDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<UserDto> findAll() {
-        return userDao.findAll().stream().filter(Objects::nonNull).map(userConverter).collect(Collectors.toList());
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public List<UserDto> findAll() {
+    return userDao
+        .findAll()
+        .stream()
+        .filter(Objects::nonNull)
+        .map(userConverter)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public UserDto findOne(@NotNull final Integer id) {
+
+    final Optional<User> user = Optional.ofNullable(userDao.findOne(id));
+
+    if (user.isPresent()) {
+      return userConverter.apply(user.get());
+    } else {
+      throw new UserNotFoundException("User not found exception");
     }
+  }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public UserDto findOne(@NotNull final Integer id) {
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public UserDto save(@NotNull final UserDto userDto) {
+    userDao.save(userDtoConverter.apply(userDto));
+    return userDto;
+  }
 
-        final Optional<User> user = Optional.ofNullable(userDao.findOne(id));
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final UserDto userDto) {
+    userDao.delete(userDtoConverter.apply(userDto));
+  }
 
-        if (user.isPresent()) {
-            return userConverter.apply(user.get());
-        } else {
-            throw new UserNotFoundException("User not found exception");
-        }
-
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public UserDto save(@NotNull final UserDto userDto) {
-        userDao.save(userDtoConverter.apply(userDto));
-        return userDto;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final UserDto userDto) {
-        userDao.delete(userDtoConverter.apply(userDto));
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
-        userDao.delete(id);
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final Integer id) {
+    userDao.delete(id);
+  }
 }

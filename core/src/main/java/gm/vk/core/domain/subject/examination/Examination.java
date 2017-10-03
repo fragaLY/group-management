@@ -12,82 +12,75 @@ import javax.persistence.*;
 @Table(name = "examination")
 public class Examination {
 
-    public Examination() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "examinationtype_id", referencedColumnName = "id")
+  private ExaminationType type;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "grade_id", referencedColumnName = "id")
+  private Grade grade;
 
-    public Examination(final Integer id, final ExaminationType type, final Grade grade) {
-        this.id = id;
-        this.type = type;
-        this.grade = grade;
-    }
+  public Examination() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+  public Examination(final Integer id, final ExaminationType type, final Grade grade) {
+    this.id = id;
+    this.type = type;
+    this.grade = grade;
+  }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "examinationtype_id", referencedColumnName = "id")
-    private ExaminationType type;
+  public Grade getGrade() {
+    return grade;
+  }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grade_id", referencedColumnName = "id")
-    private Grade grade;
+  public void setGrade(Grade grade) {
+    this.grade = grade;
+  }
 
-    public Grade getGrade() {
-        return grade;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setGrade(Grade grade) {
-        this.grade = grade;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public ExaminationType getType() {
+    return type;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setType(ExaminationType type) {
+    this.type = type;
+  }
 
-    public ExaminationType getType() {
-        return type;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public void setType(ExaminationType type) {
-        this.type = type;
-    }
+    if (!(o instanceof Examination)) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    Examination that = (Examination) o;
 
-        if (!(o instanceof Examination)) return false;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(type, that.type)
+        .append(grade, that.grade)
+        .isEquals();
+  }
 
-        Examination that = (Examination) o;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(type).append(grade).toHashCode();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(type, that.type)
-                .append(grade, that.grade)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(type)
-                .append(grade)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("type", type)
-                .append("grade", grade)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("type", type)
+        .append("grade", grade)
+        .toString();
+  }
 }

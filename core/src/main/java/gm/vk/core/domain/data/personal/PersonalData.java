@@ -10,80 +10,73 @@ import javax.persistence.*;
 @Table(name = "personalData")
 public class PersonalData {
 
-    public PersonalData() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @Column(name = "firstName", nullable = false)
+  private String firstName;
+  @Column(name = "secondName", nullable = false)
+  private String secondName;
 
-    public PersonalData(final Integer id, final String firstName, final String secondName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-    }
+  public PersonalData() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+  public PersonalData(final Integer id, final String firstName, final String secondName) {
+    this.id = id;
+    this.firstName = firstName;
+    this.secondName = secondName;
+  }
 
-    @Column(name = "firstName", nullable = false)
-    private String firstName;
+  public Integer getId() {
+    return id;
+  }
 
-    @Column(name = "secondName", nullable = false)
-    private String secondName;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getSecondName() {
+    return secondName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setSecondName(String secondName) {
+    this.secondName = secondName;
+  }
 
-    public String getSecondName() {
-        return secondName;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
+    if (!(o instanceof PersonalData)) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    PersonalData that = (PersonalData) o;
 
-        if (!(o instanceof PersonalData)) return false;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(firstName, that.firstName)
+        .append(secondName, that.secondName)
+        .isEquals();
+  }
 
-        PersonalData that = (PersonalData) o;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(firstName).append(secondName).toHashCode();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(firstName, that.firstName)
-                .append(secondName, that.secondName)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(firstName)
-                .append(secondName)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("firstName", firstName)
-                .append("secondName", secondName)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("firstName", firstName)
+        .append("secondName", secondName)
+        .toString();
+  }
 }

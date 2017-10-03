@@ -1,10 +1,11 @@
 package gm.vk.core.converter.data.contacts;
 
-import gm.vk.core.converter.data.contacts.address.AddressDtoConverter;
-import gm.vk.core.converter.person.PersonDtoConverter;
 import gm.vk.core.domain.data.contacts.Contacts;
+import gm.vk.core.domain.data.contacts.address.Address;
+import gm.vk.core.domain.person.Person;
 import gm.vk.core.dto.data.contacts.ContactsDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import gm.vk.core.dto.data.contacts.address.AddressDto;
+import gm.vk.core.dto.person.PersonDto;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -14,21 +15,45 @@ import java.util.stream.Collectors;
 @Component("contactsDtoConverter")
 public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
-    @Autowired
-    private AddressDtoConverter addressDtoConverter;
+  @Override
+  public Contacts apply(@NotNull final ContactsDto contactsDto) {
+    final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
 
-    @Autowired
-    private PersonDtoConverter personDtoConverter;
+    return new Contacts.Builder()
+        .setId(contactsDto.getId())
+        .setEmail(contactsDto.getEmail())
+        .setPhone(contactsDto.getPhone())
+        .setSkype(contactsDto.getSkype())
+        .setAddress(new CustomAddressDtoConverter().apply(contactsDto.getAddress()))
+        .setPersons(
+            contactsDto
+                .getPersons()
+                .stream()
+                .map(customPersonDtoConverter)
+                .collect(Collectors.toSet()))
+        .build();
+  }
+
+  private class CustomAddressDtoConverter implements Function<AddressDto, Address> {
 
     @Override
-    public Contacts apply(@NotNull final ContactsDto contactsDto) {
-        return new Contacts.Builder()
-                .setId(contactsDto.getId())
-                .setEmail(contactsDto.getEmail())
-                .setPhone(contactsDto.getPhone())
-                .setSkype(contactsDto.getSkype())
-                .setAddress(addressDtoConverter.apply(contactsDto.getAddress()))
-                .setPersons(contactsDto.getPersons().stream().map(personDtoConverter).collect(Collectors.toSet()))
-                .build();
+    public Address apply(AddressDto address) {
+      return new Address.Builder()
+          .setId(address.getId())
+          .setCountry(address.getCountry())
+          .setCity(address.getCity())
+          .setStreet(address.getStreet())
+          .setHome(address.getHome())
+          .setApartmentNumber(address.getApartmentNumber())
+          .build();
     }
+  }
+
+  private class CustomPersonDtoConverter implements Function<PersonDto, Person> {
+
+    @Override
+    public Person apply(PersonDto person) {
+      return new Person.Builder().setId(person.getId()).build();
+    }
+  }
 }

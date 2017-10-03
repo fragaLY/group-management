@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ExaminationTypeNotFoundException extends RuntimeException {
 
-    public ExaminationTypeNotFoundException() {
-    }
+  public ExaminationTypeNotFoundException() {}
 
-    public ExaminationTypeNotFoundException(final String message) {
-        super(message);
-    }
+  public ExaminationTypeNotFoundException(final String message) {
+    super(message);
+  }
 }

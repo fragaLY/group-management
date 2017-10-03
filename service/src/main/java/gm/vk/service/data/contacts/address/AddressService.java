@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AddressService {
 
-    List<AddressDto> findAll();
+  List<AddressDto> findAll();
 
-    AddressDto findOne(final Integer id);
+  AddressDto findOne(final Integer id);
 
-    AddressDto save(final AddressDto address);
+  AddressDto save(final AddressDto address);
 
-    void delete(final AddressDto address);
+  void delete(final AddressDto address);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

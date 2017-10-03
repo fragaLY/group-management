@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface AddressDao extends JpaRepository<Address, Integer> {
 
-    List<Address> findAll();
+  List<Address> findAll();
 
-    Address findOne(final Integer id);
+  Address findOne(final Integer id);
 
-    Address save(final Address address);
+  Address save(final Address address);
 
-    void delete(final Address address);
+  void delete(final Address address);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

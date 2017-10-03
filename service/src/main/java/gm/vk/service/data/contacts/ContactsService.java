@@ -6,14 +6,13 @@ import java.util.List;
 
 public interface ContactsService {
 
-    List<ContactsDto> findAll();
+  List<ContactsDto> findAll();
 
-    ContactsDto findOne(final Integer id);
+  ContactsDto findOne(final Integer id);
 
-    ContactsDto save(final ContactsDto contacts);
+  ContactsDto save(final ContactsDto contacts);
 
-    void delete(final ContactsDto contacts);
+  void delete(final ContactsDto contacts);
 
-    void delete(final Integer id);
-
+  void delete(final Integer id);
 }

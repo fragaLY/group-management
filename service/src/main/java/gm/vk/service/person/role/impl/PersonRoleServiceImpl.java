@@ -21,49 +21,51 @@ import java.util.stream.Collectors;
 @Service("personRoleService")
 public class PersonRoleServiceImpl implements PersonRoleService {
 
-    @Autowired
-    private PersonRoleDao personRoleDao;
+  @Autowired private PersonRoleDao personRoleDao;
 
-    @Autowired
-    private PersonRoleConverter personRoleConverter;
+  @Autowired private PersonRoleConverter personRoleConverter;
 
-    @Autowired
-    private PersonRoleDtoConverter personRoleDtoConverter;
+  @Autowired private PersonRoleDtoConverter personRoleDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<PersonRoleDto> findAll() {
-        return personRoleDao.findAll().stream().filter(Objects::nonNull).map(personRoleConverter).collect(Collectors.toList());
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public List<PersonRoleDto> findAll() {
+    return personRoleDao
+        .findAll()
+        .stream()
+        .filter(Objects::nonNull)
+        .map(personRoleConverter)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public PersonRoleDto findOne(@NotNull final Integer id) {
+    final Optional<PersonRole> role = Optional.ofNullable(personRoleDao.findOne(id));
+
+    if (role.isPresent()) {
+      return personRoleConverter.apply(role.get());
+    } else {
+      throw new PersonRoleNotFoundException("PersonRole was not found");
     }
+  }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public PersonRoleDto findOne(@NotNull final Integer id) {
-        final Optional<PersonRole> role = Optional.ofNullable(personRoleDao.findOne(id));
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public PersonRoleDto save(@NotNull final PersonRoleDto role) {
+    personRoleDao.save(personRoleDtoConverter.apply(role));
+    return role;
+  }
 
-        if (role.isPresent()) {
-            return personRoleConverter.apply(role.get());
-        } else {
-            throw new PersonRoleNotFoundException("PersonRole was not found");
-        }
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final PersonRoleDto role) {
+    personRoleDao.delete(personRoleDtoConverter.apply(role));
+  }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public PersonRoleDto save(@NotNull final PersonRoleDto role) {
-        personRoleDao.save(personRoleDtoConverter.apply(role));
-        return role;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final PersonRoleDto role) {
-        personRoleDao.delete(personRoleDtoConverter.apply(role));
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
-        personRoleDao.delete(id);
-    }
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+  public void delete(@NotNull final Integer id) {
+    personRoleDao.delete(id);
+  }
 }

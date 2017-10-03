@@ -12,80 +12,78 @@ import java.util.Set;
 @Table(name = "course")
 public class Course {
 
-    public Course() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @Column(name = "course")
+  private Integer course;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
+  private Set<Group> groups;
 
-    public Course(Integer id, Integer course, Set<Group> groups) {
-        this.id = id;
-        this.course = course;
-        this.groups = groups;
-    }
+  public Course() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+  public Course(Integer id, Integer course) {
+    this.id = id;
+    this.course = course;
+  }
 
-    @Column(name = "course")
-    private Integer course;
+  public Course(Integer id, Integer course, Set<Group> groups) {
+    this.id = id;
+    this.course = course;
+    this.groups = groups;
+  }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
-    private Set<Group> groups;
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getCourse() {
+    return course;
+  }
 
-    public Integer getCourse() {
-        return course;
-    }
+  public void setCourse(Integer course) {
+    this.course = course;
+  }
 
-    public void setCourse(Integer course) {
-        this.course = course;
-    }
+  public Set<Group> getGroups() {
+    return groups;
+  }
 
-    public Set<Group> getGroups() {
-        return groups;
-    }
+  public void setGroups(Set<Group> groups) {
+    this.groups = groups;
+  }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    if (!(o instanceof Course)) return false;
 
-        if (!(o instanceof Course)) return false;
+    Course course1 = (Course) o;
 
-        Course course1 = (Course) o;
+    return new EqualsBuilder()
+        .append(id, course1.id)
+        .append(course, course1.course)
+        .append(groups, course1.groups)
+        .isEquals();
+  }
 
-        return new EqualsBuilder()
-                .append(id, course1.id)
-                .append(course, course1.course)
-                .append(groups, course1.groups)
-                .isEquals();
-    }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(course).append(groups).toHashCode();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(course)
-                .append(groups)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("course", course)
-                .append("groups", groups)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("course", course)
+        .append("groups", groups)
+        .toString();
+  }
 }

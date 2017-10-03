@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserDto> findAll();
+  List<UserDto> findAll();
 
-    UserDto findOne(final Integer id);
+  UserDto findOne(final Integer id);
 
-    UserDto save(final UserDto userDto);
+  UserDto save(final UserDto userDto);
 
-    void delete(final UserDto userDto);
+  void delete(final UserDto userDto);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

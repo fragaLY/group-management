@@ -7,14 +7,13 @@ import java.util.List;
 
 public interface GradeDao extends JpaRepository<Grade, Integer> {
 
-    List<Grade> findAll();
+  List<Grade> findAll();
 
-    Grade findOne(final Integer id);
+  Grade findOne(final Integer id);
 
-    Grade save(final Grade grade);
+  Grade save(final Grade grade);
 
-    void delete(final Grade grade);
+  void delete(final Grade grade);
 
-    void delete(final Integer id);
-
+  void delete(final Integer id);
 }

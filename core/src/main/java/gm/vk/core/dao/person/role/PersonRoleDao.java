@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface PersonRoleDao extends JpaRepository<PersonRole, Integer> {
 
-    List<PersonRole> findAll();
+  List<PersonRole> findAll();
 
-    PersonRole findOne(final Integer id);
+  PersonRole findOne(final Integer id);
 
-    PersonRole save(final PersonRole role);
+  PersonRole save(final PersonRole role);
 
-    void delete(final PersonRole role);
+  void delete(final PersonRole role);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

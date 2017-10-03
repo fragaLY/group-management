@@ -25,7 +25,7 @@ ext {
 dependencies {
 
     //Spring
-    compile ('org.springframework:spring-tx:'+springVersion){
+    compile('org.springframework:spring-tx:' + springVersion) {
         exclude group: "org.springframework"
     }
 

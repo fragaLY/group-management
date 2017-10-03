@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface PersonRoleService {
 
-    List<PersonRoleDto> findAll();
+  List<PersonRoleDto> findAll();
 
-    PersonRoleDto findOne(final Integer id);
+  PersonRoleDto findOne(final Integer id);
 
-    PersonRoleDto save(final PersonRoleDto role);
+  PersonRoleDto save(final PersonRoleDto role);
 
-    void delete(final PersonRoleDto role);
+  void delete(final PersonRoleDto role);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

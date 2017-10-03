@@ -12,79 +12,77 @@ import java.util.Set;
 
 public class SemesterDto {
 
-    public SemesterDto() {
-    }
+  @JsonProperty("SemesterId")
+  private Integer id;
+  @NotNull
+  @Min(value = 1, message = "Semester should be in 1 to 12 range")
+  @Max(value = 12, message = "Semester should be in 1 to 12 range")
+  private Integer semester;
+  private Set<GroupDto> groups;
 
-    public SemesterDto(Integer id, Integer semester, Set<GroupDto> groups) {
-        this.id = id;
-        this.semester = semester;
-        this.groups = groups;
-    }
+  public SemesterDto() {}
 
-    @JsonProperty("SemesterId")
-    private Integer id;
+  public SemesterDto(Integer id, Integer semester) {
+    this.id = id;
+    this.semester = semester;
+  }
 
-    @NotNull
-    @Min(value = 1, message = "Semester should be in 1 to 12 range")
-    @Max(value = 12, message = "Semester should be in 1 to 12 range")
-    private Integer semester;
+  public SemesterDto(Integer id, Integer semester, Set<GroupDto> groups) {
+    this.id = id;
+    this.semester = semester;
+    this.groups = groups;
+  }
 
-    private Set<GroupDto> groups;
+  public Integer getId() {
+    return id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public Integer getSemester() {
+    return semester;
+  }
 
-    public Integer getSemester() {
-        return semester;
-    }
+  public void setSemester(Integer semester) {
+    this.semester = semester;
+  }
 
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
+  public Set<GroupDto> getGroups() {
+    return groups;
+  }
 
-    public Set<GroupDto> getGroups() {
-        return groups;
-    }
+  public void setGroups(Set<GroupDto> groups) {
+    this.groups = groups;
+  }
 
-    public void setGroups(Set<GroupDto> groups) {
-        this.groups = groups;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    if (!(o instanceof SemesterDto)) return false;
 
-        if (!(o instanceof SemesterDto)) return false;
+    SemesterDto semester1 = (SemesterDto) o;
 
-        SemesterDto semester1 = (SemesterDto) o;
+    return new EqualsBuilder()
+        .append(id, semester1.id)
+        .append(semester, semester1.semester)
+        .append(groups, semester1.groups)
+        .isEquals();
+  }
 
-        return new EqualsBuilder()
-                .append(id, semester1.id)
-                .append(semester, semester1.semester)
-                .append(groups, semester1.groups)
-                .isEquals();
-    }
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(semester).append(groups).toHashCode();
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(semester)
-                .append(groups)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("semester", semester)
-                .append("groups", groups)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("semester", semester)
+        .append("groups", groups)
+        .toString();
+  }
 }

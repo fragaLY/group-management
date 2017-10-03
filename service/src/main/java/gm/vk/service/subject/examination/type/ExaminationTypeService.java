@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ExaminationTypeService {
 
-    List<ExaminationTypeDto> findAll();
+  List<ExaminationTypeDto> findAll();
 
-    ExaminationTypeDto findOne(final Integer id);
+  ExaminationTypeDto findOne(final Integer id);
 
-    ExaminationTypeDto save(final ExaminationTypeDto type);
+  ExaminationTypeDto save(final ExaminationTypeDto type);
 
-    void delete(final ExaminationTypeDto type);
+  void delete(final ExaminationTypeDto type);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

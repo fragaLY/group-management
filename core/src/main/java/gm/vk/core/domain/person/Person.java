@@ -13,135 +13,130 @@ import java.util.Set;
 @Table(name = "person")
 public class Person {
 
-    public Person() {
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, nullable = false)
+  private Integer id;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "personrole_id", referencedColumnName = "id")
+  private PersonRole role;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "contacts_id", referencedColumnName = "id")
+  private Contacts contacts;
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "personaldata_id")
+  private PersonalData personalData;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(
+    name = "person_subject",
+    joinColumns = {@JoinColumn(name = "person_id", nullable = false, updatable = false)},
+    inverseJoinColumns = {@JoinColumn(name = "subject_id", nullable = false, updatable = false)}
+  )
+  private Set<Subject> subjects;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "group_id", referencedColumnName = "id")
+  private Group group;
 
-    private Person(final Builder builder) {
-        this.id = builder.id;
-        this.role = builder.role;
-        this.contacts = builder.contacts;
-        this.personalData = builder.personalData;
-        this.subjects = builder.subjects;
-        this.group = builder.group;
-    }
+  public Person() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+  private Person(final Builder builder) {
+    this.id = builder.id;
+    this.role = builder.role;
+    this.contacts = builder.contacts;
+    this.personalData = builder.personalData;
+    this.subjects = builder.subjects;
+    this.group = builder.group;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public PersonRole getRole() {
+    return role;
+  }
+
+  public void setRole(PersonRole role) {
+    this.role = role;
+  }
+
+  public Contacts getContacts() {
+    return contacts;
+  }
+
+  public void setContacts(Contacts contacts) {
+    this.contacts = contacts;
+  }
+
+  public PersonalData getPersonalData() {
+    return personalData;
+  }
+
+  public void setPersonalData(PersonalData personalData) {
+    this.personalData = personalData;
+  }
+
+  public Set<Subject> getSubjects() {
+    return subjects;
+  }
+
+  public void setSubjects(Set<Subject> subjects) {
+    this.subjects = subjects;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public void setGroup(Group group) {
+    this.group = group;
+  }
+
+  public static class Builder {
+
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "personrole_id", referencedColumnName = "id")
     private PersonRole role;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contacts_id", referencedColumnName = "id")
     private Contacts contacts;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "personaldata_id")
     private PersonalData personalData;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "person_subject", joinColumns = {
-            @JoinColumn(name = "person_id", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "subject_id",
-                    nullable = false, updatable = false) })
     private Set<Subject> subjects;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Group group;
 
-    public Integer getId() {
-        return id;
+    public Builder setId(Integer id) {
+      this.id = id;
+      return this;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Builder setRole(PersonRole role) {
+      this.role = role;
+      return this;
     }
 
-    public PersonRole getRole() {
-        return role;
+    public Builder setContacts(Contacts contacts) {
+      this.contacts = contacts;
+      return this;
     }
 
-    public void setRole(PersonRole role) {
-        this.role = role;
+    public Builder setPersonalData(PersonalData personalData) {
+      this.personalData = personalData;
+      return this;
     }
 
-    public Contacts getContacts() {
-        return contacts;
+    public Builder setSubjects(Set<Subject> subjects) {
+      this.subjects = subjects;
+      return this;
     }
 
-    public void setContacts(Contacts contacts) {
-        this.contacts = contacts;
+    public Builder setGroup(Group group) {
+      this.group = group;
+      return this;
     }
 
-    public PersonalData getPersonalData() {
-        return personalData;
+    public Person build() {
+      return new Person(this);
     }
-
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
-    public Set<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Set<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public static class Builder{
-
-        private Integer id;
-        private PersonRole role;
-        private Contacts contacts;
-        private PersonalData personalData;
-        private Set<Subject> subjects;
-        private Group group;
-
-        public Builder setId(Integer id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setRole(PersonRole role) {
-            this.role = role;
-            return this;
-        }
-
-        public Builder setContacts(Contacts contacts) {
-            this.contacts = contacts;
-            return this;
-        }
-
-        public Builder setPersonalData(PersonalData personalData) {
-            this.personalData = personalData;
-            return this;
-        }
-
-        public Builder setSubjects(Set<Subject> subjects) {
-            this.subjects = subjects;
-            return this;
-        }
-
-        public Builder setGroup(Group group) {
-            this.group = group;
-            return this;
-        }
-
-        public Person build() {
-            return new Person(this);
-        }
-    }
+  }
 }

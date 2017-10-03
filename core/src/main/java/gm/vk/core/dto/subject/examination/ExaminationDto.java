@@ -11,78 +11,70 @@ import javax.validation.constraints.NotNull;
 
 public class ExaminationDto {
 
-    public ExaminationDto() {
-    }
+  @JsonProperty("ExaminationId")
+  private Integer id;
+  @NotNull(message = "Examination type could not be a null")
+  private ExaminationTypeDto type;
+  private GradeDto grade;
 
-    public ExaminationDto(final Integer id, final ExaminationTypeDto type, final GradeDto grade) {
-        this.id = id;
-        this.type = type;
-        this.grade = grade;
-    }
+  public ExaminationDto() {}
 
-    @JsonProperty("ExaminationId")
-    private Integer id;
+  public ExaminationDto(final Integer id, final ExaminationTypeDto type, final GradeDto grade) {
+    this.id = id;
+    this.type = type;
+    this.grade = grade;
+  }
 
-    @NotNull(message = "Examination type could not be a null")
-    private ExaminationTypeDto type;
+  public Integer getId() {
+    return id;
+  }
 
-    private GradeDto grade;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public ExaminationTypeDto getType() {
+    return type;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public void setType(ExaminationTypeDto type) {
+    this.type = type;
+  }
 
-    public ExaminationTypeDto getType() {
-        return type;
-    }
+  public GradeDto getGrade() {
+    return grade;
+  }
 
-    public void setType(ExaminationTypeDto type) {
-        this.type = type;
-    }
+  public void setGrade(GradeDto grade) {
+    this.grade = grade;
+  }
 
-    public GradeDto getGrade() {
-        return grade;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public void setGrade(GradeDto grade) {
-        this.grade = grade;
-    }
+    if (!(o instanceof ExaminationDto)) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    ExaminationDto that = (ExaminationDto) o;
 
-        if (!(o instanceof ExaminationDto)) return false;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(type, that.type)
+        .append(grade, that.grade)
+        .isEquals();
+  }
 
-        ExaminationDto that = (ExaminationDto) o;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(type).append(grade).toHashCode();
+  }
 
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(type, that.type)
-                .append(grade, that.grade)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(type)
-                .append(grade)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("type", type)
-                .append("grade", grade)
-                .toString();
-    }
-
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("type", type)
+        .append("grade", grade)
+        .toString();
+  }
 }

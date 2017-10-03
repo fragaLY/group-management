@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ContactsDao extends JpaRepository<Contacts, Integer> {
 
-    List<Contacts> findAll();
+  List<Contacts> findAll();
 
-    Contacts findOne(final Integer id);
+  Contacts findOne(final Integer id);
 
-    Contacts save(final Contacts contacts);
+  Contacts save(final Contacts contacts);
 
-    void delete(final Contacts contacts);
+  void delete(final Contacts contacts);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

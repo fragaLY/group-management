@@ -13,106 +13,111 @@ import java.util.Set;
 
 public class SubjectDto {
 
-    public SubjectDto() {
-    }
+  @JsonProperty("SubjectId")
+  private Integer id;
+  @NotNull(message = "The name of examination could not be empty")
+  private String name;
+  @NotNull(message = "The examination could not be empty")
+  private ExaminationDto examination;
+  private Set<PersonDto> persons;
+  private Set<GroupDto> groups;
 
-    public SubjectDto(final Integer id, final String name, final ExaminationDto examination, final Set<PersonDto> persons, final Set<GroupDto> groups) {
-        this.id = id;
-        this.name = name;
-        this.examination = examination;
-        this.persons = persons;
-        this.groups = groups;
-    }
+  public SubjectDto() {}
 
-    @JsonProperty("SubjectId")
-    private Integer id;
+  public SubjectDto(Integer id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    @NotNull(message = "The name of examination could not be empty")
-    private String name;
+  public SubjectDto(
+      final Integer id,
+      final String name,
+      final ExaminationDto examination,
+      final Set<PersonDto> persons,
+      final Set<GroupDto> groups) {
+    this.id = id;
+    this.name = name;
+    this.examination = examination;
+    this.persons = persons;
+    this.groups = groups;
+  }
 
-    @NotNull(message = "The examination could not be empty")
-    private ExaminationDto examination;
+  public Integer getId() {
+    return id;
+  }
 
-    private Set<PersonDto> persons;
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    private Set<GroupDto> groups;
+  public String getName() {
+    return name;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public ExaminationDto getExamination() {
+    return examination;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setExamination(ExaminationDto examination) {
+    this.examination = examination;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Set<PersonDto> getPersons() {
+    return persons;
+  }
 
-    public ExaminationDto getExamination() {
-        return examination;
-    }
+  public void setPersons(Set<PersonDto> persons) {
+    this.persons = persons;
+  }
 
-    public void setExamination(ExaminationDto examination) {
-        this.examination = examination;
-    }
+  public Set<GroupDto> getGroups() {
+    return groups;
+  }
 
-    public Set<PersonDto> getPersons() {
-        return persons;
-    }
+  public void setGroups(Set<GroupDto> groups) {
+    this.groups = groups;
+  }
 
-    public void setPersons(Set<PersonDto> persons) {
-        this.persons = persons;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
 
-    public Set<GroupDto> getGroups() {
-        return groups;
-    }
+    if (!(o instanceof SubjectDto)) return false;
 
-    public void setGroups(Set<GroupDto> groups) {
-        this.groups = groups;
-    }
+    SubjectDto that = (SubjectDto) o;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    return new EqualsBuilder()
+        .append(id, that.id)
+        .append(name, that.name)
+        .append(examination, that.examination)
+        .append(persons, that.persons)
+        .append(groups, that.groups)
+        .isEquals();
+  }
 
-        if (!(o instanceof SubjectDto)) return false;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(id)
+        .append(name)
+        .append(examination)
+        .append(persons)
+        .append(groups)
+        .toHashCode();
+  }
 
-        SubjectDto that = (SubjectDto) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .append(name, that.name)
-                .append(examination, that.examination)
-                .append(persons, that.persons)
-                .append(groups, that.groups)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(id)
-                .append(name)
-                .append(examination)
-                .append(persons)
-                .append(groups)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("name", name)
-                .append("examination", examination)
-                .append("persons", persons)
-                .append("groups", groups)
-                .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("id", id)
+        .append("name", name)
+        .append("examination", examination)
+        .append("persons", persons)
+        .append("groups", groups)
+        .toString();
+  }
 }
