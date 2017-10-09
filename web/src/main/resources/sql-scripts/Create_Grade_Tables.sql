@@ -1,0 +1,33 @@
+USE GroupManagement;
+GO
+
+IF OBJECT_ID('Grade', 'U') IS NULL
+BEGIN
+CREATE TABLE [Grade] (
+	Id bigint NOT NULL,
+	Grade tinyint NOT NULL UNIQUE,
+  CONSTRAINT [PK_GRADE] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
+
+USE GroupManagement_Deleted;
+GO
+
+IF OBJECT_ID('Grade', 'U') IS NULL
+BEGIN
+CREATE TABLE [Grade] (
+	Id bigint NOT NULL,
+	Grade tinyint NOT NULL UNIQUE,
+	Deleted datetime NOT NULL,
+  CONSTRAINT [PK_GRADE] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END

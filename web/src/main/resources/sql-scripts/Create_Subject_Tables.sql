@@ -1,0 +1,50 @@
+USE GroupManagement;
+GO
+
+IF OBJECT_ID('Subject', 'U') IS NULL
+BEGIN
+CREATE TABLE [Subject] (
+	Id bigint NOT NULL,
+	Examination_Id bigint NOT NULL UNIQUE,
+	Name varchar(100) NOT NULL UNIQUE,
+  CONSTRAINT [PK_SUBJECT] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
+
+ALTER TABLE [Subject] WITH CHECK ADD CONSTRAINT [Subject_fk0] FOREIGN KEY ([Examination_Id]) REFERENCES [Examination]([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [Subject] CHECK CONSTRAINT [Subject_fk0]
+GO
+
+
+USE GroupManagement_Deleted;
+GO
+
+IF OBJECT_ID('Subject', 'U') IS NULL
+BEGIN
+CREATE TABLE [Subject] (
+	Id bigint NOT NULL,
+	Examination_Id bigint NOT NULL UNIQUE,
+	Name varchar(100) NOT NULL UNIQUE,
+	Deleted datetime NOT NULL,
+  CONSTRAINT [PK_SUBJECT] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
+
+ALTER TABLE [Subject] WITH CHECK ADD CONSTRAINT [Subject_fk0] FOREIGN KEY ([Examination_Id]) REFERENCES [Examination]([Id])
+ON UPDATE CASCADE
+GO
+
+ALTER TABLE [Subject] CHECK CONSTRAINT [Subject_fk0]
+GO

@@ -1,0 +1,55 @@
+USE GroupManagement;
+GO
+
+IF OBJECT_ID('User', 'U') IS NULL
+BEGIN
+CREATE TABLE [User] (
+	Id bigint NOT NULL,
+	Person_Id bigint NOT NULL UNIQUE,
+	Login varchar(35) NOT NULL UNIQUE,
+	Password varchar(50) NOT NULL,
+  CONSTRAINT [PK_USER] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
+
+ALTER TABLE [User] WITH CHECK ADD CONSTRAINT [User_fk0] FOREIGN KEY ([Person_Id]) REFERENCES [Person]([Id])
+ON UPDATE CASCADE
+GO
+
+ALTER TABLE [User] CHECK CONSTRAINT [User_fk0]
+GO
+
+
+USE GroupManagement_Deleted;
+GO
+
+IF OBJECT_ID('User', 'U') IS NULL
+BEGIN
+
+CREATE TABLE [User] (
+	Id bigint NOT NULL,
+	Person_Id bigint NOT NULL UNIQUE,
+	Login varchar(35) NOT NULL UNIQUE,
+	Password varchar(50) NOT NULL,
+	Deleted datetime NOT NULL,
+  CONSTRAINT [PK_USER] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+
+END
+GO
+
+ALTER TABLE [User] WITH CHECK ADD CONSTRAINT [User_fk0] FOREIGN KEY ([Person_Id]) REFERENCES [Person]([Id])
+ON UPDATE CASCADE
+GO
+
+ALTER TABLE [User] CHECK CONSTRAINT [User_fk0]
+GO

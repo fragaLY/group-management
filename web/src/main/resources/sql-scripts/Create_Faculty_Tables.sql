@@ -1,0 +1,34 @@
+USE GroupManagement;
+GO
+
+IF OBJECT_ID('Faculty', 'U') IS NULL
+BEGIN
+CREATE TABLE [Faculty] (
+	Id bigint NOT NULL,
+	Name varchar NOT NULL UNIQUE,
+  CONSTRAINT [PK_FACULTY] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
+
+USE GroupManagement_Deleted;
+GO
+
+IF OBJECT_ID('Faculty', 'U') IS NULL
+BEGIN
+CREATE TABLE [Faculty] (
+	Id bigint NOT NULL,
+	Name varchar NOT NULL UNIQUE,
+	Deleted datetime NOT NULL,
+  CONSTRAINT [PK_FACULTY] PRIMARY KEY CLUSTERED
+  (
+  [Id] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+END
+GO
