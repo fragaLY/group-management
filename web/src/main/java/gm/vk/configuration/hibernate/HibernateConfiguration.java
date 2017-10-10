@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -49,14 +48,13 @@ public class HibernateConfiguration {
 
   @Bean(name = "dataSource")
   public DataSource getDataSource() {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-    EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-
-    return builder
-        .continueOnError(true)
-        .setType(EmbeddedDatabaseType.H2)
-        .addScript("") // todo vk: add scripts
-        .build();
+    dataSource.setDriverClassName(environment.getRequiredProperty("hibernate.connection.driver_class"));
+    dataSource.setUrl(environment.getRequiredProperty("hibernate.connection.url"));
+    dataSource.setUsername(environment.getRequiredProperty("hibernate.connection.username"));
+    dataSource.setPassword(environment.getRequiredProperty("hibernate.connection.password"));
+    return dataSource;
   }
 
   private Properties getHibernateProperties() {
@@ -66,9 +64,12 @@ public class HibernateConfiguration {
     properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
     properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-    properties.put(
-        "hibernate.generate_statistics",
-        environment.getRequiredProperty("hibernate.generate_statistics"));
+    properties.put("hibernate.connection.url", environment.getRequiredProperty("hibernate.connection.url"));
+    properties.put("hibernate.connection.driver_class", environment.getRequiredProperty("hibernate.connection.driver_class"));
+    properties.put("hibernate.connection.pool_size", environment.getRequiredProperty("hibernate.connection.pool_size"));
+    properties.put("hibernate.connection.password", environment.getRequiredProperty("hibernate.connection.password"));
+    properties.put("hibernate.connection.username", environment.getRequiredProperty("hibernate.connection.username"));
+    properties.put("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
 
     return properties;
   }
