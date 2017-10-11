@@ -39,6 +39,20 @@ import java.util.Properties;
 @ComponentScan({"gm.vk.core", "gm.vk.service"})
 public class HibernateConfiguration {
 
+  private static final String DATASOURCE_PROPERTY_DRIVER = "javax.persistence.jdbc.driver";
+  private static final String DATASOURCE_PROPERTY_URL = "javax.persistence.jdbc.url";
+  private static final String DATASOURCE_PROPERTY_USER = "javax.persistence.jdbc.user";
+  private static final String DATASOURCE_PROPERTY_PASSWORD = "javax.persistence.jdbc.password";
+
+  private static final String HIBERNATE_PROPERTY_DIALECT = "hibernate.dialect";
+  private static final String HIBERNATE_PROPERTY_SHOW_SQL = "hibernate.show_sql";
+  private static final String HIBERNATE_PROPERTY_FORMAT_SQL = "hibernate.format_sql";
+  private static final String HIBERNATE_PROPERTY_GENERATE_STATISTICS = "hibernate.generate_statistics";
+  private static final String HIBERNATE_PROPERTY_MAX_POOL_SIZE = "hibernate.c3p0.max_size";
+  private static final String HIBERNATE_PROPERTY_TIME_OUT = "hibernate.c3p0.timeout";
+  private static final String HIBERNATE_PROPERTY_SQL_EXTRACTOR = "hibernate.hbm2ddl.import_files_sql_extractor";
+  private static final String HIBERNATE_PROPERTY_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
+
   private final Environment environment;
 
   @Autowired
@@ -50,10 +64,10 @@ public class HibernateConfiguration {
   public DataSource getDataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-    dataSource.setDriverClassName(environment.getRequiredProperty("hibernate.connection.driver_class"));
-    dataSource.setUrl(environment.getRequiredProperty("hibernate.connection.url"));
-    dataSource.setUsername(environment.getRequiredProperty("hibernate.connection.username"));
-    dataSource.setPassword(environment.getRequiredProperty("hibernate.connection.password"));
+    dataSource.setDriverClassName(environment.getRequiredProperty(DATASOURCE_PROPERTY_DRIVER));
+    dataSource.setUrl(environment.getRequiredProperty(DATASOURCE_PROPERTY_URL));
+    dataSource.setUsername(environment.getRequiredProperty(DATASOURCE_PROPERTY_USER));
+    dataSource.setPassword(environment.getRequiredProperty(DATASOURCE_PROPERTY_PASSWORD));
     return dataSource;
   }
 
@@ -61,15 +75,14 @@ public class HibernateConfiguration {
 
     Properties properties = new Properties();
 
-    properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-    properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-    properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-    properties.put("hibernate.connection.url", environment.getRequiredProperty("hibernate.connection.url"));
-    properties.put("hibernate.connection.driver_class", environment.getRequiredProperty("hibernate.connection.driver_class"));
-    properties.put("hibernate.connection.pool_size", environment.getRequiredProperty("hibernate.connection.pool_size"));
-    properties.put("hibernate.connection.password", environment.getRequiredProperty("hibernate.connection.password"));
-    properties.put("hibernate.connection.username", environment.getRequiredProperty("hibernate.connection.username"));
-    properties.put("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
+    properties.put(HIBERNATE_PROPERTY_DIALECT, environment.getRequiredProperty(HIBERNATE_PROPERTY_DIALECT));
+    properties.put(HIBERNATE_PROPERTY_SHOW_SQL, environment.getRequiredProperty(HIBERNATE_PROPERTY_SHOW_SQL));
+    properties.put(HIBERNATE_PROPERTY_FORMAT_SQL, environment.getRequiredProperty(HIBERNATE_PROPERTY_FORMAT_SQL));
+    properties.put(HIBERNATE_PROPERTY_GENERATE_STATISTICS, environment.getRequiredProperty(HIBERNATE_PROPERTY_GENERATE_STATISTICS));
+    properties.put(HIBERNATE_PROPERTY_MAX_POOL_SIZE, environment.getRequiredProperty(HIBERNATE_PROPERTY_MAX_POOL_SIZE));
+    properties.put(HIBERNATE_PROPERTY_TIME_OUT, environment.getRequiredProperty(HIBERNATE_PROPERTY_TIME_OUT));
+    properties.put(HIBERNATE_PROPERTY_SQL_EXTRACTOR, environment.getRequiredProperty(HIBERNATE_PROPERTY_SQL_EXTRACTOR));
+    properties.put(HIBERNATE_PROPERTY_IMPORT_FILES, "/sql-scripts/*");
 
     return properties;
   }
