@@ -9,7 +9,7 @@ Subject: RDBMS
 ### What I've used for project:
 * Database: MS SQL.
 * Tools IDE: IntelliJ IDEA;
-* RDBMS: SQL Server 2016 S1;
+* RDBMS: SQL Server 2017.2;
 ### Technologies and APIs: 
 * Java Core(JDK 1.8), JavaMail;
 * Spring Framework v3+(Boot, Core, MVC, OAuth2 Security, Mail, REST, Data, SpringFox);
