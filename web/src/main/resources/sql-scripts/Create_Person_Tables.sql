@@ -1,86 +1,27 @@
 USE GroupManagement;
-GO
 
-IF OBJECT_ID('Person', 'U') IS NULL
-BEGIN
-CREATE TABLE [Person] (
-	Id bigint NOT NULL,
+CREATE TABLE Person (
+	Id bigint NOT NULL PRIMARY KEY,
 	Contacts_Id bigint UNIQUE,
 	PersonalData_Id bigint UNIQUE,
-	PersonRole_Id bigint NOT NULL,
-  CONSTRAINT [PK_PERSON] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
+	PersonRole_Id bigint NOT NULL
+);
 
-)
-END
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk0] FOREIGN KEY ([Contacts_Id]) REFERENCES [Contacts]([Id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk0]
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk1] FOREIGN KEY ([PersonalData_Id]) REFERENCES [PersonalData]([Id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk1]
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk2] FOREIGN KEY ([PersonRole_Id]) REFERENCES [PersonRole]([Id])
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk2]
-GO
-
+ALTER TABLE Person ADD FOREIGN KEY (Contacts_Id) REFERENCES Contacts(Id);
+ALTER TABLE Person ADD FOREIGN KEY (PersonalData_Id) REFERENCES PersonalData(Id);
+ALTER TABLE Person ADD FOREIGN KEY (PersonRole_Id) REFERENCES PersonRole(Id);
 
 USE GroupManagement_Deleted;
-GO
 
-IF OBJECT_ID('Person', 'U') IS NULL
-BEGIN
 
-CREATE TABLE [Person] (
-	Id bigint NOT NULL,
+CREATE TABLE Person (
+	Id bigint NOT NULL PRIMARY KEY,
 	Contacts_Id bigint UNIQUE,
 	PersonalData_Id bigint UNIQUE,
 	PersonRole_Id bigint NOT NULL,
-	Deleted datetime NOT NULL,
-  CONSTRAINT [PK_PERSON] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
+	Deleted datetime NOT NULL
+);
 
-)
-
-END
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk0] FOREIGN KEY ([Contacts_Id]) REFERENCES [Contacts]([Id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk0]
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk1] FOREIGN KEY ([PersonalData_Id]) REFERENCES [PersonalData]([Id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk1]
-GO
-
-ALTER TABLE [Person] WITH CHECK ADD CONSTRAINT [Person_fk2] FOREIGN KEY ([PersonRole_Id]) REFERENCES [PersonRole]([Id])
-GO
-
-ALTER TABLE [Person] CHECK CONSTRAINT [Person_fk2]
-GO
-
+ALTER TABLE Person ADD FOREIGN KEY (Contacts_Id) REFERENCES Contacts(Id);
+ALTER TABLE Person ADD FOREIGN KEY (PersonalData_Id) REFERENCES PersonalData(Id);
+ALTER TABLE Person ADD FOREIGN KEY (PersonRole_Id) REFERENCES PersonRole(Id);

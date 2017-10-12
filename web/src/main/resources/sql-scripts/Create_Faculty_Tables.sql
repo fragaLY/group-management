@@ -1,34 +1,14 @@
 USE GroupManagement;
-GO
 
-IF OBJECT_ID('Faculty', 'U') IS NULL
-BEGIN
-CREATE TABLE [Faculty] (
-	Id bigint NOT NULL,
-	Name varchar NOT NULL UNIQUE,
-  CONSTRAINT [PK_FACULTY] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
-
-)
-END
-GO
+CREATE TABLE Faculty (
+	Id bigint NOT NULL PRIMARY KEY,
+	Name varchar NOT NULL UNIQUE
+);
 
 USE GroupManagement_Deleted;
-GO
 
-IF OBJECT_ID('Faculty', 'U') IS NULL
-BEGIN
-CREATE TABLE [Faculty] (
-	Id bigint NOT NULL,
+CREATE TABLE Faculty (
+	Id bigint NOT NULL PRIMARY KEY,
 	Name varchar NOT NULL UNIQUE,
-	Deleted datetime NOT NULL,
-  CONSTRAINT [PK_FACULTY] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
-
-)
-END
-GO
+	Deleted datetime NOT NULL
+);

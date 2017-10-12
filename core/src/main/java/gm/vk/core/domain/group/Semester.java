@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "semester")
+@Table(name = "semester", schema = "groupmanagement")
 public class Semester {
 
   @Id

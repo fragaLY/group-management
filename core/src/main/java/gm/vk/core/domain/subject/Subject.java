@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "subject")
+@Table(name = "subject", schema = "groupmanagement")
 public class Subject {
 
   @Id

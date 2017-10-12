@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address", schema = "groupmanagement")
 public class Address {
 
   @Id

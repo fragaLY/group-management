@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "groupmanagement")
 public class User {
 
   @Id

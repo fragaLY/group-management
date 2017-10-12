@@ -1,55 +1,22 @@
 USE GroupManagement;
-GO
 
-IF OBJECT_ID('User', 'U') IS NULL
-BEGIN
-CREATE TABLE [User] (
-	Id bigint NOT NULL,
+CREATE TABLE User (
+	Id bigint NOT NULL PRIMARY KEY,
 	Person_Id bigint NOT NULL UNIQUE,
 	Login varchar(35) NOT NULL UNIQUE,
-	Password varchar(50) NOT NULL,
-  CONSTRAINT [PK_USER] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
+	Password varchar(50) NOT NULL
+);
 
-)
-END
-GO
-
-ALTER TABLE [User] WITH CHECK ADD CONSTRAINT [User_fk0] FOREIGN KEY ([Person_Id]) REFERENCES [Person]([Id])
-ON UPDATE CASCADE
-GO
-
-ALTER TABLE [User] CHECK CONSTRAINT [User_fk0]
-GO
-
+ALTER TABLE User ADD FOREIGN KEY (Person_Id) REFERENCES Person(Id);
 
 USE GroupManagement_Deleted;
-GO
 
-IF OBJECT_ID('User', 'U') IS NULL
-BEGIN
-
-CREATE TABLE [User] (
-	Id bigint NOT NULL,
+CREATE TABLE User (
+	Id bigint NOT NULL PRIMARY KEY,
 	Person_Id bigint NOT NULL UNIQUE,
 	Login varchar(35) NOT NULL UNIQUE,
 	Password varchar(50) NOT NULL,
-	Deleted datetime NOT NULL,
-  CONSTRAINT [PK_USER] PRIMARY KEY CLUSTERED
-  (
-  [Id] ASC
-  ) WITH (IGNORE_DUP_KEY = OFF)
+	Deleted datetime NOT NULL
+);
 
-)
-
-END
-GO
-
-ALTER TABLE [User] WITH CHECK ADD CONSTRAINT [User_fk0] FOREIGN KEY ([Person_Id]) REFERENCES [Person]([Id])
-ON UPDATE CASCADE
-GO
-
-ALTER TABLE [User] CHECK CONSTRAINT [User_fk0]
-GO
+ALTER TABLE User ADD FOREIGN KEY (Person_Id) REFERENCES Person(Id);

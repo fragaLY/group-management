@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -39,19 +40,32 @@ import java.util.Properties;
 @ComponentScan({"gm.vk.core", "gm.vk.service"})
 public class HibernateConfiguration {
 
-  private static final String DATASOURCE_PROPERTY_DRIVER = "javax.persistence.jdbc.driver";
-  private static final String DATASOURCE_PROPERTY_URL = "javax.persistence.jdbc.url";
-  private static final String DATASOURCE_PROPERTY_USER = "javax.persistence.jdbc.user";
-  private static final String DATASOURCE_PROPERTY_PASSWORD = "javax.persistence.jdbc.password";
-
   private static final String HIBERNATE_PROPERTY_DIALECT = "hibernate.dialect";
   private static final String HIBERNATE_PROPERTY_SHOW_SQL = "hibernate.show_sql";
   private static final String HIBERNATE_PROPERTY_FORMAT_SQL = "hibernate.format_sql";
   private static final String HIBERNATE_PROPERTY_GENERATE_STATISTICS = "hibernate.generate_statistics";
   private static final String HIBERNATE_PROPERTY_MAX_POOL_SIZE = "hibernate.c3p0.max_size";
   private static final String HIBERNATE_PROPERTY_TIME_OUT = "hibernate.c3p0.timeout";
-  private static final String HIBERNATE_PROPERTY_SQL_EXTRACTOR = "hibernate.hbm2ddl.import_files_sql_extractor";
-  private static final String HIBERNATE_PROPERTY_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
+  private static final String HIBERNATE_SQL_EXTRACTOR = "hibernate.hbm2ddl.import_files_sql_extractor";
+
+  private static final String CREATE_SCHEMAS = "sql-scripts/Create_Schemas.sql";
+  private static final String CREATE_ADDRESS_TABLES = "sql-scripts/Create_Address_Tables.sql";
+  private static final String CREATE_CONTACTS_TABLES = "sql-scripts/Create_Contacts_Tables.sql";
+  private static final String CREATE_PERSONAL_DATA_TABLES = "sql-scripts/Create_PersonalData_Tables.sql";
+  private static final String CREATE_PERSON_ROLE_TABLES = "sql-scripts/Create_PersonRole_Tables.sql";
+  private static final String CREATE_PERSON_TABLES = "sql-scripts/Create_Person_Tables.sql";
+  private static final String CREATE_USER_TABLES = "sql-scripts/Create_User_Tables.sql";
+  private static final String CREATE_GRADE_TABLES = "sql-scripts/Create_Grade_Tables.sql";
+  private static final String CREATE_EXAMINATION_TYPE_TABLES = "sql-scripts/Create_ExaminationType_Tables.sql";
+  private static final String CREATE_EXAMINATION_TABLES = "sql-scripts/Create_Examination_Tables.sql";
+  private static final String CREATE_SUBJECT_TABLES = "sql-scripts/Create_Subject_Tables.sql";
+  private static final String CREATE_COURSE_TABLES = "sql-scripts/Create_Course_Tables.sql";
+  private static final String CREATE_SEMESTER_TABLES = "sql-scripts/Create_Semester_Tables.sql";
+  private static final String CREATE_FACULTY_TABLES = "sql-scripts/Create_Faculty_Tables.sql";
+  private static final String CREATE_STUDENTGROUP_TABLES = "sql-scripts/Create_StudentGroup_Tables.sql";
+  private static final String CREATE_PERSONID_GROUPID_TABLES = "sql-scripts/Create_PersonId_GroupId_Tables.sql";
+  private static final String CREATE_PERSONID_SUBJECTID_TABLES = "sql-scripts/Create_PersonId_SubjectId_Tables.sql";
+  private static final String CREATE_SUBJECTID_GROUPID_TABLES = "sql-scripts/Create_SubjectId_GroupId_Tables.sql";
 
   private final Environment environment;
 
@@ -62,13 +76,29 @@ public class HibernateConfiguration {
 
   @Bean(name = "dataSource")
   public DataSource getDataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-    dataSource.setDriverClassName(environment.getRequiredProperty(DATASOURCE_PROPERTY_DRIVER));
-    dataSource.setUrl(environment.getRequiredProperty(DATASOURCE_PROPERTY_URL));
-    dataSource.setUsername(environment.getRequiredProperty(DATASOURCE_PROPERTY_USER));
-    dataSource.setPassword(environment.getRequiredProperty(DATASOURCE_PROPERTY_PASSWORD));
-    return dataSource;
+    return new EmbeddedDatabaseBuilder()
+            .continueOnError(true)
+            .setType(EmbeddedDatabaseType.H2)
+            .addScript(CREATE_SCHEMAS)
+            .addScript(CREATE_ADDRESS_TABLES)
+            .addScript(CREATE_CONTACTS_TABLES)
+            .addScript(CREATE_PERSONAL_DATA_TABLES)
+            .addScript(CREATE_PERSON_ROLE_TABLES)
+            .addScript(CREATE_PERSON_TABLES)
+            .addScript(CREATE_USER_TABLES)
+            .addScript(CREATE_GRADE_TABLES)
+            .addScript(CREATE_EXAMINATION_TYPE_TABLES)
+            .addScript(CREATE_EXAMINATION_TABLES)
+            .addScript(CREATE_SUBJECT_TABLES)
+            .addScript(CREATE_COURSE_TABLES)
+            .addScript(CREATE_SEMESTER_TABLES)
+            .addScript(CREATE_FACULTY_TABLES)
+            .addScript(CREATE_STUDENTGROUP_TABLES)
+            .addScript(CREATE_PERSONID_GROUPID_TABLES)
+            .addScript(CREATE_PERSONID_SUBJECTID_TABLES)
+            .addScript(CREATE_SUBJECTID_GROUPID_TABLES)
+            .build();
   }
 
   private Properties getHibernateProperties() {
@@ -81,8 +111,7 @@ public class HibernateConfiguration {
     properties.put(HIBERNATE_PROPERTY_GENERATE_STATISTICS, environment.getRequiredProperty(HIBERNATE_PROPERTY_GENERATE_STATISTICS));
     properties.put(HIBERNATE_PROPERTY_MAX_POOL_SIZE, environment.getRequiredProperty(HIBERNATE_PROPERTY_MAX_POOL_SIZE));
     properties.put(HIBERNATE_PROPERTY_TIME_OUT, environment.getRequiredProperty(HIBERNATE_PROPERTY_TIME_OUT));
-    properties.put(HIBERNATE_PROPERTY_SQL_EXTRACTOR, environment.getRequiredProperty(HIBERNATE_PROPERTY_SQL_EXTRACTOR));
-    properties.put(HIBERNATE_PROPERTY_IMPORT_FILES, "/sql-scripts/*");
+    properties.put(HIBERNATE_SQL_EXTRACTOR, environment.getRequiredProperty(HIBERNATE_SQL_EXTRACTOR));
 
     return properties;
   }
