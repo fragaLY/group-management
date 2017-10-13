@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public UserDto save(@NotNull final UserDto userDto) {
-    userDao.save(userDtoConverter.apply(userDto));
-    return userDto;
+    final User savedUser = userDao.save(userDtoConverter.apply(userDto));
+    return userConverter.apply(savedUser);
   }
 
   @Override

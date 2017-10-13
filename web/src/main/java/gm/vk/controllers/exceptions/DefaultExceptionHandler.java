@@ -3,6 +3,7 @@ package gm.vk.controllers.exceptions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import gm.vk.controllers.exceptions.error.ErrorDetails;
+import gm.vk.exceptions.user.UserNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -270,6 +271,63 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   /**
+   * Handle the 404 exception. User Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({UserNotFoundException.class})
+  public ResponseEntity<Object> handleUserNotFoundException(final UserNotFoundException ex) {
+
+    final ErrorDetails error =
+        new ErrorDetails.Builder()
+            .setStatus(HttpStatus.NOT_FOUND)
+            .setOutputMessage(ex.getLocalizedMessage())
+            .setErrors(Sets.newHashSet("User Not Found"))
+            .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 500 exception. NullPointerException.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({NullPointerException.class})
+  public ResponseEntity<Object> handleUserNotFoundException(final Exception ex) {
+
+    final ErrorDetails error =
+        new ErrorDetails.Builder()
+            .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+            .setOutputMessage("Oops, Huston we have a problem.")
+            .setErrors(Sets.newHashSet("Null Pointer Exception"))
+            .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 500 exception. StackOverFlow.
+   *
+   * @param er - error
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({StackOverflowError.class})
+  public ResponseEntity<Object> handleStackOverFlowError(final StackOverflowError er) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .setOutputMessage("Oops, Huston we have a problem.")
+                    .setErrors(Sets.newHashSet("Stack Over Flow Error"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
    * Handle the 405 exception. Method not allowed.
    *
    * @param ex - exception
@@ -335,4 +393,25 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
 
+  /**
+   * A single place to customize the response body of all Exception types.
+   *
+   * <p>The default implementation sets the request attribute and creates a {@link ResponseEntity}
+   * from the given body, headers, and status.
+   *
+   * @param ex the exception
+   * @param body the body for the response
+   * @param headers the headers for the response
+   * @param status the response status
+   * @param request the current request
+   */
+  @Override
+  protected ResponseEntity<Object> handleExceptionInternal(
+      final Exception ex,
+      final Object body,
+      final HttpHeaders headers,
+      final HttpStatus status,
+      final WebRequest request) {
+    return super.handleExceptionInternal(ex, body, headers, status, request);
+  }
 }
