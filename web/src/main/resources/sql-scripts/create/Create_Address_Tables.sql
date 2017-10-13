@@ -1,6 +1,6 @@
 USE GroupManagement;
 CREATE TABLE Address (
-	Id bigint NOT NULL PRIMARY KEY,
+	Id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Country varchar(50) NOT NULL,
 	City varchar(50) NOT NULL,
 	Street varchar(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Address (
 
 USE GroupManagement_Deleted;
 CREATE TABLE Address (
-	Id bigint NOT NULL PRIMARY KEY,
+	Id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Country varchar(50) NOT NULL,
 	City varchar(50) NOT NULL,
 	Street varchar(50) NOT NULL,

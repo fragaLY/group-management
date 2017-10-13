@@ -48,24 +48,42 @@ public class HibernateConfiguration {
   private static final String HIBERNATE_PROPERTY_TIME_OUT = "hibernate.c3p0.timeout";
   private static final String HIBERNATE_SQL_EXTRACTOR = "hibernate.hbm2ddl.import_files_sql_extractor";
 
-  private static final String CREATE_SCHEMAS = "sql-scripts/Create_Schemas.sql";
-  private static final String CREATE_ADDRESS_TABLES = "sql-scripts/Create_Address_Tables.sql";
-  private static final String CREATE_CONTACTS_TABLES = "sql-scripts/Create_Contacts_Tables.sql";
-  private static final String CREATE_PERSONAL_DATA_TABLES = "sql-scripts/Create_PersonalData_Tables.sql";
-  private static final String CREATE_PERSON_ROLE_TABLES = "sql-scripts/Create_PersonRole_Tables.sql";
-  private static final String CREATE_PERSON_TABLES = "sql-scripts/Create_Person_Tables.sql";
-  private static final String CREATE_USER_TABLES = "sql-scripts/Create_User_Tables.sql";
-  private static final String CREATE_GRADE_TABLES = "sql-scripts/Create_Grade_Tables.sql";
-  private static final String CREATE_EXAMINATION_TYPE_TABLES = "sql-scripts/Create_ExaminationType_Tables.sql";
-  private static final String CREATE_EXAMINATION_TABLES = "sql-scripts/Create_Examination_Tables.sql";
-  private static final String CREATE_SUBJECT_TABLES = "sql-scripts/Create_Subject_Tables.sql";
-  private static final String CREATE_COURSE_TABLES = "sql-scripts/Create_Course_Tables.sql";
-  private static final String CREATE_SEMESTER_TABLES = "sql-scripts/Create_Semester_Tables.sql";
-  private static final String CREATE_FACULTY_TABLES = "sql-scripts/Create_Faculty_Tables.sql";
-  private static final String CREATE_STUDENTGROUP_TABLES = "sql-scripts/Create_StudentGroup_Tables.sql";
-  private static final String CREATE_PERSONID_GROUPID_TABLES = "sql-scripts/Create_PersonId_GroupId_Tables.sql";
-  private static final String CREATE_PERSONID_SUBJECTID_TABLES = "sql-scripts/Create_PersonId_SubjectId_Tables.sql";
-  private static final String CREATE_SUBJECTID_GROUPID_TABLES = "sql-scripts/Create_SubjectId_GroupId_Tables.sql";
+  private static final String CREATE_SCHEMAS = "sql-scripts/create/Create_Schemas.sql";
+  private static final String CREATE_ADDRESS_TABLES = "sql-scripts/create/Create_Address_Tables.sql";
+  private static final String CREATE_CONTACTS_TABLES = "sql-scripts/create/Create_Contacts_Tables.sql";
+  private static final String CREATE_PERSONAL_DATA_TABLES = "sql-scripts/create/Create_PersonalData_Tables.sql";
+  private static final String CREATE_PERSON_ROLE_TABLES = "sql-scripts/create/Create_PersonRole_Tables.sql";
+  private static final String CREATE_PERSON_TABLES = "sql-scripts/create/Create_Person_Tables.sql";
+  private static final String CREATE_USER_TABLES = "sql-scripts/create/Create_User_Tables.sql";
+  private static final String CREATE_GRADE_TABLES = "sql-scripts/create/Create_Grade_Tables.sql";
+  private static final String CREATE_EXAMINATION_TYPE_TABLES = "sql-scripts/create/Create_ExaminationType_Tables.sql";
+  private static final String CREATE_EXAMINATION_TABLES = "sql-scripts/create/Create_Examination_Tables.sql";
+  private static final String CREATE_SUBJECT_TABLES = "sql-scripts/create/Create_Subject_Tables.sql";
+  private static final String CREATE_COURSE_TABLES = "sql-scripts/create/Create_Course_Tables.sql";
+  private static final String CREATE_SEMESTER_TABLES = "sql-scripts/create/Create_Semester_Tables.sql";
+  private static final String CREATE_FACULTY_TABLES = "sql-scripts/create/Create_Faculty_Tables.sql";
+  private static final String CREATE_STUDENTGROUP_TABLES = "sql-scripts/create/Create_StudentGroup_Tables.sql";
+  private static final String CREATE_PERSONID_GROUPID_TABLES = "sql-scripts/create/Create_PersonId_GroupId_Tables.sql";
+  private static final String CREATE_PERSONID_SUBJECTID_TABLES = "sql-scripts/create/Create_PersonId_SubjectId_Tables.sql";
+  private static final String CREATE_SUBJECTID_GROUPID_TABLES = "sql-scripts/create/Create_SubjectId_GroupId_Tables.sql";
+
+  private static final String INIT_ADDRESS_TABLE = "sql-scripts/init/Init_Address_Table.sql";
+  private static final String INIT_CONTACTS_TABLE = "sql-scripts/init/Init_Contacts_Table.sql";
+  private static final String INIT_PERSONAL_DATA_TABLE = "sql-scripts/init/Init_PersonalData_Table.sql";
+  private static final String INIT_PERSON_ROLE_TABLE = "sql-scripts/init/Init_PersonRole_Table.sql";
+  private static final String INIT_PERSON_TABLE = "sql-scripts/init/Init_Person_Table.sql";
+  private static final String INIT_USER_TABLE = "sql-scripts/init/Init_User_Table.sql";
+  private static final String INIT_COURSE_TABLE = "sql-scripts/init/Init_Course_Table.sql";
+  private static final String INIT_SEMESTER_TABLE = "sql-scripts/init/Init_Semester_Table.sql";
+  private static final String INIT_FACULTY_TABLE = "sql-scripts/init/Init_Faculty_Table.sql";
+  private static final String INIT_STUDENTGROUP_TABLE = "sql-scripts/init/Init_Group_Table.sql";
+  private static final String INIT_PERSONID_GROUPID_TABLE = "sql-scripts/init/Init_PersonId_GroupId_Table.sql";
+  private static final String INIT_GRADE_TABLE = "sql-scripts/init/Init_Grade_Table.sql";
+  private static final String INIT_EXAMINATION_TYPE_TABLE = "sql-scripts/init/Init_ExaminationType_Table.sql";
+  private static final String INIT_EXAMINATION_TABLE = "sql-scripts/init/Init_Examination_Table.sql";
+  private static final String INIT_SUBJECT_TABLE = "sql-scripts/init/Init_Subject_Table.sql";
+  private static final String INIT_PERSONID_SUBJECTID_TABLE = "sql-scripts/init/Init_PersonId_SubjectId_Table.sql";
+  private static final String INIT_SUBJECTID_GROUPID_TABLE = "sql-scripts/init/Init_SubjectId_GroupId_Table.sql";
 
   private final Environment environment;
 
@@ -81,23 +99,20 @@ public class HibernateConfiguration {
             .continueOnError(true)
             .setType(EmbeddedDatabaseType.H2)
             .addScript(CREATE_SCHEMAS)
-            .addScript(CREATE_ADDRESS_TABLES)
-            .addScript(CREATE_CONTACTS_TABLES)
-            .addScript(CREATE_PERSONAL_DATA_TABLES)
-            .addScript(CREATE_PERSON_ROLE_TABLES)
-            .addScript(CREATE_PERSON_TABLES)
-            .addScript(CREATE_USER_TABLES)
-            .addScript(CREATE_GRADE_TABLES)
-            .addScript(CREATE_EXAMINATION_TYPE_TABLES)
-            .addScript(CREATE_EXAMINATION_TABLES)
-            .addScript(CREATE_SUBJECT_TABLES)
-            .addScript(CREATE_COURSE_TABLES)
-            .addScript(CREATE_SEMESTER_TABLES)
-            .addScript(CREATE_FACULTY_TABLES)
-            .addScript(CREATE_STUDENTGROUP_TABLES)
-            .addScript(CREATE_PERSONID_GROUPID_TABLES)
+            .addScripts(CREATE_ADDRESS_TABLES, CREATE_CONTACTS_TABLES)
+            .addScripts(CREATE_PERSONAL_DATA_TABLES, CREATE_PERSON_ROLE_TABLES, CREATE_PERSON_TABLES, CREATE_USER_TABLES)
+            .addScripts(CREATE_GRADE_TABLES, CREATE_EXAMINATION_TYPE_TABLES, CREATE_EXAMINATION_TABLES, CREATE_SUBJECT_TABLES)
+            .addScripts(CREATE_COURSE_TABLES, CREATE_SEMESTER_TABLES, CREATE_FACULTY_TABLES, CREATE_STUDENTGROUP_TABLES)
             .addScript(CREATE_PERSONID_SUBJECTID_TABLES)
+            .addScript(CREATE_PERSONID_GROUPID_TABLES)
             .addScript(CREATE_SUBJECTID_GROUPID_TABLES)
+            .addScripts(INIT_ADDRESS_TABLE, INIT_CONTACTS_TABLE)
+            .addScripts(INIT_PERSONAL_DATA_TABLE, INIT_PERSON_ROLE_TABLE, INIT_PERSON_TABLE, INIT_USER_TABLE)
+            .addScripts(INIT_GRADE_TABLE, INIT_EXAMINATION_TYPE_TABLE, INIT_EXAMINATION_TABLE, INIT_SUBJECT_TABLE)
+            .addScripts(INIT_COURSE_TABLE, INIT_SEMESTER_TABLE, INIT_FACULTY_TABLE, INIT_STUDENTGROUP_TABLE)
+            .addScript(INIT_PERSONID_SUBJECTID_TABLE)
+            .addScript(INIT_PERSONID_GROUPID_TABLE)
+            .addScript(INIT_SUBJECTID_GROUPID_TABLE)
             .build();
   }
 

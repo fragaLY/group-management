@@ -1,7 +1,7 @@
 USE GroupManagement;
 
 CREATE TABLE Person (
-	Id bigint NOT NULL PRIMARY KEY,
+	Id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Contacts_Id bigint UNIQUE,
 	PersonalData_Id bigint UNIQUE,
 	PersonRole_Id bigint NOT NULL
@@ -15,7 +15,7 @@ USE GroupManagement_Deleted;
 
 
 CREATE TABLE Person (
-	Id bigint NOT NULL PRIMARY KEY,
+	Id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	Contacts_Id bigint UNIQUE,
 	PersonalData_Id bigint UNIQUE,
 	PersonRole_Id bigint NOT NULL,

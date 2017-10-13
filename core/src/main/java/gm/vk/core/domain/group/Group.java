@@ -19,22 +19,29 @@ public class Group {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Column(name = "name")
   private String name;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "course_id", referencedColumnName = "id")
   private Course course;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "semester_id", referencedColumnName = "id")
   private Semester semester;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "faculty_id", referencedColumnName = "id")
   private Faculty faculty;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
   private Set<Person> persons;
+
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(
-    name = "subject_group",
+    schema = "groupmanagement",
+    name = "subjectid_groupid",
     joinColumns = {@JoinColumn(name = "group_id", nullable = false, updatable = false)},
     inverseJoinColumns = {@JoinColumn(name = "subject_id", nullable = false, updatable = false)}
   )

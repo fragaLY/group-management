@@ -17,24 +17,35 @@ public class Person {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "personrole_id", referencedColumnName = "id")
   private PersonRole role;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "contacts_id", referencedColumnName = "id")
   private Contacts contacts;
+
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "personaldata_id")
   private PersonalData personalData;
+
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(
-    name = "person_subject",
+    schema = "groupmanagement",
+    name = "personid_subjectid",
     joinColumns = {@JoinColumn(name = "person_id", nullable = false, updatable = false)},
     inverseJoinColumns = {@JoinColumn(name = "subject_id", nullable = false, updatable = false)}
   )
   private Set<Subject> subjects;
+
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "group_id", referencedColumnName = "id")
+  @JoinTable(
+    schema = "groupmanagement",
+    name = "personid_groupid",
+    joinColumns = {@JoinColumn(name = "person_id", nullable = false, updatable = false)},
+    inverseJoinColumns = {@JoinColumn(name = "group_id", nullable = false, updatable = false)}
+  )
   private Group group;
 
   public Person() {}
