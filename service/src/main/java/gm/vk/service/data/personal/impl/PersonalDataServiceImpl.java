@@ -53,8 +53,9 @@ public class PersonalDataServiceImpl implements PersonalDataService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public PersonalDataDto save(@NotNull final PersonalDataDto personalData) {
-    personalDataDao.save(personalDataDtoConverter.apply(personalData));
-    return personalData;
+      final PersonalData savedPersonalData =
+              personalDataDao.save(personalDataDtoConverter.apply(personalData));
+      return personalDataConverter.apply(savedPersonalData);
   }
 
   @Override

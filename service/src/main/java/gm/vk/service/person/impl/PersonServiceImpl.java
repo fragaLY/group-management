@@ -54,8 +54,8 @@ public class PersonServiceImpl implements PersonService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public PersonDto save(@NotNull final PersonDto person) {
-    personDao.save(personDtoConverter.apply(person));
-    return person;
+      final Person savedPerson = personDao.save(personDtoConverter.apply(person));
+      return personConverter.apply(savedPerson);
   }
 
   @Override

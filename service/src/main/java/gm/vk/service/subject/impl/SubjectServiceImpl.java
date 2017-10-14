@@ -53,8 +53,8 @@ public class SubjectServiceImpl implements SubjectService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public SubjectDto save(@NotNull final SubjectDto subject) {
-    subjectDao.save(subjectDtoConverter.apply(subject));
-    return subject;
+      final Subject savedSubject = subjectDao.save(subjectDtoConverter.apply(subject));
+      return subjectConverter.apply(savedSubject);
   }
 
   @Override

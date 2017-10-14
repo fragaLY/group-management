@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/addresses")
 @Validated
 public class AddressController {
 

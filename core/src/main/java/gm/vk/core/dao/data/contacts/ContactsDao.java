@@ -16,4 +16,5 @@ public interface ContactsDao extends JpaRepository<Contacts, Integer> {
   void delete(final Contacts contacts);
 
   void delete(final Integer id);
+
 }

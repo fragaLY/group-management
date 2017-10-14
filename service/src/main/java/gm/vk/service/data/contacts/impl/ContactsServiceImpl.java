@@ -53,8 +53,8 @@ public class ContactsServiceImpl implements ContactsService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public ContactsDto save(@NotNull final ContactsDto contacts) {
-    contactsDao.save(contactsDtoConverter.apply(contacts));
-    return contacts;
+      final Contacts savedContacts = contactsDao.save(contactsDtoConverter.apply(contacts));
+      return contactsConverter.apply(savedContacts);
   }
 
   @Override

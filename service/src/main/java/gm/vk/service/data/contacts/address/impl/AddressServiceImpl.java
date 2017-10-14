@@ -53,8 +53,8 @@ public class AddressServiceImpl implements AddressService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public AddressDto save(@NotNull final AddressDto address) {
-    addressDao.save(addressDtoConverter.apply(address));
-    return address;
+      final Address savedAddress = addressDao.save(addressDtoConverter.apply(address));
+      return addressConverter.apply(savedAddress);
   }
 
   @Override
