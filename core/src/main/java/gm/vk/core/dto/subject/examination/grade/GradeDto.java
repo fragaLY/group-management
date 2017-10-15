@@ -23,6 +23,10 @@ public class GradeDto {
 
   public GradeDto() {}
 
+    public GradeDto(Integer id) {
+        this.id = id;
+    }
+
   public GradeDto(Integer id, Integer grade) {
     this.id = id;
     this.grade = grade;

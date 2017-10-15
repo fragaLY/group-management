@@ -17,7 +17,7 @@ public class Faculty {
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
 
-  @Column(name = "faculty")
+  @Column(name = "name")
   private String faculty;
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")

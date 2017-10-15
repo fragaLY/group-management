@@ -1,4 +1,4 @@
-package gm.vk.controllers.semester;
+package gm.vk.controllers.group;
 
 import gm.vk.core.dto.group.SemesterDto;
 import gm.vk.service.group.SemesterService;

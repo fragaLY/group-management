@@ -4,6 +4,8 @@ import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.domain.subject.Subject;
 import gm.vk.core.domain.subject.examination.Examination;
+import gm.vk.core.domain.subject.examination.grade.Grade;
+import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import gm.vk.core.dto.group.GroupDto;
 import gm.vk.core.dto.person.PersonDto;
 import gm.vk.core.dto.subject.SubjectDto;
@@ -36,10 +38,22 @@ public class SubjectConverter implements Function<Subject, SubjectDto> {
 
     @Override
     public ExaminationDto apply(Examination examination) {
+
+      final ExaminationType type = examination.getType();
+      final Grade grade = examination.getGrade();
+
+      Integer gradeId = null;
+      Integer gradeValue = null;
+
+      if (grade != null) {
+        gradeId = grade.getId();
+        gradeValue = grade.getGrade();
+      }
+
       return new ExaminationDto(
           examination.getId(),
-          new ExaminationTypeDto(examination.getType().getId(), examination.getType().getType()),
-          new GradeDto(examination.getGrade().getId(), examination.getGrade().getGrade()));
+              new ExaminationTypeDto(type.getId(), type.getType()),
+              new GradeDto(gradeId, gradeValue));
     }
   }
 

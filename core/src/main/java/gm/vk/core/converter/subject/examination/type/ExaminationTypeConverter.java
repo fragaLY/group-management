@@ -1,6 +1,7 @@
 package gm.vk.core.converter.subject.examination.type;
 
 import gm.vk.core.domain.subject.examination.Examination;
+import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import gm.vk.core.dto.subject.examination.grade.GradeDto;
@@ -31,10 +32,22 @@ public class ExaminationTypeConverter implements Function<ExaminationType, Exami
 
     @Override
     public ExaminationDto apply(Examination examination) {
+        final Grade grade = examination.getGrade();
+
+        Integer id = null;
+        Integer gradeValue = null;
+
+        if (grade != null) {
+            id = grade.getId();
+            gradeValue = grade.getGrade();
+        }
+
+        final ExaminationType type = examination.getType();
+
       return new ExaminationDto(
           examination.getId(),
-          new ExaminationTypeDto(examination.getType().getId(), examination.getType().getType()),
-          new GradeDto(examination.getGrade().getId(), examination.getGrade().getGrade()));
+              new ExaminationTypeDto(type.getId(), type.getType()),
+              new GradeDto(id, gradeValue));
     }
   }
 }
