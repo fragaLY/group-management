@@ -18,13 +18,17 @@ public class Subject {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Column(name = "name", unique = true, nullable = false)
   private String name;
+
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "examination_id", nullable = false)
   private Examination examination;
+
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
   private Set<Person> persons;
+
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
   private Set<Group> groups;
 
@@ -96,34 +100,16 @@ public class Subject {
 
     Subject subject = (Subject) o;
 
-    return new EqualsBuilder()
-        .append(id, subject.id)
-        .append(name, subject.name)
-        .append(examination, subject.examination)
-        .append(persons, subject.persons)
-        .append(groups, subject.groups)
-        .isEquals();
+    return new EqualsBuilder().append(id, subject.id).append(name, subject.name).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(name)
-        .append(examination)
-        .append(persons)
-        .append(groups)
-        .toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("name", name)
-        .append("examination", examination)
-        .append("persons", persons)
-        .append("groups", groups)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).append("name", name).toString();
   }
 }

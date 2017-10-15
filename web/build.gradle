@@ -42,7 +42,6 @@ dependencies {
     //runtime group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: mssqlVersion
     runtime group: 'com.h2database', name: 'h2', version: h2Version
 
-
     //Jackson
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion

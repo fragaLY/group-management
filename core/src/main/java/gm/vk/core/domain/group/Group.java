@@ -123,41 +123,17 @@ public class Group {
 
     Group group = (Group) o;
 
-    return new EqualsBuilder()
-        .append(id, group.id)
-        .append(name, group.name)
-        .append(course, group.course)
-        .append(semester, group.semester)
-        .append(faculty, group.faculty)
-        .append(persons, group.persons)
-        .append(subjects, group.subjects)
-        .isEquals();
+      return new EqualsBuilder().append(id, group.id).append(name, group.name).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(name)
-        .append(course)
-        .append(semester)
-        .append(faculty)
-        .append(persons)
-        .append(subjects)
-        .toHashCode();
+      return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("name", name)
-        .append("course", course)
-        .append("semester", semester)
-        .append("faculty", faculty)
-        .append("persons", persons)
-        .append("subjects", subjects)
-        .toString();
+      return new ToStringBuilder(this).append("id", id).append("name", name).toString();
   }
 
   public static class Builder {

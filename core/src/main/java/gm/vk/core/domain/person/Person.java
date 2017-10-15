@@ -5,6 +5,9 @@ import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.person.role.PersonRole;
 import gm.vk.core.domain.subject.Subject;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -105,6 +108,27 @@ public class Person {
 
   public void setGroup(Group group) {
     this.group = group;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+
+    if (!(o instanceof Person)) return false;
+
+    Person person = (Person) o;
+
+    return new EqualsBuilder().append(id, person.id).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).toHashCode();
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("role", role).toString();
   }
 
   public static class Builder {

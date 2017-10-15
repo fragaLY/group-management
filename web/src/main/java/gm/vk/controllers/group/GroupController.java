@@ -84,5 +84,4 @@ public class GroupController {
         groupService.delete(id);
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }
-
 }

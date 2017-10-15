@@ -33,8 +33,7 @@ public class PersonController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<PersonDto> getPerson(
-            @Range(min = 1) @PathVariable("id") final Integer id) {
+    public ResponseEntity<PersonDto> getPerson(@Range(min = 1) @PathVariable("id") final Integer id) {
         final PersonDto person = personService.findOne(id);
         return new ResponseEntity<>(person, new HttpHeaders(), HttpStatus.FOUND);
     }
@@ -74,8 +73,7 @@ public class PersonController {
     }
 
     @DeleteMapping
-    public ResponseEntity<PersonDto> deletePerson(
-            @Valid @RequestBody final PersonDto person) {
+    public ResponseEntity<PersonDto> deletePerson(@Valid @RequestBody final PersonDto person) {
         personService.delete(person);
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }
@@ -86,5 +84,4 @@ public class PersonController {
         personService.delete(id);
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }
-
 }

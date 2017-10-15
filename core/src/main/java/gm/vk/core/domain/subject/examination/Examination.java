@@ -16,9 +16,11 @@ public class Examination {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "examinationtype_id", referencedColumnName = "id")
   private ExaminationType type;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "grade_id", referencedColumnName = "id")
   private Grade grade;
@@ -63,24 +65,16 @@ public class Examination {
 
     Examination that = (Examination) o;
 
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(type, that.type)
-        .append(grade, that.grade)
-        .isEquals();
+    return new EqualsBuilder().append(id, that.id).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(type).append(grade).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("type", type)
-        .append("grade", grade)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).toString();
   }
 }

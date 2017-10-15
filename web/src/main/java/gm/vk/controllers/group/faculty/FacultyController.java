@@ -33,7 +33,8 @@ public class FacultyController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<FacultyDto> getFaculty(@Range(min = 1) @PathVariable("id") final Integer id) {
+    public ResponseEntity<FacultyDto> getFaculty(
+            @Range(min = 1) @PathVariable("id") final Integer id) {
         final FacultyDto faculty = facultyService.findOne(id);
         return new ResponseEntity<>(faculty, new HttpHeaders(), HttpStatus.FOUND);
     }
@@ -84,5 +85,4 @@ public class FacultyController {
         facultyService.delete(id);
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }
-
 }

@@ -33,7 +33,8 @@ public class SemesterController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<SemesterDto> getSemester(@Range(min = 1) @PathVariable("id") final Integer id) {
+    public ResponseEntity<SemesterDto> getSemester(
+            @Range(min = 1) @PathVariable("id") final Integer id) {
         final SemesterDto semester = semesterService.findOne(id);
         return new ResponseEntity<>(semester, new HttpHeaders(), HttpStatus.FOUND);
     }
@@ -73,7 +74,8 @@ public class SemesterController {
     }
 
     @DeleteMapping
-    public ResponseEntity<SemesterDto> deleteSemester(@Valid @RequestBody final SemesterDto semester) {
+    public ResponseEntity<SemesterDto> deleteSemester(
+            @Valid @RequestBody final SemesterDto semester) {
         semesterService.delete(semester);
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
     }

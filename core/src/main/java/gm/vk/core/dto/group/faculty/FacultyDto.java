@@ -13,8 +13,10 @@ public class FacultyDto {
 
   @JsonProperty("FacultyId")
   private Integer id;
+
   @NotNull(message = "Invalid faculty")
   private String faculty;
+
   private Set<GroupDto> groups;
 
   public FacultyDto() {}
@@ -65,13 +67,12 @@ public class FacultyDto {
     return new EqualsBuilder()
         .append(id, faculty1.id)
         .append(faculty, faculty1.faculty)
-        .append(groups, faculty1.groups)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(faculty).append(groups).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(faculty).toHashCode();
   }
 
   @Override
@@ -79,7 +80,6 @@ public class FacultyDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("faculty", faculty)
-        .append("groups", groups)
         .toString();
   }
 }

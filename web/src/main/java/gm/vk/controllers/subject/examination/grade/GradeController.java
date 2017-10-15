@@ -33,8 +33,7 @@ public class GradeController {
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public ResponseEntity<GradeDto> getGrade(
-      @Range(min = 1) @PathVariable("id") final Integer id) {
+  public ResponseEntity<GradeDto> getGrade(@Range(min = 1) @PathVariable("id") final Integer id) {
     final GradeDto grade = gradeService.findOne(id);
     return new ResponseEntity<>(grade, new HttpHeaders(), HttpStatus.FOUND);
   }
@@ -80,8 +79,7 @@ public class GradeController {
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<UserDto> deleteGrade(
-      @Range(min = 1) @PathVariable("id") final Integer id) {
+  public ResponseEntity<UserDto> deleteGrade(@Range(min = 1) @PathVariable("id") final Integer id) {
     gradeService.delete(id);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
   }

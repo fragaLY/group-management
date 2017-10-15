@@ -15,8 +15,10 @@ public class Semester {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Column(name = "semester")
   private Integer semester;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "semester")
   private Set<Group> groups;
 
@@ -68,21 +70,16 @@ public class Semester {
     return new EqualsBuilder()
         .append(id, semester1.id)
         .append(semester, semester1.semester)
-        .append(groups, semester1.groups)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(semester).append(groups).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(semester).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("semester", semester)
-        .append("groups", groups)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).append("semester", semester).toString();
   }
 }

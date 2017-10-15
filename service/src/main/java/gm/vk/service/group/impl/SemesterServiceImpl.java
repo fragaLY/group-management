@@ -71,5 +71,4 @@ public class SemesterServiceImpl implements SemesterService {
     public void delete(@NotNull final Integer id) {
         semesterDao.delete(id);
     }
-
 }

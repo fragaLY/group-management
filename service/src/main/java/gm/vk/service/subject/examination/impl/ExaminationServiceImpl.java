@@ -54,7 +54,8 @@ public class ExaminationServiceImpl implements ExaminationService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public ExaminationDto save(@NotNull final ExaminationDto examination) {
-      final Examination savedExamination = examinationDao.save(examinationDtoConverter.apply(examination));
+      final Examination savedExamination =
+              examinationDao.save(examinationDtoConverter.apply(examination));
       return examinationConverter.apply(savedExamination);
   }
 

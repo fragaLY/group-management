@@ -16,9 +16,11 @@ public class ExaminationType {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Enumerated(value = EnumType.STRING)
   @Column(name = "type", unique = true, nullable = false)
   private Type type;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
   private Set<Examination> examinations;
 
@@ -67,24 +69,16 @@ public class ExaminationType {
 
     ExaminationType that = (ExaminationType) o;
 
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(type, that.type)
-        .append(examinations, that.examinations)
-        .isEquals();
+    return new EqualsBuilder().append(id, that.id).append(type, that.type).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(type).append(examinations).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(type).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("type", type)
-        .append("examinations", examinations)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).append("type", type).toString();
   }
 }

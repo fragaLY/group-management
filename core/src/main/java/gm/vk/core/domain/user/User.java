@@ -15,11 +15,14 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "person_id", unique = true)
   private Person person;
+
   @Column(name = "login", unique = true, nullable = false)
   private String login;
+
   @Column(name = "password", nullable = false)
   private String password;
 
@@ -74,7 +77,6 @@ public class User {
 
     return new EqualsBuilder()
         .append(id, user.id)
-        .append(person, user.person)
         .append(login, user.login)
         .append(password, user.password)
         .isEquals();
@@ -82,19 +84,13 @@ public class User {
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(person)
-        .append(login)
-        .append(password)
-        .toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(login).append(password).toHashCode();
   }
 
   @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
-        .append("person", person)
         .append("login", login)
         .append("password", password)
         .toString();

@@ -17,10 +17,13 @@ public class PersonDto {
 
   @JsonProperty("PersonId")
   private Integer id;
+
   private ContactsDto contacts;
   private PersonalDataDto personalData;
+
   @NotNull(message = "Person's role missed")
   private PersonRoleDto role;
+
   private Set<SubjectDto> subjects;
   private GroupDto group;
 
@@ -32,7 +35,7 @@ public class PersonDto {
     this.personalData = builder.personalData;
     this.role = builder.role;
     this.subjects = builder.subjects;
-    this.group = group;
+    this.group = builder.group;
   }
 
   public Integer getId() {
@@ -93,11 +96,6 @@ public class PersonDto {
 
     return new EqualsBuilder()
         .append(id, personDto.id)
-        .append(contacts, personDto.contacts)
-        .append(personalData, personDto.personalData)
-        .append(role, personDto.role)
-        .append(subjects, personDto.subjects)
-        .append(group, personDto.group)
         .isEquals();
   }
 
@@ -105,11 +103,6 @@ public class PersonDto {
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
         .append(id)
-        .append(contacts)
-        .append(personalData)
-        .append(role)
-        .append(subjects)
-        .append(group)
         .toHashCode();
   }
 
@@ -117,11 +110,6 @@ public class PersonDto {
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
-        .append("contacts", contacts)
-        .append("personalData", personalData)
-        .append("role", role)
-        .append("subjects", subjects)
-        .append("group", group)
         .toString();
   }
 

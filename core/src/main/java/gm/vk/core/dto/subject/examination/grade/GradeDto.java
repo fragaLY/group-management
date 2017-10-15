@@ -14,9 +14,11 @@ public class GradeDto {
 
   @JsonProperty("GradeId")
   private Integer id;
+
   @Min(value = 0, message = "The grade should be greater or equals to 0 and less or equals to 10")
   @Max(value = 10, message = "The grade should be greater or equals to 0 and less or equals to 10")
   private Integer grade;
+
   private Set<ExaminationDto> examinations;
 
   public GradeDto() {}
@@ -67,13 +69,12 @@ public class GradeDto {
     return new EqualsBuilder()
         .append(id, gradeDto.id)
         .append(grade, gradeDto.grade)
-        .append(examinations, gradeDto.examinations)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(grade).append(examinations).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(grade).toHashCode();
   }
 
   @Override
@@ -81,7 +82,6 @@ public class GradeDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("grade", grade)
-        .append("examinations", examinations)
         .toString();
   }
 }

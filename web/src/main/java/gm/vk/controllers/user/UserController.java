@@ -82,5 +82,4 @@ public class UserController {
     userService.delete(id);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
   }
-
 }

@@ -39,7 +39,8 @@ public class PersonalDataController {
   }
 
   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> createPersonalData(@Valid @RequestBody final PersonalDataDto personalData) {
+  public ResponseEntity<?> createPersonalData(
+          @Valid @RequestBody final PersonalDataDto personalData) {
 
     final PersonalDataDto createdPersonalData = personalDataService.save(personalData);
 
@@ -56,7 +57,8 @@ public class PersonalDataController {
   }
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> editPersonalData(@Valid @RequestBody final PersonalDataDto personalData) {
+  public ResponseEntity<?> editPersonalData(
+          @Valid @RequestBody final PersonalDataDto personalData) {
 
     final PersonalDataDto savedPersonalData = personalDataService.save(personalData);
 

@@ -11,8 +11,10 @@ public class PersonalDataDto {
 
   @JsonProperty("PersonalDataId")
   private Integer id;
+
   @Size(max = 100, message = "The firstname could not be greater than 100 literals")
   private String firstName;
+
   @Size(max = 100, message = "The secondname could not be greater than 100 literals")
   private String secondName;
 

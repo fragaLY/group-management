@@ -14,6 +14,7 @@ public class ExaminationTypeDto {
 
   @JsonProperty("ExaminationTypeId")
   private Integer id;
+
   @NotNull private Type type;
   private Set<ExaminationDto> examinations;
 
@@ -66,13 +67,12 @@ public class ExaminationTypeDto {
     return new EqualsBuilder()
         .append(id, that.id)
         .append(type, that.type)
-        .append(examinations, that.examinations)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(type).append(examinations).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(type).toHashCode();
   }
 
   @Override
@@ -80,7 +80,6 @@ public class ExaminationTypeDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("type", type)
-        .append("examinations", examinations)
         .toString();
   }
 }

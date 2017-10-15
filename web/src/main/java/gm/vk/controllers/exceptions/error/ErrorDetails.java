@@ -10,6 +10,12 @@ import java.util.Set;
 
 public class ErrorDetails {
 
+    @JsonProperty("status")
+    private HttpStatus status;
+    @JsonProperty("message")
+    private String message;
+    private Set<String> errors;
+
     public ErrorDetails() {
     }
 
@@ -18,13 +24,6 @@ public class ErrorDetails {
         this.message = builder.outputMessage;
         this.errors = builder.errors;
     }
-
-    @JsonProperty("status")
-    private HttpStatus status;
-
-    @JsonProperty("message")
-    private String message;
-    private Set<String> errors;
 
     public HttpStatus getStatus() {
         return status;
@@ -67,11 +66,7 @@ public class ErrorDetails {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(status)
-                .append(message)
-                .append(errors)
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(status).append(message).append(errors).toHashCode();
     }
 
     @Override
@@ -104,9 +99,8 @@ public class ErrorDetails {
             return this;
         }
 
-        public ErrorDetails build(){
+        public ErrorDetails build() {
             return new ErrorDetails(this);
         }
     }
-
 }

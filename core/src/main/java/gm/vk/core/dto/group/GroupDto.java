@@ -16,14 +16,19 @@ public class GroupDto {
 
   @JsonProperty("GroupId")
   private Integer id;
+
   @NotNull(message = "Invalid name of group")
   private String name;
+
   @NotNull(message = "Invalid course of group")
   private CourseDto course;
+
   @NotNull(message = "Invalid semester of group")
   private SemesterDto semester;
+
   @NotNull(message = "Invalid faculty of group")
   private FacultyDto faculty;
+
   private Set<PersonDto> persons;
   private Set<SubjectDto> subjects;
 
@@ -106,11 +111,6 @@ public class GroupDto {
     return new EqualsBuilder()
         .append(id, group.id)
         .append(name, group.name)
-        .append(course, group.course)
-        .append(semester, group.semester)
-        .append(faculty, group.faculty)
-        .append(persons, group.persons)
-        .append(subjects, group.subjects)
         .isEquals();
   }
 
@@ -119,11 +119,6 @@ public class GroupDto {
     return new HashCodeBuilder(17, 37)
         .append(id)
         .append(name)
-        .append(course)
-        .append(semester)
-        .append(faculty)
-        .append(persons)
-        .append(subjects)
         .toHashCode();
   }
 
@@ -132,11 +127,6 @@ public class GroupDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("name", name)
-        .append("course", course)
-        .append("semester", semester)
-        .append("faculty", faculty)
-        .append("persons", persons)
-        .append("subjects", subjects)
         .toString();
   }
 
