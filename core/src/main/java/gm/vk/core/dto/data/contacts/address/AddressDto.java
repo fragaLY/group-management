@@ -114,7 +114,6 @@ public class AddressDto {
         .append(street, that.street)
         .append(home, that.home)
         .append(apartmentNumber, that.apartmentNumber)
-        .append(contacts, that.contacts)
         .isEquals();
   }
 
@@ -127,7 +126,6 @@ public class AddressDto {
         .append(street)
         .append(home)
         .append(apartmentNumber)
-        .append(contacts)
         .toHashCode();
   }
 
@@ -140,7 +138,6 @@ public class AddressDto {
         .append("street", street)
         .append("home", home)
         .append("apartmentNumber", apartmentNumber)
-        .append("contacts", contacts)
         .toString();
   }
 

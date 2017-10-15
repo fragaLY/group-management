@@ -101,8 +101,6 @@ public class Contacts {
         .append(phone, contacts.phone)
         .append(skype, contacts.skype)
         .append(email, contacts.email)
-        .append(address, contacts.address)
-        .append(persons, contacts.persons)
         .isEquals();
   }
 
@@ -113,8 +111,6 @@ public class Contacts {
         .append(phone)
         .append(skype)
         .append(email)
-        .append(address)
-        .append(persons)
         .toHashCode();
   }
 
@@ -126,7 +122,6 @@ public class Contacts {
         .append("skype", skype)
         .append("email", email)
         .append("address", address)
-        .append("persons", persons)
         .toString();
   }
 

@@ -112,7 +112,6 @@ public class Address {
         .append(street, address.street)
         .append(home, address.home)
         .append(apartmentNumber, address.apartmentNumber)
-        .append(contacts, address.contacts)
         .isEquals();
   }
 
@@ -125,7 +124,6 @@ public class Address {
         .append(street)
         .append(home)
         .append(apartmentNumber)
-        .append(contacts)
         .toHashCode();
   }
 
@@ -138,7 +136,6 @@ public class Address {
         .append("street", street)
         .append("home", home)
         .append("apartmentNumber", apartmentNumber)
-        .append("contacts", contacts)
         .toString();
   }
 

@@ -103,8 +103,6 @@ public class ContactsDto {
         .append(phone, that.phone)
         .append(skype, that.skype)
         .append(email, that.email)
-        .append(address, that.address)
-        .append(persons, that.persons)
         .isEquals();
   }
 
@@ -115,8 +113,6 @@ public class ContactsDto {
         .append(phone)
         .append(skype)
         .append(email)
-        .append(address)
-        .append(persons)
         .toHashCode();
   }
 
@@ -127,8 +123,6 @@ public class ContactsDto {
         .append("phone", phone)
         .append("skype", skype)
         .append("email", email)
-        .append("address", address)
-        .append("persons", persons)
         .toString();
   }
 

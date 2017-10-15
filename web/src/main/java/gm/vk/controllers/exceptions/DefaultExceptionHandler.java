@@ -3,6 +3,20 @@ package gm.vk.controllers.exceptions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import gm.vk.controllers.exceptions.error.ErrorDetails;
+import gm.vk.exceptions.data.contacts.ContactsNotFoundException;
+import gm.vk.exceptions.data.contacts.address.AddressNotFoundException;
+import gm.vk.exceptions.data.personal.PersonalDataNotFoundException;
+import gm.vk.exceptions.group.GroupNotFoundException;
+import gm.vk.exceptions.group.SemesterNotFoundException;
+import gm.vk.exceptions.group.course.CourseNotFoundException;
+import gm.vk.exceptions.group.faculty.FacultyNotFoundException;
+import gm.vk.exceptions.person.PersonNotFoundException;
+import gm.vk.exceptions.person.role.PersonRoleNotFoundException;
+import gm.vk.exceptions.subject.SubjectNotFoundException;
+import gm.vk.exceptions.subject.examination.ExaminationNotFoundException;
+import gm.vk.exceptions.subject.examination.grade.GradeNotFoundException;
+import gm.vk.exceptions.subject.examination.type.ExaminationTypeNotFoundException;
+import gm.vk.exceptions.user.UserNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -269,7 +283,6 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
 
-
   /**
    * Handle the 500 exception. NullPointerException.
    *
@@ -394,5 +407,277 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
       final HttpStatus status,
       final WebRequest request) {
     return super.handleExceptionInternal(ex, body, headers, status, request);
+  }
+
+  /**
+   * Handle the 404 exception. Address Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({AddressNotFoundException.class})
+  public ResponseEntity<Object> handleAddressNotFoundException(final AddressNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Address Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Contacts Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({ContactsNotFoundException.class})
+  public ResponseEntity<Object> handleContactsNotFoundException(
+          final ContactsNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Contacts Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Personal Data Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({PersonalDataNotFoundException.class})
+  public ResponseEntity<Object> handlePersonalDataNotFoundException(
+          final PersonalDataNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Personal Data Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Course Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({CourseNotFoundException.class})
+  public ResponseEntity<Object> handleCourseNotFoundException(final CourseNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Course Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Faculty Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({FacultyNotFoundException.class})
+  public ResponseEntity<Object> handleFacultyNotFoundException(final FacultyNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Faculty Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Group Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({GroupNotFoundException.class})
+  public ResponseEntity<Object> handleGroupNotFoundException(final GroupNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Group Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Semester Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({SemesterNotFoundException.class})
+  public ResponseEntity<Object> handleSemesterNotFoundException(
+          final SemesterNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Semester Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. PersonRole Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({PersonRoleNotFoundException.class})
+  public ResponseEntity<Object> handlePersonRoleNotFoundException(
+          final PersonRoleNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Person Role Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Person Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({PersonNotFoundException.class})
+  public ResponseEntity<Object> handlePersonNotFoundException(final PersonNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Person Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. User Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({UserNotFoundException.class})
+  public ResponseEntity<Object> handleUserNotFoundException(final UserNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("User Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Subject Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({SubjectNotFoundException.class})
+  public ResponseEntity<Object> handleSubjectNotFoundException(final SubjectNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Subject Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Examination Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({ExaminationNotFoundException.class})
+  public ResponseEntity<Object> handleExaminationNotFoundException(
+          final ExaminationNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Examination Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. Grade Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({GradeNotFoundException.class})
+  public ResponseEntity<Object> handleGradeNotFoundException(final GradeNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Grade Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 404 exception. ExaminationType Not Found.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
+  @ExceptionHandler({ExaminationTypeNotFoundException.class})
+  public ResponseEntity<Object> handleExaminationTypeNotFoundException(
+          final ExaminationTypeNotFoundException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Examination Type Not Found"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
 }
