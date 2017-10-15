@@ -27,6 +27,7 @@ public class AddressConverter implements Function<Address, AddressDto> {
         .setCity(address.getCity())
         .setStreet(address.getStreet())
         .setHome(address.getHome())
+            .setApartmentNumber(address.getApartmentNumber())
         .setContacts(
             address.getContacts().stream().map(customContactConverter).collect(Collectors.toSet()))
         .build();
