@@ -7,6 +7,8 @@ import gm.vk.core.dto.data.contacts.address.AddressDto;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,18 @@ public class AddressDtoConverter implements Function<AddressDto, Address> {
   @Override
   public Address apply(@NotNull final AddressDto addressDto) {
     final CustomContactDtoConverter customContactDtoConverter = new CustomContactDtoConverter();
+    final Set<ContactsDto> contactsDtos = addressDto.getContacts();
+    Set<Contacts> contacts = null;
+
+    if (contactsDtos != null) {
+      contacts =
+              contactsDtos
+                      .stream()
+                      .filter(Objects::nonNull)
+                      .map(customContactDtoConverter)
+                      .collect(Collectors.toSet());
+    }
+
     return new Address.Builder()
         .setId(addressDto.getId())
         .setCountry(addressDto.getCountry())
@@ -23,12 +37,7 @@ public class AddressDtoConverter implements Function<AddressDto, Address> {
         .setStreet(addressDto.getStreet())
         .setHome(addressDto.getHome())
         .setApartmentNumber(addressDto.getApartmentNumber())
-        .setContacts(
-            addressDto
-                .getContacts()
-                .stream()
-                .map(customContactDtoConverter)
-                .collect(Collectors.toSet()))
+            .setContacts(contacts)
         .build();
   }
 

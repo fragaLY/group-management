@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,12 @@ public class AddressConverter implements Function<Address, AddressDto> {
   @Override
   public AddressDto apply(@NotNull final Address address) {
     final CustomContactConverter customContactConverter = new CustomContactConverter();
+    final Set<Contacts> contacts = address.getContacts();
+    Set<ContactsDto> contactsDtos = null;
+
+    if (contacts != null) {
+      contactsDtos = contacts.stream().map(customContactConverter).collect(Collectors.toSet());
+    }
 
     return new AddressDto.Builder()
         .setId(address.getId())
@@ -28,8 +35,7 @@ public class AddressConverter implements Function<Address, AddressDto> {
         .setStreet(address.getStreet())
         .setHome(address.getHome())
             .setApartmentNumber(address.getApartmentNumber())
-        .setContacts(
-            address.getContacts().stream().map(customContactConverter).collect(Collectors.toSet()))
+            .setContacts(contactsDtos)
         .build();
   }
 

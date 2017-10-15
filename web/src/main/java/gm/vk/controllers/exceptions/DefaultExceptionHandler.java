@@ -667,6 +667,26 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
+  @ExceptionHandler({org.hibernate.exception.ConstraintViolationException.class})
+  public ResponseEntity<Object> handleConstraintViolationException(
+          final org.hibernate.exception.ConstraintViolationException ex) {
+
+    final ErrorDetails error =
+            new ErrorDetails.Builder()
+                    .setStatus(HttpStatus.NOT_FOUND)
+                    .setOutputMessage(ex.getLocalizedMessage())
+                    .setErrors(Sets.newHashSet("Constraint Violation Exception"))
+                    .build();
+
+    return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
+  }
+
+  /**
+   * Handle the 400 exception. Constraint violation.
+   *
+   * @param ex - exception
+   * @return {@link ResponseEntity} object
+   */
   @ExceptionHandler({ExaminationTypeNotFoundException.class})
   public ResponseEntity<Object> handleExaminationTypeNotFoundException(
           final ExaminationTypeNotFoundException ex) {
