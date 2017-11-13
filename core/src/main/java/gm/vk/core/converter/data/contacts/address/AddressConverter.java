@@ -1,25 +1,28 @@
 package gm.vk.core.converter.data.contacts.address;
 
-import gm.vk.core.converter.person.PersonConverter;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.contacts.address.Address;
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import gm.vk.core.dto.data.contacts.address.AddressDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component("addressConverter")
 public class AddressConverter implements Function<Address, AddressDto> {
 
-  @Autowired private PersonConverter personConverter;
+  private static final Logger LOG = LoggerFactory.getLogger(AddressConverter.class);
 
   @Override
   public AddressDto apply(@NotNull final Address address) {
+
+    LOG.info("Converts Address [{}] to AddressDto.", address);
+
     final CustomContactConverter customContactConverter = new CustomContactConverter();
     final Set<Contacts> contacts = address.getContacts();
     Set<ContactsDto> contactsDtos = null;

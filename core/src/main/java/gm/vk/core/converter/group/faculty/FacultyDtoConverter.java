@@ -1,19 +1,26 @@
 package gm.vk.core.converter.group.faculty;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.group.faculty.Faculty;
 import gm.vk.core.dto.group.GroupDto;
 import gm.vk.core.dto.group.faculty.FacultyDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component("facultyDtoConverter")
 public class FacultyDtoConverter implements Function<FacultyDto, Faculty> {
 
-  @Override
-  public Faculty apply(FacultyDto facultyDto) {
+  private static final Logger LOG = LoggerFactory.getLogger(FacultyDtoConverter.class);
+
+  @Override public Faculty apply(@NotNull final FacultyDto facultyDto) {
+
+    LOG.info("Converts FacultyDto [{}] to Faculty", facultyDto);
+
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
     return new Faculty(

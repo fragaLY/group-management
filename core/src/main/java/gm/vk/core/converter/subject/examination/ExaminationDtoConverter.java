@@ -1,19 +1,26 @@
 package gm.vk.core.converter.subject.examination;
 
+import java.util.function.Function;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.subject.examination.Examination;
 import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotNull;
-import java.util.function.Function;
 
 @Component("examinationDtoConverter")
 public class ExaminationDtoConverter implements Function<ExaminationDto, Examination> {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ExaminationDtoConverter.class);
+
   @Override
   public Examination apply(@NotNull final ExaminationDto examinationDto) {
+
+    LOG.info("Converts ExaminationDto [{}] to Examination", examinationDto);
+
     return new Examination(
         examinationDto.getId(),
         new ExaminationType(examinationDto.getType().getId(), examinationDto.getType().getType()),

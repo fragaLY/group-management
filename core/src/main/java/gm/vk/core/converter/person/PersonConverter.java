@@ -1,5 +1,9 @@
 package gm.vk.core.converter.person;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.personal.PersonalData;
 import gm.vk.core.domain.group.Group;
@@ -12,17 +16,20 @@ import gm.vk.core.dto.group.GroupDto;
 import gm.vk.core.dto.person.PersonDto;
 import gm.vk.core.dto.person.role.PersonRoleDto;
 import gm.vk.core.dto.subject.SubjectDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotNull;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component("personConverter")
 public class PersonConverter implements Function<Person, PersonDto> {
 
+  private static final Logger LOG = LoggerFactory.getLogger(PersonConverter.class);
+
   @Override
   public PersonDto apply(@NotNull final Person person) {
+
+    LOG.info("Converts Person [{}] to PersonDto", person);
+
     final CustomSubjectConverter customSubjectConverter = new CustomSubjectConverter();
 
     return new PersonDto.Builder()

@@ -1,22 +1,29 @@
 package gm.vk.core.converter.data.contacts;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.data.contacts.Contacts;
 import gm.vk.core.domain.data.contacts.address.Address;
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import gm.vk.core.dto.data.contacts.address.AddressDto;
 import gm.vk.core.dto.person.PersonDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotNull;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component("contactsDtoConverter")
 public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ContactsDtoConverter.class);
+
   @Override
   public Contacts apply(@NotNull final ContactsDto contactsDto) {
+
+    LOG.info("Converts ContactsDto [{}] to Contacts", contactsDto);
+
     final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
 
     return new Contacts.Builder()

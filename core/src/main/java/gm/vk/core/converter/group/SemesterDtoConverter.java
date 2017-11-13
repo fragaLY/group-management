@@ -1,19 +1,26 @@
 package gm.vk.core.converter.group;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
+
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.group.Semester;
 import gm.vk.core.dto.group.GroupDto;
 import gm.vk.core.dto.group.SemesterDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component("semesterDtoConverter")
 public class SemesterDtoConverter implements Function<SemesterDto, Semester> {
 
-  @Override
-  public Semester apply(SemesterDto semesterDto) {
+  private static final Logger LOG = LoggerFactory.getLogger(SemesterDtoConverter.class);
+
+  @Override public Semester apply(@NotNull final SemesterDto semesterDto) {
+
+    LOG.info("Converts SemesterDto [{}] to Semester", semesterDto);
+
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
     return new Semester(
