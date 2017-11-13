@@ -18,7 +18,8 @@ repositories {
 
 ext {
     springVersion = '4.+'
-    mssqlVersion = '6.2.1.jre8'
+//    mssqlVersion = '6.2.1.jre8'
+    h2Version = '1.+'
     jacksonVersion = '2.8.+'
     springFoxVersion = '2.6.+'
 }
@@ -38,7 +39,8 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-bean-validators', version: springFoxVersion
 
     //H2 database
-    runtime group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: mssqlVersion
+    //runtime group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: mssqlVersion
+    runtime group: 'com.h2database', name: 'h2', version: h2Version
 
     //Jackson
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion

@@ -15,10 +15,13 @@ public class SubjectDto {
 
   @JsonProperty("SubjectId")
   private Integer id;
+
   @NotNull(message = "The name of examination could not be empty")
   private String name;
+
   @NotNull(message = "The examination could not be empty")
   private ExaminationDto examination;
+
   private Set<PersonDto> persons;
   private Set<GroupDto> groups;
 
@@ -93,9 +96,6 @@ public class SubjectDto {
     return new EqualsBuilder()
         .append(id, that.id)
         .append(name, that.name)
-        .append(examination, that.examination)
-        .append(persons, that.persons)
-        .append(groups, that.groups)
         .isEquals();
   }
 
@@ -104,10 +104,7 @@ public class SubjectDto {
     return new HashCodeBuilder(17, 37)
         .append(id)
         .append(name)
-        .append(examination)
-        .append(persons)
-        .append(groups)
-        .toHashCode();
+            .toHashCode();
   }
 
   @Override
@@ -115,9 +112,6 @@ public class SubjectDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("name", name)
-        .append("examination", examination)
-        .append("persons", persons)
-        .append("groups", groups)
         .toString();
   }
 }

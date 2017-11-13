@@ -14,21 +14,27 @@ public class AddressDto {
 
   @JsonProperty("AddressId")
   private Integer id;
+
   @Size(max = 50, message = "The name of country could not be greater than 50 literals")
   @NotNull(message = "Please chose country")
   private String country;
+
   @Size(max = 50, message = "The name of city could not be greater than 50 literals")
   @NotNull(message = "Please add city")
   private String city;
+
   @Size(max = 50, message = "The name of street could not be greater than 50 literals")
   @NotNull(message = "Please add street")
   private String street;
+
   @Size(max = 10, message = "The home could not be greater than 10 literals")
   @NotNull(message = "Please add home number")
   private String home;
+
   @Size(max = 10, message = "The apartments could not be greater than 50 literals")
   @NotNull(message = "Please add apartment number")
   private String apartmentNumber;
+
   private Set<ContactsDto> contacts;
 
   public AddressDto() {}
@@ -114,7 +120,6 @@ public class AddressDto {
         .append(street, that.street)
         .append(home, that.home)
         .append(apartmentNumber, that.apartmentNumber)
-        .append(contacts, that.contacts)
         .isEquals();
   }
 
@@ -127,7 +132,6 @@ public class AddressDto {
         .append(street)
         .append(home)
         .append(apartmentNumber)
-        .append(contacts)
         .toHashCode();
   }
 
@@ -140,7 +144,6 @@ public class AddressDto {
         .append("street", street)
         .append("home", home)
         .append("apartmentNumber", apartmentNumber)
-        .append("contacts", contacts)
         .toString();
   }
 

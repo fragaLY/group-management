@@ -18,7 +18,7 @@ Subject: RDBMS
 * Web: HTML, CSS, JS , JQuery, ReactJS;
 * Building tool: Gradle;
 * Test: JUnit 4, Mockito;
-* Database: MS SQL;
+* Database: MS SQL, H2;
 * Logging: log4j (logback, slf4j);
 * 3rd party libraries: Apache: Guava, Commons;
 * [Travis-CI](https://travis-ci.org/)

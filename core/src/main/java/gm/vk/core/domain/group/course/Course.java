@@ -9,15 +9,17 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "course")
+@Table(name = "course", schema = "groupmanagement")
 public class Course {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Column(name = "course")
   private Integer course;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
   private Set<Group> groups;
 
@@ -66,11 +68,7 @@ public class Course {
 
     Course course1 = (Course) o;
 
-    return new EqualsBuilder()
-        .append(id, course1.id)
-        .append(course, course1.course)
-        .append(groups, course1.groups)
-        .isEquals();
+    return new EqualsBuilder().append(id, course1.id).append(course, course1.course).isEquals();
   }
 
   @Override
@@ -80,10 +78,6 @@ public class Course {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("course", course)
-        .append("groups", groups)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).append("course", course).toString();
   }
 }

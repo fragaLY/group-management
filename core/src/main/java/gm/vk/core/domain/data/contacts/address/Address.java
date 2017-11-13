@@ -9,24 +9,30 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address", schema = "groupmanagement")
 public class Address {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
-  @Column(name = "country", nullable = false)
+
+    @Column(name = "country", nullable = false)
   private String country;
-  @Column(name = "city", nullable = false)
+
+    @Column(name = "city", nullable = false)
   private String city;
-  @Column(name = "street", nullable = false)
+
+    @Column(name = "street", nullable = false)
   private String street;
-  @Column(name = "home", nullable = false)
+
+    @Column(name = "home", nullable = false)
   private String home;
-  @Column(name = "apartmentNumber", nullable = false)
+
+    @Column(name = "apartmentNumber", nullable = false)
   private String apartmentNumber;
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
   private Set<Contacts> contacts;
 
   public Address() {}
@@ -112,7 +118,6 @@ public class Address {
         .append(street, address.street)
         .append(home, address.home)
         .append(apartmentNumber, address.apartmentNumber)
-        .append(contacts, address.contacts)
         .isEquals();
   }
 
@@ -125,7 +130,6 @@ public class Address {
         .append(street)
         .append(home)
         .append(apartmentNumber)
-        .append(contacts)
         .toHashCode();
   }
 
@@ -138,7 +142,6 @@ public class Address {
         .append("street", street)
         .append("home", home)
         .append("apartmentNumber", apartmentNumber)
-        .append("contacts", contacts)
         .toString();
   }
 

@@ -54,8 +54,8 @@ public class GradeServiceImpl implements GradeService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public GradeDto save(@NotNull final GradeDto grade) {
-    gradeDao.save(gradeDtoConverter.apply(grade));
-    return grade;
+      final Grade savedGrade = gradeDao.save(gradeDtoConverter.apply(grade));
+      return gradeConverter.apply(savedGrade);
   }
 
   @Override

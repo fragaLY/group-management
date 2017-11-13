@@ -14,8 +14,10 @@ public class PersonRoleDto {
 
   @JsonProperty("PersonRoleId")
   private Integer id;
+
   @NotNull(message = "Invalid role")
   private Role role;
+
   private Set<PersonDto> persons;
 
   public PersonRoleDto() {}
@@ -66,13 +68,12 @@ public class PersonRoleDto {
     return new EqualsBuilder()
         .append(id, that.id)
         .append(role, that.role)
-        .append(persons, that.persons)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(role).append(persons).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(role).toHashCode();
   }
 
   @Override
@@ -80,7 +81,6 @@ public class PersonRoleDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("role", role)
-        .append("persons", persons)
         .toString();
   }
 }

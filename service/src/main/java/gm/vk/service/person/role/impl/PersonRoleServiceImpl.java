@@ -53,8 +53,8 @@ public class PersonRoleServiceImpl implements PersonRoleService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public PersonRoleDto save(@NotNull final PersonRoleDto role) {
-    personRoleDao.save(personRoleDtoConverter.apply(role));
-    return role;
+      final PersonRole savedPersonRole = personRoleDao.save(personRoleDtoConverter.apply(role));
+      return personRoleConverter.apply(savedPersonRole);
   }
 
   @Override

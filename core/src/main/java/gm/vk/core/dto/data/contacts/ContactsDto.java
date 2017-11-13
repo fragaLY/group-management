@@ -16,18 +16,24 @@ public class ContactsDto {
   private static final String PHONE_REGEXP = "[+]\\d{3}[(]\\d{2}[)]\\d{3}[\\-]\\d{4}";
   private static final String EMAIL_REGEXP = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
   private static final String SKYPE_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
+
   @JsonProperty("ContactsId")
   private Integer id;
+
   @Pattern(
     regexp = PHONE_REGEXP,
     message = "Enter the phone in international format (e.g. +111(22)333-4444)"
   )
   private String phone;
+
   @Pattern(regexp = SKYPE_REGEXP, message = "Invalid skype account")
   private String skype;
+
   @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email")
   private String email;
+
   private AddressDto address;
+
   @NotNull(message = "Contacts has no any person")
   private Set<PersonDto> persons;
 
@@ -103,8 +109,6 @@ public class ContactsDto {
         .append(phone, that.phone)
         .append(skype, that.skype)
         .append(email, that.email)
-        .append(address, that.address)
-        .append(persons, that.persons)
         .isEquals();
   }
 
@@ -115,8 +119,6 @@ public class ContactsDto {
         .append(phone)
         .append(skype)
         .append(email)
-        .append(address)
-        .append(persons)
         .toHashCode();
   }
 
@@ -127,8 +129,6 @@ public class ContactsDto {
         .append("phone", phone)
         .append("skype", skype)
         .append("email", email)
-        .append("address", address)
-        .append("persons", persons)
         .toString();
   }
 

@@ -10,23 +10,28 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "contacts")
+@Table(name = "contacts", schema = "groupmanagement")
 public class Contacts {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
-  @Column(name = "phone", unique = true, nullable = false)
+
+    @Column(name = "phone", unique = true, nullable = false)
   private String phone;
-  @Column(name = "skype", unique = true)
+
+    @Column(name = "skype", unique = true)
   private String skype;
-  @Column(name = "email", unique = true, nullable = false)
+
+    @Column(name = "email", unique = true, nullable = false)
   private String email;
-  @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
   @JoinColumn(name = "address_id")
   private Address address;
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts")
   private Set<Person> persons;
 
   public Contacts() {}
@@ -101,8 +106,6 @@ public class Contacts {
         .append(phone, contacts.phone)
         .append(skype, contacts.skype)
         .append(email, contacts.email)
-        .append(address, contacts.address)
-        .append(persons, contacts.persons)
         .isEquals();
   }
 
@@ -113,8 +116,6 @@ public class Contacts {
         .append(phone)
         .append(skype)
         .append(email)
-        .append(address)
-        .append(persons)
         .toHashCode();
   }
 
@@ -126,7 +127,6 @@ public class Contacts {
         .append("skype", skype)
         .append("email", email)
         .append("address", address)
-        .append("persons", persons)
         .toString();
   }
 

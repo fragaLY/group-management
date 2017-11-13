@@ -9,16 +9,18 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "personRole")
+@Table(name = "personRole", schema = "groupmanagement")
 public class PersonRole {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Enumerated(value = EnumType.STRING)
   @Column(name = "role", unique = true, nullable = false)
   private Role role;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
   private Set<Person> persons;
 
@@ -67,24 +69,16 @@ public class PersonRole {
 
     PersonRole that = (PersonRole) o;
 
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(role, that.role)
-        .append(persons, that.persons)
-        .isEquals();
+    return new EqualsBuilder().append(id, that.id).append(role, that.role).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(role).append(persons).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(role).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("role", role)
-        .append("persons", persons)
-        .toString();
+    return new ToStringBuilder(this).append("id", id).append("role", role).toString();
   }
 }

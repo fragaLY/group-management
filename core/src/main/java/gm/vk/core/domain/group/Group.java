@@ -12,29 +12,36 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "group")
+@Table(name = "studentgroup", schema = "groupmanagement")
 public class Group {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
+
   @Column(name = "name")
   private String name;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "course_id", referencedColumnName = "id")
   private Course course;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "semester_id", referencedColumnName = "id")
   private Semester semester;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "faculty_id", referencedColumnName = "id")
   private Faculty faculty;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
   private Set<Person> persons;
+
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(
-    name = "subject_group",
+    schema = "groupmanagement",
+    name = "subjectid_groupid",
     joinColumns = {@JoinColumn(name = "group_id", nullable = false, updatable = false)},
     inverseJoinColumns = {@JoinColumn(name = "subject_id", nullable = false, updatable = false)}
   )
@@ -116,41 +123,17 @@ public class Group {
 
     Group group = (Group) o;
 
-    return new EqualsBuilder()
-        .append(id, group.id)
-        .append(name, group.name)
-        .append(course, group.course)
-        .append(semester, group.semester)
-        .append(faculty, group.faculty)
-        .append(persons, group.persons)
-        .append(subjects, group.subjects)
-        .isEquals();
+      return new EqualsBuilder().append(id, group.id).append(name, group.name).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(name)
-        .append(course)
-        .append(semester)
-        .append(faculty)
-        .append(persons)
-        .append(subjects)
-        .toHashCode();
+      return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("name", name)
-        .append("course", course)
-        .append("semester", semester)
-        .append("faculty", faculty)
-        .append("persons", persons)
-        .append("subjects", subjects)
-        .toString();
+      return new ToStringBuilder(this).append("id", id).append("name", name).toString();
   }
 
   public static class Builder {

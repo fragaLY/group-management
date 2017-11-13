@@ -15,10 +15,12 @@ public class CourseDto {
 
   @JsonProperty("CourseId")
   private Integer id;
+
   @NotNull
   @Min(value = 1, message = "Course should be in 1 to 6 range")
   @Max(value = 6, message = "Course should be in 1 to 6 range")
   private Integer course;
+
   private Set<GroupDto> groups;
 
   public CourseDto() {}
@@ -64,18 +66,17 @@ public class CourseDto {
 
     if (!(o instanceof CourseDto)) return false;
 
-    CourseDto course1 = (CourseDto) o;
+    CourseDto c = (CourseDto) o;
 
     return new EqualsBuilder()
-        .append(id, course1.id)
-        .append(course, course1.course)
-        .append(groups, course1.groups)
+            .append(id, c.id)
+            .append(course, c.course)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(course).append(groups).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(course).toHashCode();
   }
 
   @Override
@@ -83,7 +84,6 @@ public class CourseDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("course", course)
-        .append("groups", groups)
         .toString();
   }
 }

@@ -55,8 +55,9 @@ public class ExaminationTypeServiceImpl implements ExaminationTypeService {
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
   public ExaminationTypeDto save(@NotNull final ExaminationTypeDto examination) {
-    examinationTypeDao.save(examinationTypeDtoConverter.apply(examination));
-    return examination;
+      final ExaminationType savedExaminationType =
+              examinationTypeDao.save(examinationTypeDtoConverter.apply(examination));
+      return examinationTypeConverter.apply(savedExaminationType);
   }
 
   @Override

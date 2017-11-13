@@ -16,13 +16,17 @@ public class UserDto {
   private static final String LOGIN_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
   private static final String PASSWORD_REGEXP =
       "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,50})";
+
   @JsonProperty("UserId")
   private Integer id;
+
   @NotNull(message = "The user should be an any person")
   private PersonDto person;
+
   @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login")
   @Size(min = 3, max = 31)
   private String login;
+
   @JsonIgnore
   @Pattern(
     regexp = PASSWORD_REGEXP,
@@ -82,7 +86,6 @@ public class UserDto {
 
     return new EqualsBuilder()
         .append(id, userDto.id)
-        .append(person, userDto.person)
         .append(login, userDto.login)
         .append(password, userDto.password)
         .isEquals();
@@ -92,7 +95,6 @@ public class UserDto {
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
         .append(id)
-        .append(person)
         .append(login)
         .append(password)
         .toHashCode();
@@ -102,7 +104,6 @@ public class UserDto {
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
-        .append("person", person)
         .append("login", login)
         .append("password", password)
         .toString();

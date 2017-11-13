@@ -7,16 +7,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "personalData")
+@Table(name = "personalData", schema = "groupmanagement")
 public class PersonalData {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Integer id;
-  @Column(name = "firstName", nullable = false)
+
+    @Column(name = "firstName", nullable = false)
   private String firstName;
-  @Column(name = "secondName", nullable = false)
+
+    @Column(name = "secondName", nullable = false)
   private String secondName;
 
   public PersonalData() {}

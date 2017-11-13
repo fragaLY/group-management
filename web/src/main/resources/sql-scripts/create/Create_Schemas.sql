@@ -1,0 +1,2 @@
+CREATE SCHEMA GroupManagement;
+CREATE SCHEMA GroupManagement_Deleted;

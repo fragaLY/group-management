@@ -14,10 +14,12 @@ public class SemesterDto {
 
   @JsonProperty("SemesterId")
   private Integer id;
+
   @NotNull
   @Min(value = 1, message = "Semester should be in 1 to 12 range")
   @Max(value = 12, message = "Semester should be in 1 to 12 range")
   private Integer semester;
+
   private Set<GroupDto> groups;
 
   public SemesterDto() {}
@@ -68,13 +70,12 @@ public class SemesterDto {
     return new EqualsBuilder()
         .append(id, semester1.id)
         .append(semester, semester1.semester)
-        .append(groups, semester1.groups)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(semester).append(groups).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).append(semester).toHashCode();
   }
 
   @Override
@@ -82,7 +83,6 @@ public class SemesterDto {
     return new ToStringBuilder(this)
         .append("id", id)
         .append("semester", semester)
-        .append("groups", groups)
         .toString();
   }
 }

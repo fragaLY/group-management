@@ -13,8 +13,10 @@ public class ExaminationDto {
 
   @JsonProperty("ExaminationId")
   private Integer id;
+
   @NotNull(message = "Examination type could not be a null")
   private ExaminationTypeDto type;
+
   private GradeDto grade;
 
   public ExaminationDto() {}
@@ -59,22 +61,18 @@ public class ExaminationDto {
 
     return new EqualsBuilder()
         .append(id, that.id)
-        .append(type, that.type)
-        .append(grade, that.grade)
         .isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(type).append(grade).toHashCode();
+    return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 
   @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
-        .append("type", type)
-        .append("grade", grade)
         .toString();
   }
 }
