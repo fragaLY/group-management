@@ -17,16 +17,19 @@ public class CourseConverter implements Function<Course, CourseDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CourseConverter.class);
 
+  /**
+   * Converts {@link Course} to {@link CourseDto}
+   *
+   * @param course - the {@link Course}
+   * @return {@link CourseDto}
+   */
   @Override public CourseDto apply(@NotNull final Course course) {
 
     LOG.info("Converts Course [{}] to CourseDto", course);
 
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
-    return new CourseDto(
-        course.getId(),
-        course.getCourse(),
-        course.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
+    return new CourseDto(course.getId(), course.getCourse(), course.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
   }
 
   private class CustomGroupConverter implements Function<Group, GroupDto> {

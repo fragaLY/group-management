@@ -23,8 +23,13 @@ public class SubjectDtoConverter implements Function<SubjectDto, Subject> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SubjectDtoConverter.class);
 
-  @Override
-  public Subject apply(@NotNull final SubjectDto subjectDto) {
+  /**
+   * Converts {@link SubjectDto} to {@link Subject}
+   *
+   * @param subjectDto - the {@link SubjectDto}
+   * @return {@link Subject}
+   */
+  @Override public Subject apply(@NotNull final SubjectDto subjectDto) {
 
     LOG.info("Converts SubjectDto [{}] to Subject", subjectDto);
 

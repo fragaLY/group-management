@@ -17,16 +17,19 @@ public class FacultyConverter implements Function<Faculty, FacultyDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(FacultyConverter.class);
 
+  /**
+   * Converts {@link Faculty} to {@link FacultyDto}
+   *
+   * @param faculty - the {@link Faculty}
+   * @return {@link FacultyDto}
+   */
   @Override public FacultyDto apply(@NotNull final Faculty faculty) {
 
     LOG.info("Converts Faculty [{}] to FacultyDto", faculty);
 
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
-    return new FacultyDto(
-        faculty.getId(),
-        faculty.getFaculty(),
-        faculty.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
+    return new FacultyDto(faculty.getId(), faculty.getFaculty(), faculty.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
   }
 
   private class CustomGroupConverter implements Function<Group, GroupDto> {

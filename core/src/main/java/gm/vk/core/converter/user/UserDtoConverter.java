@@ -16,13 +16,17 @@ public class UserDtoConverter implements Function<UserDto, User> {
 
   private static final Logger LOG = LoggerFactory.getLogger(UserDtoConverter.class);
 
-  @Override
-  public User apply(@NotNull final UserDto userDto) {
+  /**
+   * Converts {@link UserDto} to {@link User}
+   *
+   * @param userDto - the {@link UserDto}
+   * @return {@link User}
+   */
+  @Override public User apply(@NotNull final UserDto userDto) {
 
     LOG.info("Converts UserDto [{}] to User", userDto);
 
-    return new User(
-        userDto.getId(),
+    return new User(userDto.getId(),
         new CustomPersonConverter().apply(userDto.getPerson()),
         userDto.getLogin(),
         userDto.getPassword());

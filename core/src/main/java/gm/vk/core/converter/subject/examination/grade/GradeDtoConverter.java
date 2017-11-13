@@ -18,8 +18,13 @@ public class GradeDtoConverter implements Function<GradeDto, Grade> {
 
   private static final Logger LOG = LoggerFactory.getLogger(GradeDtoConverter.class);
 
-  @Override
-  public Grade apply(@NotNull final GradeDto gradeDto) {
+  /**
+   * Converts {@link GradeDto} to {@link Grade}
+   *
+   * @param gradeDto - the {@link GradeDto}
+   * @return {@link Grade}
+   */
+  @Override public Grade apply(@NotNull final GradeDto gradeDto) {
 
     LOG.info("Converts GradeDto [{}] to Grade", gradeDto);
 
@@ -27,11 +32,7 @@ public class GradeDtoConverter implements Function<GradeDto, Grade> {
     return new Grade(
         gradeDto.getId(),
         gradeDto.getGrade(),
-        gradeDto
-            .getExaminations()
-            .stream()
-            .map(customExaminationConverter)
-            .collect(Collectors.toSet()));
+        gradeDto.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<ExaminationDto, Examination> {

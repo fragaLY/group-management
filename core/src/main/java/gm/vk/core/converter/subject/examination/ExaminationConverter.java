@@ -18,6 +18,12 @@ import org.springframework.stereotype.Component;
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationConverter.class);
 
+  /**
+   * Converts {@link Examination} to {@link ExaminationDto}
+   *
+   * @param examination - the {@link Examination}
+   * @return {@link ExaminationDto}
+   */
   @Override public ExaminationDto apply(@NotNull final Examination examination) {
 
     LOG.info("Converts Examination [{}] to ExaminationDto", examination);
@@ -33,9 +39,6 @@ import org.springframework.stereotype.Component;
       gradeValue = grade.getGrade();
     }
 
-    return new ExaminationDto(
-        examination.getId(),
-        new ExaminationTypeDto(type.getId(), type.getType()),
-        new GradeDto(gradeId, gradeValue));
+    return new ExaminationDto(examination.getId(), new ExaminationTypeDto(type.getId(), type.getType()), new GradeDto(gradeId, gradeValue));
   }
 }

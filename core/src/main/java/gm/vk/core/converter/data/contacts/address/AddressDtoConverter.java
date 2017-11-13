@@ -19,8 +19,13 @@ public class AddressDtoConverter implements Function<AddressDto, Address> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AddressDtoConverter.class);
 
-  @Override
-  public Address apply(@NotNull final AddressDto addressDto) {
+  /**
+   * Converts {@link AddressDto} to {@link Address}
+   *
+   * @param addressDto - the {@link AddressDto}
+   * @return {@link Address}
+   */
+  @Override public Address apply(@NotNull final AddressDto addressDto) {
 
     LOG.info("Converts AddressDto [{}] to Address.", addressDto);
 
@@ -29,23 +34,10 @@ public class AddressDtoConverter implements Function<AddressDto, Address> {
     Set<Contacts> contacts = null;
 
     if (contactsDtos != null) {
-      contacts =
-              contactsDtos
-                      .stream()
-                      .filter(Objects::nonNull)
-                      .map(customContactDtoConverter)
-                      .collect(Collectors.toSet());
+      contacts = contactsDtos.stream().filter(Objects::nonNull).map(customContactDtoConverter).collect(Collectors.toSet());
     }
 
-    return new Address.Builder()
-        .setId(addressDto.getId())
-        .setCountry(addressDto.getCountry())
-        .setCity(addressDto.getCity())
-        .setStreet(addressDto.getStreet())
-        .setHome(addressDto.getHome())
-        .setApartmentNumber(addressDto.getApartmentNumber())
-            .setContacts(contacts)
-        .build();
+    return new Address.Builder().setId(addressDto.getId()).setCountry(addressDto.getCountry()).setCity(addressDto.getCity()).setStreet(addressDto.getStreet()).setHome(addressDto.getHome()).setApartmentNumber(addressDto.getApartmentNumber()).setContacts(contacts).build();
   }
 
   private class CustomContactDtoConverter implements Function<ContactsDto, Contacts> {

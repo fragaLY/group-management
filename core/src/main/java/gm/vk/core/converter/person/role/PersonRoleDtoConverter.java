@@ -18,18 +18,18 @@ public class PersonRoleDtoConverter implements Function<PersonRoleDto, PersonRol
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonRoleDtoConverter.class);
 
-  @Override
-  public PersonRole apply(@NotNull final PersonRoleDto personRoleDto) {
+  /**
+   * Converts {@link PersonRoleDto} to {@link PersonRole}
+   *
+   * @param personRoleDto - the {@link PersonRoleDto}
+   * @return {@link PersonRole}
+   */
+  @Override public PersonRole apply(@NotNull final PersonRoleDto personRoleDto) {
 
     LOG.info("Converts PersonRoleDto [{}] to PersonRole", personRoleDto);
-    
+
     final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
-    final Set<Person> persons =
-        personRoleDto
-            .getPersons()
-            .stream()
-            .map(customPersonDtoConverter)
-            .collect(Collectors.toSet());
+    final Set<Person> persons = personRoleDto.getPersons().stream().map(customPersonDtoConverter).collect(Collectors.toSet());
 
     return new PersonRole(personRoleDto.getId(), personRoleDto.getRole(), persons);
   }

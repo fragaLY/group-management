@@ -19,22 +19,20 @@ public class ContactsConverter implements Function<Contacts, ContactsDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ContactsConverter.class);
 
-  @Override
-  public ContactsDto apply(@NotNull final Contacts contacts) {
+  /**
+   * Converts {@link Contacts} to {@link ContactsDto}
+   *
+   * @param contacts - {@link Contacts}
+   * @return {@link ContactsDto}
+   */
+  @Override public ContactsDto apply(@NotNull final Contacts contacts) {
 
     LOG.info("Converts Contacts [{}] to ContactsDto", contacts);
 
     final CustomPersonConverter customPersonConverter = new CustomPersonConverter();
 
-    return new ContactsDto.Builder()
-        .setId(contacts.getId())
-        .setEmail(contacts.getEmail())
-        .setPhone(contacts.getPhone())
-        .setSkype(contacts.getSkype())
-        .setAddress(new CustomAddressConverter().apply(contacts.getAddress()))
-        .setPersons(
-            contacts.getPersons().stream().map(customPersonConverter).collect(Collectors.toSet()))
-        .build();
+    return new ContactsDto.Builder().setId(contacts.getId()).setEmail(contacts.getEmail()).setPhone(contacts.getPhone()).setSkype(contacts.getSkype()).setAddress(new CustomAddressConverter().apply(contacts.getAddress())).setPersons(
+        contacts.getPersons().stream().map(customPersonConverter).collect(Collectors.toSet())).build();
   }
 
   private class CustomAddressConverter implements Function<Address, AddressDto> {

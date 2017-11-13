@@ -17,16 +17,16 @@ public class GroupDtoConverter implements Function<GroupDto, Group> {
 
   private static final Logger LOG = LoggerFactory.getLogger(GroupDtoConverter.class);
 
+  /**
+   * Converts {@link GroupDto} to {@link Group}
+   *
+   * @param group - the {@link Group}
+   * @return {@link GroupDto}
+   */
   @Override public Group apply(@NotNull final GroupDto group) {
 
     LOG.info("Converts GroupDto [{}] to Group", group);
 
-    return new Group.Builder()
-        .setName(group.getName())
-        .setId(group.getId())
-        .setCourse(new Course(group.getCourse().getId(), group.getCourse().getCourse()))
-        .setFaculty(new Faculty(group.getFaculty().getId(), group.getFaculty().getFaculty()))
-        .setSemester(new Semester(group.getSemester().getId(), group.getSemester().getSemester()))
-        .build();
+    return new Group.Builder().setName(group.getName()).setId(group.getId()).setCourse(new Course(group.getCourse().getId(), group.getCourse().getCourse())).setFaculty(new Faculty(group.getFaculty().getId(), group.getFaculty().getFaculty())).setSemester(new Semester(group.getSemester().getId(), group.getSemester().getSemester())).build();
   }
 }

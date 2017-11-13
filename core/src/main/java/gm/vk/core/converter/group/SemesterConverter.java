@@ -17,16 +17,19 @@ public class SemesterConverter implements Function<Semester, SemesterDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SemesterConverter.class);
 
+  /**
+   * Converts {@link Semester} to {@link SemesterDto}
+   *
+   * @param semester - the {@link SemesterDto}
+   * @return {@link Semester}
+   */
   @Override public SemesterDto apply(@NotNull final Semester semester) {
 
     LOG.info("Converts Semester [{}] to SemesterDto", semester);
 
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
-    return new SemesterDto(
-        semester.getId(),
-        semester.getSemester(),
-        semester.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
+    return new SemesterDto(semester.getId(), semester.getSemester(), semester.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
   }
 
   private class CustomGroupConverter implements Function<Group, GroupDto> {

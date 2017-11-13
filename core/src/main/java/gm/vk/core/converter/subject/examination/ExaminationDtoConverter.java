@@ -16,8 +16,13 @@ public class ExaminationDtoConverter implements Function<ExaminationDto, Examina
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationDtoConverter.class);
 
-  @Override
-  public Examination apply(@NotNull final ExaminationDto examinationDto) {
+  /**
+   * Converts {@link ExaminationDto} to {@link Examination}
+   *
+   * @param examinationDto - the {@link ExaminationDto}
+   * @return {@link Examination}
+   */
+  @Override public Examination apply(@NotNull final ExaminationDto examinationDto) {
 
     LOG.info("Converts ExaminationDto [{}] to Examination", examinationDto);
 

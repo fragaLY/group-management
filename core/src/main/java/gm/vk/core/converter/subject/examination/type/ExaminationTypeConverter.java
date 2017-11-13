@@ -19,6 +19,12 @@ public class ExaminationTypeConverter implements Function<ExaminationType, Exami
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationTypeConverter.class);
 
+  /**
+   * Converts {@link ExaminationType} to {@link ExaminationTypeDto}
+   *
+   * @param examinationType - the {@link ExaminationType}
+   * @return {@link ExaminationTypeDto}
+   */
   @Override public ExaminationTypeDto apply(@NotNull final ExaminationType examinationType) {
 
     LOG.info("Converts ExaminationType [{}] to ExaminationTypeDto", examinationType);
@@ -28,11 +34,7 @@ public class ExaminationTypeConverter implements Function<ExaminationType, Exami
     return new ExaminationTypeDto(
         examinationType.getId(),
         examinationType.getType(),
-        examinationType
-            .getExaminations()
-            .stream()
-            .map(customExaminationConverter)
-            .collect(Collectors.toSet()));
+        examinationType.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<Examination, ExaminationDto> {

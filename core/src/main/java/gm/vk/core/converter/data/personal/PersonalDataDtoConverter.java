@@ -14,12 +14,16 @@ public class PersonalDataDtoConverter implements Function<PersonalDataDto, Perso
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonalDataDtoConverter.class);
 
-  @Override
-  public PersonalData apply(@NotNull final PersonalDataDto personalDataDto) {
+  /**
+   * Converts {@link PersonalDataDto} to {@link PersonalData}
+   *
+   * @param personalDataDto - the {@link PersonalDataDto}
+   * @return {@link PersonalData}
+   */
+  @Override public PersonalData apply(@NotNull final PersonalDataDto personalDataDto) {
 
     LOG.info("Converts PersonalDataDto [{}] to PersonalData", personalDataDto);
 
-    return new PersonalData(
-        personalDataDto.getId(), personalDataDto.getFirstName(), personalDataDto.getSecondName());
+    return new PersonalData(personalDataDto.getId(), personalDataDto.getFirstName(), personalDataDto.getSecondName());
   }
 }

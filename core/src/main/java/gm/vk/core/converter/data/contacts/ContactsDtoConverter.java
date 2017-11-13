@@ -19,26 +19,20 @@ public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ContactsDtoConverter.class);
 
-  @Override
-  public Contacts apply(@NotNull final ContactsDto contactsDto) {
+  /**
+   * Converts {@link ContactsDto} to {@link Contacts}
+   *
+   * @param contactsDto - {@link ContactsDto}
+   * @return {@link Contacts}
+   */
+  @Override public Contacts apply(@NotNull final ContactsDto contactsDto) {
 
     LOG.info("Converts ContactsDto [{}] to Contacts", contactsDto);
 
     final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
 
-    return new Contacts.Builder()
-        .setId(contactsDto.getId())
-        .setEmail(contactsDto.getEmail())
-        .setPhone(contactsDto.getPhone())
-        .setSkype(contactsDto.getSkype())
-        .setAddress(new CustomAddressDtoConverter().apply(contactsDto.getAddress()))
-        .setPersons(
-            contactsDto
-                .getPersons()
-                .stream()
-                .map(customPersonDtoConverter)
-                .collect(Collectors.toSet()))
-        .build();
+    return new Contacts.Builder().setId(contactsDto.getId()).setEmail(contactsDto.getEmail()).setPhone(contactsDto.getPhone()).setSkype(contactsDto.getSkype()).setAddress(new CustomAddressDtoConverter().apply(contactsDto.getAddress())).setPersons(
+        contactsDto.getPersons().stream().map(customPersonDtoConverter).collect(Collectors.toSet())).build();
   }
 
   private class CustomAddressDtoConverter implements Function<AddressDto, Address> {

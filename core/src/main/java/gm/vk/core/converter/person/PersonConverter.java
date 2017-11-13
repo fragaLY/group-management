@@ -25,22 +25,20 @@ public class PersonConverter implements Function<Person, PersonDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonConverter.class);
 
-  @Override
-  public PersonDto apply(@NotNull final Person person) {
+  /**
+   * Converts {@link Person} to {@link PersonDto}
+   *
+   * @param person - the {@link Person}
+   * @return {@link PersonDto}
+   */
+  @Override public PersonDto apply(@NotNull final Person person) {
 
     LOG.info("Converts Person [{}] to PersonDto", person);
 
     final CustomSubjectConverter customSubjectConverter = new CustomSubjectConverter();
 
-    return new PersonDto.Builder()
-        .setId(person.getId())
-        .setRole(new CustomPersonRoleConverter().apply(person.getRole()))
-        .setPersonalData(new CustomPersonalDataConverter().apply(person.getPersonalData()))
-        .setContacts(new CustomContactConverter().apply(person.getContacts()))
-        .setSubjects(
-            person.getSubjects().stream().map(customSubjectConverter).collect(Collectors.toSet()))
-        .setGroup(new CustomGroupConverter().apply(person.getGroup()))
-        .build();
+    return new PersonDto.Builder().setId(person.getId()).setRole(new CustomPersonRoleConverter().apply(person.getRole())).setPersonalData(new CustomPersonalDataConverter().apply(person.getPersonalData())).setContacts(new CustomContactConverter().apply(person.getContacts())).setSubjects(
+        person.getSubjects().stream().map(customSubjectConverter).collect(Collectors.toSet())).setGroup(new CustomGroupConverter().apply(person.getGroup())).build();
   }
 
   private class CustomContactConverter implements Function<Contacts, ContactsDto> {
