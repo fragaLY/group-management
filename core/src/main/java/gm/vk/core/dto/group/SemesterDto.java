@@ -1,14 +1,14 @@
 package gm.vk.core.dto.group;
 
+import java.util.Set;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 public class SemesterDto {
 
@@ -35,11 +35,11 @@ public class SemesterDto {
     this.groups = groups;
   }
 
-  public Integer getId() {
+  public Integer getSemesterId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setSemesterId(Integer id) {
     this.id = id;
   }
 

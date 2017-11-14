@@ -1,17 +1,18 @@
 package gm.vk.core.dto.user;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-public class UserDto {
+public class UserDto extends ResourceSupport {
 
   private static final String LOGIN_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
   private static final String PASSWORD_REGEXP =
@@ -44,11 +45,11 @@ public class UserDto {
     this.password = password;
   }
 
-  public Integer getId() {
+  public Integer getUserId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setUserId(Integer id) {
     this.id = id;
   }
 

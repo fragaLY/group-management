@@ -31,7 +31,9 @@ public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
     final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
 
-    return new Contacts.Builder().setId(contactsDto.getId()).setEmail(contactsDto.getEmail()).setPhone(contactsDto.getPhone()).setSkype(contactsDto.getSkype()).setAddress(new CustomAddressDtoConverter().apply(contactsDto.getAddress())).setPersons(
+    return new Contacts.Builder().setId(contactsDto.getContactsId()).setEmail(contactsDto.getEmail()).setPhone(
+        contactsDto.getPhone()).setSkype(contactsDto.getSkype()).setAddress(new CustomAddressDtoConverter().apply(
+        contactsDto.getAddress())).setPersons(
         contactsDto.getPersons().stream().map(customPersonDtoConverter).collect(Collectors.toSet())).build();
   }
 
@@ -39,8 +41,7 @@ public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
     @Override
     public Address apply(AddressDto address) {
-      return new Address.Builder()
-          .setId(address.getId())
+      return new Address.Builder().setId(address.getAddressId())
           .setCountry(address.getCountry())
           .setCity(address.getCity())
           .setStreet(address.getStreet())

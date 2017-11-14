@@ -1,16 +1,17 @@
 package gm.vk.core.dto.data.contacts.address;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Set;
-
-public class AddressDto {
+public class AddressDto extends ResourceSupport {
 
   @JsonProperty("AddressId")
   private Integer id;
@@ -49,11 +50,11 @@ public class AddressDto {
     this.contacts = builder.contacts;
   }
 
-  public Integer getId() {
+  public Integer getAddressId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setAddressId(Integer id) {
     this.id = id;
   }
 

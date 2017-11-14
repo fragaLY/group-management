@@ -1,16 +1,17 @@
 package gm.vk.core.dto.subject.examination.type;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.subject.examination.type.Type;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-
-public class ExaminationTypeDto {
+public class ExaminationTypeDto extends ResourceSupport {
 
   @JsonProperty("ExaminationTypeId")
   private Integer id;
@@ -32,11 +33,11 @@ public class ExaminationTypeDto {
     this.examinations = examinations;
   }
 
-  public Integer getId() {
+  public Integer getExaminationTypeId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setExaminationTypeId(Integer id) {
     this.id = id;
   }
 

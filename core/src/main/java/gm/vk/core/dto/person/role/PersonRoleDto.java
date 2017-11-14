@@ -1,16 +1,17 @@
 package gm.vk.core.dto.person.role;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.person.role.Role;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-
-public class PersonRoleDto {
+public class PersonRoleDto extends ResourceSupport {
 
   @JsonProperty("PersonRoleId")
   private Integer id;
@@ -33,11 +34,11 @@ public class PersonRoleDto {
     this.persons = persons;
   }
 
-  public Integer getId() {
+  public Integer getPersonRoleId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setPersonRoleId(Integer id) {
     this.id = id;
   }
 

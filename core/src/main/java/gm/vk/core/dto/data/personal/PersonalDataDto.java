@@ -1,13 +1,14 @@
 package gm.vk.core.dto.data.personal;
 
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.Size;
-
-public class PersonalDataDto {
+public class PersonalDataDto extends ResourceSupport {
 
   @JsonProperty("PersonalDataId")
   private Integer id;
@@ -26,11 +27,11 @@ public class PersonalDataDto {
     this.secondName = secondName;
   }
 
-  public Integer getId() {
+  public Integer getPersonalDataId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setPersonalDataId(Integer id) {
     this.id = id;
   }
 

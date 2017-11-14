@@ -1,15 +1,16 @@
 package gm.vk.core.dto.group.faculty;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.group.GroupDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-
-public class FacultyDto {
+public class FacultyDto extends ResourceSupport {
 
   @JsonProperty("FacultyId")
   private Integer id;
@@ -32,11 +33,11 @@ public class FacultyDto {
     this.groups = groups;
   }
 
-  public Integer getId() {
+  public Integer getFacultyId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setFacultyId(Integer id) {
     this.id = id;
   }
 

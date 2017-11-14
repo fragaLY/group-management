@@ -1,17 +1,18 @@
 package gm.vk.core.dto.data.contacts;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.data.contacts.address.AddressDto;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.Set;
-
-public class ContactsDto {
+public class ContactsDto extends ResourceSupport {
 
   private static final String PHONE_REGEXP = "[+]\\d{3}[(]\\d{2}[)]\\d{3}[\\-]\\d{4}";
   private static final String EMAIL_REGEXP = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
@@ -48,11 +49,11 @@ public class ContactsDto {
     this.persons = builder.persons;
   }
 
-  public Integer getId() {
+  public Integer getContactsId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setContactsId(Integer id) {
     this.id = id;
   }
 

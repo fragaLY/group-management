@@ -1,17 +1,18 @@
 package gm.vk.core.dto.group.course;
 
+import java.util.Set;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.group.GroupDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-
-public class CourseDto {
+public class CourseDto extends ResourceSupport {
 
   @JsonProperty("CourseId")
   private Integer id;
@@ -36,11 +37,11 @@ public class CourseDto {
     this.groups = groups;
   }
 
-  public Integer getId() {
+  public Integer getCourseId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setCourseId(Integer id) {
     this.id = id;
   }
 

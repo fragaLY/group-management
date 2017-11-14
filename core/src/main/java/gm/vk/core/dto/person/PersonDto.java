@@ -1,5 +1,8 @@
 package gm.vk.core.dto.person;
 
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import gm.vk.core.dto.data.personal.PersonalDataDto;
@@ -9,11 +12,9 @@ import gm.vk.core.dto.subject.SubjectDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-
-public class PersonDto {
+public class PersonDto extends ResourceSupport {
 
   @JsonProperty("PersonId")
   private Integer id;
@@ -38,11 +39,11 @@ public class PersonDto {
     this.group = builder.group;
   }
 
-  public Integer getId() {
+  public Integer getPersonId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setPersonId(Integer id) {
     this.id = id;
   }
 

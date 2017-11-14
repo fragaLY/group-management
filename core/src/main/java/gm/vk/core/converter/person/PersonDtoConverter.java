@@ -45,8 +45,7 @@ public class PersonDtoConverter implements Function<PersonDto, Person> {
 
     @Override
     public Contacts apply(ContactsDto contacts) {
-      return new Contacts.Builder()
-          .setId(contacts.getId())
+      return new Contacts.Builder().setId(contacts.getContactsId())
           .setSkype(contacts.getSkype())
           .setPhone(contacts.getPhone())
           .setEmail(contacts.getEmail())

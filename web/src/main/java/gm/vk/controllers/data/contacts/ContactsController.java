@@ -1,5 +1,9 @@
 package gm.vk.controllers.data.contacts;
 
+import java.net.URI;
+import java.util.List;
+import javax.validation.Valid;
+
 import gm.vk.core.dto.data.contacts.ContactsDto;
 import gm.vk.service.data.contacts.ContactsService;
 import org.hibernate.validator.constraints.Range;
@@ -9,12 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/contacts")
@@ -45,8 +53,7 @@ public class ContactsController {
 
     final URI createdContactsUri =
         ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(createdContacts.getId())
+            .path("/{id}").buildAndExpand(createdContacts.getContactsId())
             .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
@@ -62,8 +69,7 @@ public class ContactsController {
 
     final URI editedContactsUri =
         ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(savedContacts.getId())
+            .path("/{id}").buildAndExpand(savedContacts.getContactsId())
             .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();

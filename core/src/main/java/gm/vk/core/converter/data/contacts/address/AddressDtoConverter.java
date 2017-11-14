@@ -37,15 +37,16 @@ public class AddressDtoConverter implements Function<AddressDto, Address> {
       contacts = contactsDtos.stream().filter(Objects::nonNull).map(customContactDtoConverter).collect(Collectors.toSet());
     }
 
-    return new Address.Builder().setId(addressDto.getId()).setCountry(addressDto.getCountry()).setCity(addressDto.getCity()).setStreet(addressDto.getStreet()).setHome(addressDto.getHome()).setApartmentNumber(addressDto.getApartmentNumber()).setContacts(contacts).build();
+    return new Address.Builder().setId(addressDto.getAddressId()).setCountry(addressDto.getCountry()).setCity(
+        addressDto.getCity()).setStreet(addressDto.getStreet()).setHome(addressDto.getHome()).setApartmentNumber(
+        addressDto.getApartmentNumber()).setContacts(contacts).build();
   }
 
   private class CustomContactDtoConverter implements Function<ContactsDto, Contacts> {
 
     @Override
     public Contacts apply(ContactsDto contacts) {
-      return new Contacts.Builder()
-          .setId(contacts.getId())
+      return new Contacts.Builder().setId(contacts.getContactsId())
           .setSkype(contacts.getSkype())
           .setPhone(contacts.getPhone())
           .setEmail(contacts.getEmail())

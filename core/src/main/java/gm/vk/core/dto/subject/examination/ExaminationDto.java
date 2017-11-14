@@ -1,15 +1,16 @@
 package gm.vk.core.dto.subject.examination;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.subject.examination.grade.GradeDto;
 import gm.vk.core.dto.subject.examination.type.ExaminationTypeDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.validation.constraints.NotNull;
-
-public class ExaminationDto {
+public class ExaminationDto extends ResourceSupport {
 
   @JsonProperty("ExaminationId")
   private Integer id;
@@ -27,11 +28,11 @@ public class ExaminationDto {
     this.grade = grade;
   }
 
-  public Integer getId() {
+  public Integer getExaminationId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setExaminationId(Integer id) {
     this.id = id;
   }
 
