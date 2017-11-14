@@ -3,6 +3,7 @@ package gm.vk.core.dto.subject.examination.type;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.subject.examination.type.Type;
@@ -12,7 +13,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) public class ExaminationTypeDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class ExaminationTypeDto
+    extends ResourceSupport {
 
   @JsonProperty("ExaminationTypeId") private Integer id;
 
