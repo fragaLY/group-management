@@ -1,18 +1,18 @@
 package gm.vk.service.group;
 
-import gm.vk.core.dto.group.SemesterDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.group.SemesterDto;
 
 public interface SemesterService {
 
-    List<SemesterDto> findAll();
+  List<SemesterDto> findAll();
 
-    SemesterDto findOne(final Integer id);
+  SemesterDto findOne(final Integer id);
 
-    SemesterDto save(final SemesterDto semester);
+  SemesterDto save(final SemesterDto semester);
 
-    void delete(final SemesterDto semester);
+  void delete(final SemesterDto semester);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

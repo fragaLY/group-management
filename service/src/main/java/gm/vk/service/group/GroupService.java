@@ -1,18 +1,18 @@
 package gm.vk.service.group;
 
-import gm.vk.core.dto.group.GroupDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.group.GroupDto;
 
 public interface GroupService {
 
-    List<GroupDto> findAll();
+  List<GroupDto> findAll();
 
-    GroupDto findOne(final Integer id);
+  GroupDto findOne(final Integer id);
 
-    GroupDto save(final GroupDto group);
+  GroupDto save(final GroupDto group);
 
-    void delete(final GroupDto group);
+  void delete(final GroupDto group);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

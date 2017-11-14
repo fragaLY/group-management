@@ -1,18 +1,18 @@
 package gm.vk.service.group.faculty;
 
-import gm.vk.core.dto.group.faculty.FacultyDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.group.faculty.FacultyDto;
 
 public interface FacultyService {
 
-    List<FacultyDto> findAll();
+  List<FacultyDto> findAll();
 
-    FacultyDto findOne(final Integer id);
+  FacultyDto findOne(final Integer id);
 
-    FacultyDto save(final FacultyDto faculty);
+  FacultyDto save(final FacultyDto faculty);
 
-    void delete(final FacultyDto faculty);
+  void delete(final FacultyDto faculty);
 
-    void delete(final Integer id);
+  void delete(final Integer id);
 }

@@ -3,6 +3,7 @@ package gm.vk.core.dto.group;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.group.course.CourseDto;
 import gm.vk.core.dto.group.faculty.FacultyDto;
@@ -13,27 +14,23 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class GroupDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class GroupDto extends ResourceSupport {
 
-  @JsonProperty("GroupId")
-  private Integer id;
+  @JsonProperty("GroupId") private Integer id;
 
-  @NotNull(message = "Invalid name of group")
-  private String name;
+  @NotNull(message = "Invalid name of group") private String name;
 
-  @NotNull(message = "Invalid course of group")
-  private CourseDto course;
+  @NotNull(message = "Invalid course of group") private CourseDto course;
 
-  @NotNull(message = "Invalid semester of group")
-  private SemesterDto semester;
+  @NotNull(message = "Invalid semester of group") private SemesterDto semester;
 
-  @NotNull(message = "Invalid faculty of group")
-  private FacultyDto faculty;
+  @NotNull(message = "Invalid faculty of group") private FacultyDto faculty;
 
   private Set<PersonDto> persons;
   private Set<SubjectDto> subjects;
 
-  public GroupDto() {}
+  public GroupDto() {
+  }
 
   private GroupDto(final Builder builder) {
     this.id = builder.id;
@@ -101,34 +98,24 @@ public class GroupDto extends ResourceSupport {
     this.subjects = subjects;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof GroupDto)) return false;
+    if (!(o instanceof GroupDto))
+      return false;
 
-    GroupDto group = (GroupDto) o;
+    GroupDto group = (GroupDto)o;
 
-    return new EqualsBuilder()
-        .append(id, group.id)
-        .append(name, group.name)
-        .isEquals();
+    return new EqualsBuilder().append(id, group.id).append(name, group.name).isEquals();
   }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(name)
-        .toHashCode();
+  @Override public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("name", name)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("name", name).toString();
   }
 
   public static class Builder {

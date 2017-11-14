@@ -1,5 +1,9 @@
 package gm.vk.controllers.exceptions;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
+
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import gm.vk.controllers.exceptions.error.ErrorDetails;
@@ -34,12 +38,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-@ControllerAdvice
-public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
   private static final String MESSAGE_NOT_FOUND = "Page Not Found";
 
@@ -52,19 +51,14 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param req - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleNoHandlerFoundException(
+  @Override protected ResponseEntity<Object> handleNoHandlerFoundException(
       final NoHandlerFoundException ex,
       final HttpHeaders headers,
       final HttpStatus status,
       final WebRequest req) {
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.NOT_FOUND)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(ImmutableSet.of(MESSAGE_NOT_FOUND))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        ImmutableSet.of(MESSAGE_NOT_FOUND)).build();
 
     return handleExceptionInternal(ex, error, headers, status, req);
   }
@@ -78,8 +72,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+  @Override protected ResponseEntity<Object> handleMethodArgumentNotValid(
       final MethodArgumentNotValidException ex,
       final HttpHeaders headers,
       final HttpStatus status,
@@ -87,20 +80,13 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     final Set<String> errors = Sets.newHashSet();
 
-    ex.getBindingResult()
-        .getFieldErrors()
-        .forEach(
-            error -> {
-              errors.add(error.getField() + ": " + error.getDefaultMessage());
-              errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
-            });
+    ex.getBindingResult().getFieldErrors().forEach(error -> {
+      errors.add(error.getField() + ": " + error.getDefaultMessage());
+      errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
+    });
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.CONFLICT)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(errors)
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.CONFLICT).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        errors).build();
 
     return handleExceptionInternal(ex, error, headers, error.getStatus(), request);
   }
@@ -114,29 +100,18 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleBindException(
-      final BindException ex,
-      final HttpHeaders headers,
-      final HttpStatus status,
-      final WebRequest request) {
+  @Override protected ResponseEntity<Object> handleBindException(
+      final BindException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
 
     final Set<String> errors = Sets.newConcurrentHashSet();
 
-    ex.getBindingResult()
-        .getFieldErrors()
-        .forEach(
-            error -> {
-              errors.add(error.getField() + ": " + error.getDefaultMessage());
-              errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
-            });
+    ex.getBindingResult().getFieldErrors().forEach(error -> {
+      errors.add(error.getField() + ": " + error.getDefaultMessage());
+      errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
+    });
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(errors)
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(errors).build();
 
     return handleExceptionInternal(ex, error, headers, error.getStatus(), request);
   }
@@ -150,26 +125,20 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleTypeMismatch(
+  @Override protected ResponseEntity<Object> handleTypeMismatch(
       final TypeMismatchException ex,
       final HttpHeaders headers,
       final HttpStatus status,
       final WebRequest request) {
 
-    final String exception =
-        ex.getValue().toString()
-            + " value for "
-            + ex.getPropertyName()
-            + " should be of type "
-            + ex.getRequiredType();
+    final String exception = ex.getValue().toString()
+                             + " value for "
+                             + ex.getPropertyName()
+                             + " should be of type "
+                             + ex.getRequiredType();
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(exception))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(exception)).build();
 
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
@@ -183,8 +152,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleMissingServletRequestPart(
+  @Override protected ResponseEntity<Object> handleMissingServletRequestPart(
       final MissingServletRequestPartException ex,
       final HttpHeaders headers,
       final HttpStatus status,
@@ -192,12 +160,8 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     final String exception = ex.getRequestPartName() + " part is missing";
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(exception))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(exception)).build();
 
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
@@ -211,8 +175,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleMissingServletRequestParameter(
+  @Override protected ResponseEntity<Object> handleMissingServletRequestParameter(
       final MissingServletRequestParameterException ex,
       final HttpHeaders headers,
       final HttpStatus status,
@@ -220,12 +183,8 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     final String exception = ex.getParameterName() + " parameter is missing";
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(exception))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(exception)).build();
 
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
@@ -236,18 +195,13 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-  public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
+  @ExceptionHandler({ MethodArgumentTypeMismatchException.class }) public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
       final MethodArgumentTypeMismatchException ex) {
 
     final String exception = ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(exception))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(exception)).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -258,27 +212,18 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({ConstraintViolationException.class})
-  public ResponseEntity<Object> handleConstraintViolation(final ConstraintViolationException ex) {
+  @ExceptionHandler({ ConstraintViolationException.class }) public ResponseEntity<Object> handleConstraintViolation(
+      final ConstraintViolationException ex) {
 
-    final Set<String> errors =
-        ex.getConstraintViolations()
-            .stream()
-            .map(
-                cv ->
-                    cv.getRootBeanClass().getName()
-                        + " "
-                        + cv.getPropertyPath()
-                        + ": "
-                        + cv.getMessage())
-            .collect(Collectors.toCollection(Sets::newHashSet));
+    final Set<String> errors = ex.getConstraintViolations().stream().map(cv -> cv.getRootBeanClass().getName()
+                                                                               + " "
+                                                                               + cv.getPropertyPath()
+                                                                               + ": "
+                                                                               + cv.getMessage()).collect(
+        Collectors.toCollection(Sets::newHashSet));
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.BAD_REQUEST)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(errors)
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.BAD_REQUEST).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(errors).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -289,15 +234,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({NullPointerException.class})
-  public ResponseEntity<Object> handleUserNotFoundException(final Exception ex) {
+  @ExceptionHandler({ NullPointerException.class }) public ResponseEntity<Object> handleUserNotFoundException(
+      final Exception ex) {
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-            .setOutputMessage("Oops, Huston we have a problem.")
-            .setErrors(Sets.newHashSet("Null Pointer Exception"))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.INTERNAL_SERVER_ERROR).setOutputMessage(
+        "Oops, Huston we have a problem.").setErrors(Sets.newHashSet("Null Pointer Exception")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -308,15 +249,10 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param er - error
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({StackOverflowError.class})
-  public ResponseEntity<Object> handleStackOverFlowError(final StackOverflowError er) {
+  @ExceptionHandler({ StackOverflowError.class }) public ResponseEntity<Object> handleStackOverFlowError(final StackOverflowError er) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .setOutputMessage("Oops, Huston we have a problem.")
-                    .setErrors(Sets.newHashSet("Stack Over Flow Error"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.INTERNAL_SERVER_ERROR).setOutputMessage(
+        "Oops, Huston we have a problem.").setErrors(Sets.newHashSet("Stack Over Flow Error")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -330,26 +266,19 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+  @Override protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
       final HttpRequestMethodNotSupportedException ex,
       final HttpHeaders headers,
       final HttpStatus status,
       final WebRequest request) {
 
-    final StringBuilder builder =
-        new StringBuilder()
-            .append(ex.getMethod())
-            .append(" method is not supported for this request. Supported methods are ");
+    final StringBuilder builder = new StringBuilder().append(ex.getMethod()).append(
+        " method is not supported for this request. Supported methods are ");
 
     ex.getSupportedHttpMethods().forEach(method -> builder.append(method).append(" "));
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.METHOD_NOT_ALLOWED)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(builder.toString()))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.METHOD_NOT_ALLOWED).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(builder.toString())).build();
 
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
@@ -363,26 +292,20 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param request - request
    * @return {@link ResponseEntity} object
    */
-  @Override
-  protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
+  @Override protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
       final HttpMediaTypeNotSupportedException ex,
       final HttpHeaders headers,
       final HttpStatus status,
       final WebRequest request) {
 
-    final StringBuilder builder =
-        new StringBuilder()
-            .append(ex.getContentType())
-            .append(" media type is not supported. Supported media types are ");
+    final StringBuilder builder = new StringBuilder().append(ex.getContentType()).append(
+        " media type is not supported. Supported media types are ");
 
     ex.getSupportedMediaTypes().forEach(type -> builder.append(type).append(" "));
 
-    final ErrorDetails error =
-        new ErrorDetails.Builder()
-            .setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-            .setOutputMessage(ex.getLocalizedMessage())
-            .setErrors(Sets.newHashSet(builder.substring(0, builder.length() - 2)))
-            .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE).setOutputMessage(
+        ex.getLocalizedMessage()).setErrors(Sets.newHashSet(builder.substring(0,
+        builder.length() - 2))).build();
 
     return new ResponseEntity<>(error, headers, error.getStatus());
   }
@@ -399,8 +322,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param status the response status
    * @param request the current request
    */
-  @Override
-  protected ResponseEntity<Object> handleExceptionInternal(
+  @Override protected ResponseEntity<Object> handleExceptionInternal(
       final Exception ex,
       final Object body,
       final HttpHeaders headers,
@@ -415,15 +337,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({AddressNotFoundException.class})
-  public ResponseEntity<Object> handleAddressNotFoundException(final AddressNotFoundException ex) {
+  @ExceptionHandler({ AddressNotFoundException.class }) public ResponseEntity<Object> handleAddressNotFoundException(
+      final AddressNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Address Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Address Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -434,16 +352,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({ContactsNotFoundException.class})
-  public ResponseEntity<Object> handleContactsNotFoundException(
-          final ContactsNotFoundException ex) {
+  @ExceptionHandler({ ContactsNotFoundException.class }) public ResponseEntity<Object> handleContactsNotFoundException(
+      final ContactsNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Contacts Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Contacts Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -454,16 +367,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({PersonalDataNotFoundException.class})
-  public ResponseEntity<Object> handlePersonalDataNotFoundException(
-          final PersonalDataNotFoundException ex) {
+  @ExceptionHandler({ PersonalDataNotFoundException.class }) public ResponseEntity<Object> handlePersonalDataNotFoundException(
+      final PersonalDataNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Personal Data Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Personal Data Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -474,15 +382,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({CourseNotFoundException.class})
-  public ResponseEntity<Object> handleCourseNotFoundException(final CourseNotFoundException ex) {
+  @ExceptionHandler({ CourseNotFoundException.class }) public ResponseEntity<Object> handleCourseNotFoundException(
+      final CourseNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Course Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Course Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -493,15 +397,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({FacultyNotFoundException.class})
-  public ResponseEntity<Object> handleFacultyNotFoundException(final FacultyNotFoundException ex) {
+  @ExceptionHandler({ FacultyNotFoundException.class }) public ResponseEntity<Object> handleFacultyNotFoundException(
+      final FacultyNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Faculty Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Faculty Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -512,15 +412,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({GroupNotFoundException.class})
-  public ResponseEntity<Object> handleGroupNotFoundException(final GroupNotFoundException ex) {
+  @ExceptionHandler({ GroupNotFoundException.class }) public ResponseEntity<Object> handleGroupNotFoundException(
+      final GroupNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Group Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Group Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -531,16 +427,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({SemesterNotFoundException.class})
-  public ResponseEntity<Object> handleSemesterNotFoundException(
-          final SemesterNotFoundException ex) {
+  @ExceptionHandler({ SemesterNotFoundException.class }) public ResponseEntity<Object> handleSemesterNotFoundException(
+      final SemesterNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Semester Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Semester Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -551,16 +442,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({PersonRoleNotFoundException.class})
-  public ResponseEntity<Object> handlePersonRoleNotFoundException(
-          final PersonRoleNotFoundException ex) {
+  @ExceptionHandler({ PersonRoleNotFoundException.class }) public ResponseEntity<Object> handlePersonRoleNotFoundException(
+      final PersonRoleNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Person Role Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Person Role Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -571,15 +457,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({PersonNotFoundException.class})
-  public ResponseEntity<Object> handlePersonNotFoundException(final PersonNotFoundException ex) {
+  @ExceptionHandler({ PersonNotFoundException.class }) public ResponseEntity<Object> handlePersonNotFoundException(
+      final PersonNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Person Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Person Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -590,15 +472,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({UserNotFoundException.class})
-  public ResponseEntity<Object> handleUserNotFoundException(final UserNotFoundException ex) {
+  @ExceptionHandler({ UserNotFoundException.class }) public ResponseEntity<Object> handleUserNotFoundException(
+      final UserNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("User Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("User Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -609,15 +487,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({SubjectNotFoundException.class})
-  public ResponseEntity<Object> handleSubjectNotFoundException(final SubjectNotFoundException ex) {
+  @ExceptionHandler({ SubjectNotFoundException.class }) public ResponseEntity<Object> handleSubjectNotFoundException(
+      final SubjectNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Subject Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Subject Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -628,16 +502,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({ExaminationNotFoundException.class})
-  public ResponseEntity<Object> handleExaminationNotFoundException(
-          final ExaminationNotFoundException ex) {
+  @ExceptionHandler({ ExaminationNotFoundException.class }) public ResponseEntity<Object> handleExaminationNotFoundException(
+      final ExaminationNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Examination Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Examination Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -648,15 +517,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({GradeNotFoundException.class})
-  public ResponseEntity<Object> handleGradeNotFoundException(final GradeNotFoundException ex) {
+  @ExceptionHandler({ GradeNotFoundException.class }) public ResponseEntity<Object> handleGradeNotFoundException(
+      final GradeNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Grade Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Grade Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -667,16 +532,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({org.hibernate.exception.ConstraintViolationException.class})
-  public ResponseEntity<Object> handleConstraintViolationException(
-          final org.hibernate.exception.ConstraintViolationException ex) {
+  @ExceptionHandler({ org.hibernate.exception.ConstraintViolationException.class }) public ResponseEntity<Object> handleConstraintViolationException(
+      final org.hibernate.exception.ConstraintViolationException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Constraint Violation Exception"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Constraint Violation Exception")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }
@@ -687,16 +547,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
    * @param ex - exception
    * @return {@link ResponseEntity} object
    */
-  @ExceptionHandler({ExaminationTypeNotFoundException.class})
-  public ResponseEntity<Object> handleExaminationTypeNotFoundException(
-          final ExaminationTypeNotFoundException ex) {
+  @ExceptionHandler({ ExaminationTypeNotFoundException.class }) public ResponseEntity<Object> handleExaminationTypeNotFoundException(
+      final ExaminationTypeNotFoundException ex) {
 
-    final ErrorDetails error =
-            new ErrorDetails.Builder()
-                    .setStatus(HttpStatus.NOT_FOUND)
-                    .setOutputMessage(ex.getLocalizedMessage())
-                    .setErrors(Sets.newHashSet("Examination Type Not Found"))
-                    .build();
+    final ErrorDetails error = new ErrorDetails.Builder().setStatus(HttpStatus.NOT_FOUND).setOutputMessage(ex.getLocalizedMessage()).setErrors(
+        Sets.newHashSet("Examination Type Not Found")).build();
 
     return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
   }

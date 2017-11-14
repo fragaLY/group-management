@@ -20,37 +20,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("courseService")
-public class CourseServiceImpl implements CourseService {
+@Service("courseService") public class CourseServiceImpl implements CourseService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CourseServiceImpl.class);
 
-    @Autowired
-    private CourseDao courseDao;
+    @Autowired private CourseDao courseDao;
 
-    @Autowired
-    private CourseConverter courseConverter;
+    @Autowired private CourseConverter courseConverter;
 
-    @Autowired
-    private CourseDtoConverter courseDtoConverter;
+    @Autowired private CourseDtoConverter courseDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<CourseDto> findAll() {
+    @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<CourseDto> findAll() {
 
         LOG.info("Gets all Courses");
 
-        return courseDao
-                .findAll()
-                .stream()
-                .filter(Objects::nonNull)
-                .map(courseConverter)
-                .collect(Collectors.toList());
+        return courseDao.findAll().stream().filter(Objects::nonNull).map(courseConverter).collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public CourseDto findOne(@NotNull final Integer id) {
+    @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public CourseDto findOne(
+        @NotNull final Integer id) {
 
         LOG.info("Gets Course by id [{}]", id);
 
@@ -64,24 +52,21 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public CourseDto save(@NotNull final CourseDto course) {
+    @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public CourseDto save(
+        @NotNull final CourseDto course) {
         final Course savedCourse = courseDao.save(courseDtoConverter.apply(course));
         LOG.info("Course [{}] had been saved", course);
         return courseConverter.apply(savedCourse);
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final CourseDto course) {
+    @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+        @NotNull final CourseDto course) {
         courseDao.delete(courseDtoConverter.apply(course));
         LOG.info("Course [{}] had been deleted", course);
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
+    @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+        @NotNull final Integer id) {
         courseDao.delete(id);
         LOG.info("Course with id [{}] had been deleted", id);
     }

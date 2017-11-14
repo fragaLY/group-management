@@ -13,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("GradeConverter")
-public class GradeConverter implements Function<Grade, GradeDto> {
+@Component("GradeConverter") public class GradeConverter implements Function<Grade, GradeDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(GradeConverter.class);
 
@@ -30,15 +29,15 @@ public class GradeConverter implements Function<Grade, GradeDto> {
 
     final CustomExaminationConverter customExaminationConverter = new CustomExaminationConverter();
 
-    return new GradeDto(grade.getId(),
+    return new GradeDto(
+        grade.getId(),
         grade.getGrade(),
         grade.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<Examination, ExaminationDto> {
 
-    @Override
-    public ExaminationDto apply(Examination examination) {
+    @Override public ExaminationDto apply(Examination examination) {
       return new ExaminationDto(
           examination.getId(),
           new ExaminationTypeDto(examination.getType().getId(), examination.getType().getType()),

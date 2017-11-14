@@ -20,37 +20,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("facultyService")
-public class FacultyServiceImpl implements FacultyService {
+@Service("facultyService") public class FacultyServiceImpl implements FacultyService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FacultyServiceImpl.class);
 
-    @Autowired
-    private FacultyDao facultyDao;
+    @Autowired private FacultyDao facultyDao;
 
-    @Autowired
-    private FacultyConverter facultyConverter;
+    @Autowired private FacultyConverter facultyConverter;
 
-    @Autowired
-    private FacultyDtoConverter facultyDtoConverter;
+    @Autowired private FacultyDtoConverter facultyDtoConverter;
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public List<FacultyDto> findAll() {
+    @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<FacultyDto> findAll() {
 
         LOG.info("Gets all Faculties");
 
-        return facultyDao
-                .findAll()
-                .stream()
-                .filter(Objects::nonNull)
-                .map(facultyConverter)
-                .collect(Collectors.toList());
+        return facultyDao.findAll().stream().filter(Objects::nonNull).map(facultyConverter).collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public FacultyDto findOne(@NotNull final Integer id) {
+    @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public FacultyDto findOne(
+        @NotNull final Integer id) {
 
         LOG.info("Gets Faculty by id [{}]");
 
@@ -64,24 +52,21 @@ public class FacultyServiceImpl implements FacultyService {
         }
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public FacultyDto save(@NotNull final FacultyDto faculty) {
+    @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public FacultyDto save(
+        @NotNull final FacultyDto faculty) {
         final Faculty savedFaculty = facultyDao.save(facultyDtoConverter.apply(faculty));
         LOG.info("Faculty [{}] had been saved", faculty);
         return facultyConverter.apply(savedFaculty);
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final FacultyDto faculty) {
+    @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+        @NotNull final FacultyDto faculty) {
         facultyDao.delete(facultyDtoConverter.apply(faculty));
         LOG.info("Faculty [{}] had been deleted", faculty);
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void delete(@NotNull final Integer id) {
+    @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+        @NotNull final Integer id) {
         facultyDao.delete(id);
         LOG.info("Faculty with id [{}] had been deleted", id);
     }

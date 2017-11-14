@@ -12,8 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("courseDtoConverter")
-public class CourseDtoConverter implements Function<CourseDto, Course> {
+@Component("courseDtoConverter") public class CourseDtoConverter implements Function<CourseDto, Course> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CourseDtoConverter.class);
 
@@ -29,14 +28,16 @@ public class CourseDtoConverter implements Function<CourseDto, Course> {
 
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
-    return new Course(courseDto.getId(), courseDto.getCourse(), courseDto.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
+    return new Course(
+        courseDto.getCourseId(),
+        courseDto.getCourse(),
+        courseDto.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
   }
 
   private class CustomGroupConverter implements Function<GroupDto, Group> {
 
-    @Override
-    public Group apply(GroupDto group) {
-      return new Group.Builder().setId(group.getId()).setName(group.getName()).build();
+    @Override public Group apply(GroupDto group) {
+      return new Group.Builder().setId(group.getGroupId()).setName(group.getName()).build();
     }
   }
 }

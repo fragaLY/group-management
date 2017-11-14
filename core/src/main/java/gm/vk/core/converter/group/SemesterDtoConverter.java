@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("semesterDtoConverter")
-public class SemesterDtoConverter implements Function<SemesterDto, Semester> {
+@Component("semesterDtoConverter") public class SemesterDtoConverter
+    implements Function<SemesterDto, Semester> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SemesterDtoConverter.class);
 
@@ -29,14 +29,16 @@ public class SemesterDtoConverter implements Function<SemesterDto, Semester> {
 
     final CustomGroupConverter customGroupConverter = new CustomGroupConverter();
 
-    return new Semester(semesterDto.getId(), semesterDto.getSemester(), semesterDto.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
+    return new Semester(
+        semesterDto.getSemesterId(),
+        semesterDto.getSemester(),
+        semesterDto.getGroups().stream().map(customGroupConverter).collect(Collectors.toSet()));
   }
 
   private class CustomGroupConverter implements Function<GroupDto, Group> {
 
-    @Override
-    public Group apply(GroupDto group) {
-      return new Group.Builder().setId(group.getId()).setName(group.getName()).build();
+    @Override public Group apply(GroupDto group) {
+      return new Group.Builder().setId(group.getGroupId()).setName(group.getName()).build();
     }
   }
 }

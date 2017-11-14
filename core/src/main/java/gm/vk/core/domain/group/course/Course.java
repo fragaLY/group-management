@@ -1,29 +1,30 @@
 package gm.vk.core.domain.group.course;
 
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import gm.vk.core.domain.group.Group;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
-import java.util.Set;
+@Entity @Table(name = "course", schema = "groupmanagement") public class Course {
 
-@Entity
-@Table(name = "course", schema = "groupmanagement")
-public class Course {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  private Integer id;
+  @Column(name = "course") private Integer course;
 
-  @Column(name = "course")
-  private Integer course;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "course") private Set<Group> groups;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
-  private Set<Group> groups;
-
-  public Course() {}
+  public Course() {
+  }
 
   public Course(Integer id, Integer course) {
     this.id = id;
@@ -60,24 +61,23 @@ public class Course {
     this.groups = groups;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof Course)) return false;
+    if (!(o instanceof Course))
+      return false;
 
-    Course course1 = (Course) o;
+    Course course1 = (Course)o;
 
     return new EqualsBuilder().append(id, course1.id).append(course, course1.course).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(course).append(groups).toHashCode();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return new ToStringBuilder(this).append("id", id).append("course", course).toString();
   }
 }

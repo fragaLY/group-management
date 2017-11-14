@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("examinationTypeDtoConverter")
-public class ExaminationTypeDtoConverter implements Function<ExaminationTypeDto, ExaminationType> {
+@Component("examinationTypeDtoConverter") public class ExaminationTypeDtoConverter
+    implements Function<ExaminationTypeDto, ExaminationType> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationTypeDtoConverter.class);
 
@@ -30,19 +30,18 @@ public class ExaminationTypeDtoConverter implements Function<ExaminationTypeDto,
 
     final CustomExaminationConverter customExaminationConverter = new CustomExaminationConverter();
     return new ExaminationType(
-        examinationTypeDto.getId(),
+        examinationTypeDto.getExaminationTypeId(),
         examinationTypeDto.getType(),
         examinationTypeDto.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<ExaminationDto, Examination> {
 
-    @Override
-    public Examination apply(ExaminationDto examination) {
+    @Override public Examination apply(ExaminationDto examination) {
       return new Examination(
-          examination.getId(),
-          new ExaminationType(examination.getType().getId(), examination.getType().getType()),
-          new Grade(examination.getGrade().getId(), examination.getGrade().getGrade()));
+          examination.getExaminationId(),
+          new ExaminationType(examination.getType().getExaminationTypeId(), examination.getType().getType()),
+          new Grade(examination.getGrade().getGradeId(), examination.getGrade().getGrade()));
     }
   }
 }

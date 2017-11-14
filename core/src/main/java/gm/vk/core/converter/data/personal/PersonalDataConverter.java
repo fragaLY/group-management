@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("personalDataConverter")
-public class PersonalDataConverter implements Function<PersonalData, PersonalDataDto> {
+@Component("personalDataConverter") public class PersonalDataConverter
+    implements Function<PersonalData, PersonalDataDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonalDataConverter.class);
 
@@ -24,6 +24,8 @@ public class PersonalDataConverter implements Function<PersonalData, PersonalDat
 
     LOG.info("Converts PersonalData [{}] to PersonalDataDto", personalData);
 
-    return new PersonalDataDto(personalData.getId(), personalData.getFirstName(), personalData.getSecondName());
+    return new PersonalDataDto(personalData.getId(),
+        personalData.getFirstName(),
+        personalData.getSecondName());
   }
 }

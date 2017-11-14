@@ -24,37 +24,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RestController
-@RequestMapping("/addresses")
-@Validated
-public class AddressController {
+@RestController @RequestMapping("/addresses") @Validated public class AddressController {
 
   @Autowired private AddressService addressService;
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public ResponseEntity<List<AddressDto>> getAddresss() {
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody public ResponseEntity<List<AddressDto>> getAddresss() {
     final List<AddressDto> address = addressService.findAll();
     return new ResponseEntity<>(address, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public ResponseEntity<AddressDto> getAddress(
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody public ResponseEntity<AddressDto> getAddress(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final AddressDto address = addressService.findOne(id);
     return new ResponseEntity<>(address, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> createAddress(@Valid @RequestBody final AddressDto address) {
+  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<?> createAddress(@Valid @RequestBody final AddressDto address) {
 
     final AddressDto createdAddress = addressService.save(address);
 
-    final URI createdAddressUri =
-        ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}").buildAndExpand(createdAddress.getAddressId())
-            .toUri();
+    final URI createdAddressUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
+        createdAddress.getAddressId()).toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(createdAddressUri);
@@ -62,15 +52,12 @@ public class AddressController {
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> editAddress(@Valid @RequestBody final AddressDto address) {
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<?> editAddress(@Valid @RequestBody final AddressDto address) {
 
     final AddressDto savedAddress = addressService.save(address);
 
-    final URI editedAddressUri =
-        ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}").buildAndExpand(savedAddress.getAddressId())
-            .toUri();
+    final URI editedAddressUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
+        savedAddress.getAddressId()).toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(editedAddressUri);
@@ -78,14 +65,12 @@ public class AddressController {
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
   }
 
-  @DeleteMapping
-  public ResponseEntity<AddressDto> deleteAddress(@Valid @RequestBody final AddressDto address) {
+  @DeleteMapping public ResponseEntity<AddressDto> deleteAddress(@Valid @RequestBody final AddressDto address) {
     addressService.delete(address);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
   }
 
-  @DeleteMapping(value = "/{id}")
-  public ResponseEntity<AddressDto> deleteAddress(
+  @DeleteMapping(value = "/{id}") public ResponseEntity<AddressDto> deleteAddress(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     addressService.delete(id);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);

@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("personRoleDtoConverter")
-public class PersonRoleDtoConverter implements Function<PersonRoleDto, PersonRole> {
+@Component("personRoleDtoConverter") public class PersonRoleDtoConverter
+    implements Function<PersonRoleDto, PersonRole> {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonRoleDtoConverter.class);
 
@@ -29,16 +29,16 @@ public class PersonRoleDtoConverter implements Function<PersonRoleDto, PersonRol
     LOG.info("Converts PersonRoleDto [{}] to PersonRole", personRoleDto);
 
     final CustomPersonDtoConverter customPersonDtoConverter = new CustomPersonDtoConverter();
-    final Set<Person> persons = personRoleDto.getPersons().stream().map(customPersonDtoConverter).collect(Collectors.toSet());
+    final Set<Person> persons = personRoleDto.getPersons().stream().map(customPersonDtoConverter).collect(
+        Collectors.toSet());
 
-    return new PersonRole(personRoleDto.getId(), personRoleDto.getRole(), persons);
+    return new PersonRole(personRoleDto.getPersonRoleId(), personRoleDto.getRole(), persons);
   }
 
   private class CustomPersonDtoConverter implements Function<PersonDto, Person> {
 
-    @Override
-    public Person apply(PersonDto person) {
-      return new Person.Builder().setId(person.getId()).build();
+    @Override public Person apply(PersonDto person) {
+      return new Person.Builder().setId(person.getPersonId()).build();
     }
   }
 }

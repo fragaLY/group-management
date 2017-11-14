@@ -1,32 +1,32 @@
 package gm.vk.core.domain.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import gm.vk.core.domain.person.Person;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
+@Entity @Table(name = "user", schema = "groupmanagement") public class User {
 
-@Entity
-@Table(name = "user", schema = "groupmanagement")
-public class User {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  private Integer id;
+  @OneToOne(fetch = FetchType.LAZY) @JoinColumn(name = "person_id", unique = true) private Person person;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "person_id", unique = true)
-  private Person person;
+  @Column(name = "login", unique = true, nullable = false) private String login;
 
-  @Column(name = "login", unique = true, nullable = false)
-  private String login;
+  @Column(name = "password", nullable = false) private String password;
 
-  @Column(name = "password", nullable = false)
-  private String password;
-
-  public User() {}
+  public User() {
+  }
 
   public User(Integer id, Person person, String login, String password) {
     this.id = id;
@@ -67,32 +67,25 @@ public class User {
     this.password = password;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof User)) return false;
+    if (!(o instanceof User))
+      return false;
 
-    User user = (User) o;
+    User user = (User)o;
 
-    return new EqualsBuilder()
-        .append(id, user.id)
-        .append(login, user.login)
-        .append(password, user.password)
-        .isEquals();
+    return new EqualsBuilder().append(id, user.id).append(login, user.login).append(password,
+        user.password).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(login).append(password).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("login", login)
-        .append("password", password)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("login", login).append("password",
+        password).toString();
   }
 }

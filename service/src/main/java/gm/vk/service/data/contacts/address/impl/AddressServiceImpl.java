@@ -20,8 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("addressService")
-public class AddressServiceImpl implements AddressService {
+@Service("addressService") public class AddressServiceImpl implements AddressService {
 
   private static final Logger LOG = LoggerFactory.getLogger(AddressServiceImpl.class);
 
@@ -31,23 +30,15 @@ public class AddressServiceImpl implements AddressService {
 
   @Autowired private AddressDtoConverter addressDtoConverter;
 
-  @Override
-  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-  public List<AddressDto> findAll() {
+  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<AddressDto> findAll() {
 
     LOG.info("Gets all addresses");
 
-    return addressDao
-        .findAll()
-        .stream()
-        .filter(Objects::nonNull)
-        .map(addressConverter)
-        .collect(Collectors.toList());
+    return addressDao.findAll().stream().filter(Objects::nonNull).map(addressConverter).collect(Collectors.toList());
   }
 
-  @Override
-  @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-  public AddressDto findOne(@NotNull final Integer id) {
+  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public AddressDto findOne(
+      @NotNull final Integer id) {
 
     LOG.info("Gets address by id [{}]", id);
 
@@ -61,26 +52,23 @@ public class AddressServiceImpl implements AddressService {
     }
   }
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-  public AddressDto save(@NotNull final AddressDto address) {
-      final Address savedAddress = addressDao.save(addressDtoConverter.apply(address));
+  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public AddressDto save(
+      @NotNull final AddressDto address) {
+    final Address savedAddress = addressDao.save(addressDtoConverter.apply(address));
 
     LOG.info("Address [{}] had been saved", address);
 
     return addressConverter.apply(savedAddress);
   }
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-  public void delete(@NotNull final AddressDto address) {
+  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+      @NotNull final AddressDto address) {
     addressDao.delete(addressDtoConverter.apply(address));
     LOG.info("Address [{}] had been deleted", address);
   }
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-  public void delete(@NotNull final Integer id) {
+  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
+      @NotNull final Integer id) {
     addressDao.delete(id);
     LOG.info("Address with id [{}] had been deleted", id);
   }

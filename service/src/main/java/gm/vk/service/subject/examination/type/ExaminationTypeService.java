@@ -1,8 +1,8 @@
 package gm.vk.service.subject.examination.type;
 
-import gm.vk.core.dto.subject.examination.type.ExaminationTypeDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.subject.examination.type.ExaminationTypeDto;
 
 public interface ExaminationTypeService {
 

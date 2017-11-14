@@ -7,40 +7,40 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupDao extends JpaRepository<Group, Integer> {
 
-    /**
-     * Gets all groups
-     *
-     * @return {@link List<Group>}
-     */
-    List<Group> findAll();
+  /**
+   * Gets all groups
+   *
+   * @return {@link List<Group>}
+   */
+  List<Group> findAll();
 
-    /**
-     * Gets the group by id
-     *
-     * @param id - the id
-     * @return {@link Group}
-     */
-    Group findOne(final Integer id);
+  /**
+   * Gets the group by id
+   *
+   * @param id - the id
+   * @return {@link Group}
+   */
+  Group findOne(final Integer id);
 
-    /**
-     * Saves group
-     *
-     * @param group - the group
-     * @return {@link Group}
-     */
-    Group save(final Group group);
+  /**
+   * Saves group
+   *
+   * @param group - the group
+   * @return {@link Group}
+   */
+  Group save(final Group group);
 
-    /**
-     * Deletes the group
-     *
-     * @param group - the group
-     */
-    void delete(final Group group);
+  /**
+   * Deletes the group
+   *
+   * @param group - the group
+   */
+  void delete(final Group group);
 
-    /**
-     * Deletes the group by id
-     *
-     * @param id - the id
-     */
-    void delete(final Integer id);
+  /**
+   * Deletes the group by id
+   *
+   * @param id - the id
+   */
+  void delete(final Integer id);
 }

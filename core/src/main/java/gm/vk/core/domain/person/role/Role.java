@@ -4,10 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum Role {
-  LECTURER("LECTURER"),
-  STUDENT("STUDENT"),
-  ADMIN("ADMIN"),
-  SURFER("SURFER");
+  LECTURER("LECTURER"), STUDENT("STUDENT"), ADMIN("ADMIN"), SURFER("SURFER");
 
   private String role;
 
@@ -16,10 +13,7 @@ public enum Role {
   }
 
   public static Optional<Role> getPersonTypeByType(final String _role) {
-    return Arrays.stream(values())
-        .parallel()
-        .filter(person -> person.getRole().equals(_role))
-        .findFirst();
+    return Arrays.stream(values()).parallel().filter(person -> person.getRole().equals(_role)).findFirst();
   }
 
   public String getRole() {

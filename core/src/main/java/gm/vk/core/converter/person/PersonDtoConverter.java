@@ -20,8 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("personDtoConverter")
-public class PersonDtoConverter implements Function<PersonDto, Person> {
+@Component("personDtoConverter") public class PersonDtoConverter implements Function<PersonDto, Person> {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonDtoConverter.class);
 
@@ -37,52 +36,48 @@ public class PersonDtoConverter implements Function<PersonDto, Person> {
 
     final CustomSubjectConverter customSubjectConverter = new CustomSubjectConverter();
 
-    return new Person.Builder().setId(personDto.getId()).setRole(new CustomPersonRoleConverter().apply(personDto.getRole())).setPersonalData(new CustomPersonalDataConverter().apply(personDto.getPersonalData())).setContacts(new CustomContactConverter().apply(personDto.getContacts())).setSubjects(
-        personDto.getSubjects().stream().map(customSubjectConverter).collect(Collectors.toSet())).setGroup(new CustomGroupConverter().apply(personDto.getGroup())).build();
+    return new Person.Builder().setId(personDto.getPersonId()).setRole(new CustomPersonRoleConverter().apply(
+        personDto.getRole())).setPersonalData(new CustomPersonalDataConverter().apply(personDto.getPersonalData())).setContacts(
+        new CustomContactConverter().apply(personDto.getContacts())).setSubjects(personDto.getSubjects().stream().map(
+        customSubjectConverter).collect(Collectors.toSet())).setGroup(new CustomGroupConverter().apply(
+        personDto.getGroup())).build();
   }
 
   private class CustomContactConverter implements Function<ContactsDto, Contacts> {
 
-    @Override
-    public Contacts apply(ContactsDto contacts) {
-      return new Contacts.Builder().setId(contacts.getContactsId())
-          .setSkype(contacts.getSkype())
-          .setPhone(contacts.getPhone())
-          .setEmail(contacts.getEmail())
-          .build();
+    @Override public Contacts apply(ContactsDto contacts) {
+      return new Contacts.Builder().setId(contacts.getContactsId()).setSkype(contacts.getSkype()).setPhone(
+          contacts.getPhone()).setEmail(contacts.getEmail()).build();
     }
   }
 
   private class CustomGroupConverter implements Function<GroupDto, Group> {
 
-    @Override
-    public Group apply(GroupDto group) {
-      return new Group.Builder().setId(group.getId()).setName(group.getName()).build();
+    @Override public Group apply(GroupDto group) {
+      return new Group.Builder().setId(group.getGroupId()).setName(group.getName()).build();
     }
   }
 
   private class CustomPersonRoleConverter implements Function<PersonRoleDto, PersonRole> {
 
-    @Override
-    public PersonRole apply(PersonRoleDto personRole) {
-      return new PersonRole(personRole.getId(), personRole.getRole());
+    @Override public PersonRole apply(PersonRoleDto personRole) {
+      return new PersonRole(personRole.getPersonRoleId(), personRole.getRole());
     }
   }
 
   private class CustomPersonalDataConverter implements Function<PersonalDataDto, PersonalData> {
 
-    @Override
-    public PersonalData apply(PersonalDataDto personalData) {
-      return new PersonalData(
-          personalData.getId(), personalData.getFirstName(), personalData.getSecondName());
+    @Override public PersonalData apply(PersonalDataDto personalData) {
+      return new PersonalData(personalData.getPersonalDataId(),
+          personalData.getFirstName(),
+          personalData.getSecondName());
     }
   }
 
   private class CustomSubjectConverter implements Function<SubjectDto, Subject> {
 
-    @Override
-    public Subject apply(SubjectDto subject) {
-      return new Subject(subject.getId(), subject.getName());
+    @Override public Subject apply(SubjectDto subject) {
+      return new Subject(subject.getSubjectId(), subject.getName());
     }
   }
 }

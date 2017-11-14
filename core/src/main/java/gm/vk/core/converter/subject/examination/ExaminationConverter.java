@@ -39,6 +39,9 @@ import org.springframework.stereotype.Component;
       gradeValue = grade.getGrade();
     }
 
-    return new ExaminationDto(examination.getId(), new ExaminationTypeDto(type.getId(), type.getType()), new GradeDto(gradeId, gradeValue));
+    return new ExaminationDto(
+        examination.getId(),
+        new ExaminationTypeDto(type.getId(), type.getType()),
+        new GradeDto(gradeId, gradeValue));
   }
 }

@@ -3,6 +3,7 @@ package gm.vk.core.dto.person.role;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.person.role.Role;
 import gm.vk.core.dto.person.PersonDto;
@@ -11,17 +12,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class PersonRoleDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class PersonRoleDto extends ResourceSupport {
 
-  @JsonProperty("PersonRoleId")
-  private Integer id;
+  @JsonProperty("PersonRoleId") private Integer id;
 
-  @NotNull(message = "Invalid role")
-  private Role role;
+  @NotNull(message = "Invalid role") private Role role;
 
   private Set<PersonDto> persons;
 
-  public PersonRoleDto() {}
+  public PersonRoleDto() {
+  }
 
   public PersonRoleDto(Integer id, Role role) {
     this.id = id;
@@ -58,30 +58,23 @@ public class PersonRoleDto extends ResourceSupport {
     this.persons = persons;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof PersonRoleDto)) return false;
+    if (!(o instanceof PersonRoleDto))
+      return false;
 
-    PersonRoleDto that = (PersonRoleDto) o;
+    PersonRoleDto that = (PersonRoleDto)o;
 
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(role, that.role)
-        .isEquals();
+    return new EqualsBuilder().append(id, that.id).append(role, that.role).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(role).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("role", role)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("role", role).toString();
   }
 }

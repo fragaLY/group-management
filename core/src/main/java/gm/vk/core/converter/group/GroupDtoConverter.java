@@ -12,8 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("groupDtoConverter")
-public class GroupDtoConverter implements Function<GroupDto, Group> {
+@Component("groupDtoConverter") public class GroupDtoConverter implements Function<GroupDto, Group> {
 
   private static final Logger LOG = LoggerFactory.getLogger(GroupDtoConverter.class);
 
@@ -27,6 +26,9 @@ public class GroupDtoConverter implements Function<GroupDto, Group> {
 
     LOG.info("Converts GroupDto [{}] to Group", group);
 
-    return new Group.Builder().setName(group.getName()).setId(group.getId()).setCourse(new Course(group.getCourse().getId(), group.getCourse().getCourse())).setFaculty(new Faculty(group.getFaculty().getId(), group.getFaculty().getFaculty())).setSemester(new Semester(group.getSemester().getId(), group.getSemester().getSemester())).build();
+    return new Group.Builder().setName(group.getName()).setId(group.getGroupId()).setCourse(new Course(group.getCourse().getCourseId(),
+        group.getCourse().getCourse())).setFaculty(new Faculty(group.getFaculty().getFacultyId(),
+        group.getFaculty().getFaculty())).setSemester(new Semester(group.getSemester().getSemesterId(),
+        group.getSemester().getSemester())).build();
   }
 }

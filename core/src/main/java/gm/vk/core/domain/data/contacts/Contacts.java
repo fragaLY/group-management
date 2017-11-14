@@ -1,40 +1,39 @@
 package gm.vk.core.domain.data.contacts;
 
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import gm.vk.core.domain.data.contacts.address.Address;
 import gm.vk.core.domain.person.Person;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
-import java.util.Set;
+@Entity @Table(name = "contacts", schema = "groupmanagement") public class Contacts {
 
-@Entity
-@Table(name = "contacts", schema = "groupmanagement")
-public class Contacts {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  private Integer id;
+  @Column(name = "phone", unique = true, nullable = false) private String phone;
 
-    @Column(name = "phone", unique = true, nullable = false)
-  private String phone;
+  @Column(name = "skype", unique = true) private String skype;
 
-    @Column(name = "skype", unique = true)
-  private String skype;
+  @Column(name = "email", unique = true, nullable = false) private String email;
 
-    @Column(name = "email", unique = true, nullable = false)
-  private String email;
+  @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class) @JoinColumn(name = "address_id") private Address address;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
-  @JoinColumn(name = "address_id")
-  private Address address;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts") private Set<Person> persons;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts")
-  private Set<Person> persons;
-
-  public Contacts() {}
+  public Contacts() {
+  }
 
   private Contacts(final Builder builder) {
     this.id = builder.id;
@@ -93,41 +92,26 @@ public class Contacts {
     this.persons = persons;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof Contacts)) return false;
+    if (!(o instanceof Contacts))
+      return false;
 
-    Contacts contacts = (Contacts) o;
+    Contacts contacts = (Contacts)o;
 
-    return new EqualsBuilder()
-        .append(id, contacts.id)
-        .append(phone, contacts.phone)
-        .append(skype, contacts.skype)
-        .append(email, contacts.email)
-        .isEquals();
+    return new EqualsBuilder().append(id, contacts.id).append(phone, contacts.phone).append(skype,
+        contacts.skype).append(email, contacts.email).isEquals();
   }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(phone)
-        .append(skype)
-        .append(email)
-        .toHashCode();
+  @Override public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(phone).append(skype).append(email).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("phone", phone)
-        .append("skype", skype)
-        .append("email", email)
-        .append("address", address)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("phone", phone).append("skype", skype).append("email",
+        email).append("address", address).toString();
   }
 
   public static class Builder {

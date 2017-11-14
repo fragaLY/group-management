@@ -1,5 +1,20 @@
 package gm.vk.core.domain.group;
 
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import gm.vk.core.domain.group.course.Course;
 import gm.vk.core.domain.group.faculty.Faculty;
 import gm.vk.core.domain.person.Person;
@@ -8,46 +23,25 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
-import java.util.Set;
+@Entity @Table(name = "studentgroup", schema = "groupmanagement") public class Group {
 
-@Entity
-@Table(name = "studentgroup", schema = "groupmanagement")
-public class Group {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  private Integer id;
+  @Column(name = "name") private String name;
 
-  @Column(name = "name")
-  private String name;
+  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "course_id", referencedColumnName = "id") private Course course;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "course_id", referencedColumnName = "id")
-  private Course course;
+  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "semester_id", referencedColumnName = "id") private Semester semester;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "semester_id", referencedColumnName = "id")
-  private Semester semester;
+  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "faculty_id", referencedColumnName = "id") private Faculty faculty;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "faculty_id", referencedColumnName = "id")
-  private Faculty faculty;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group") private Set<Person> persons;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
-  private Set<Person> persons;
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable(schema = "groupmanagement", name = "subjectid_groupid", joinColumns = {
+      @JoinColumn(name = "group_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "subject_id", nullable = false, updatable = false) }) private Set<Subject> subjects;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinTable(
-    schema = "groupmanagement",
-    name = "subjectid_groupid",
-    joinColumns = {@JoinColumn(name = "group_id", nullable = false, updatable = false)},
-    inverseJoinColumns = {@JoinColumn(name = "subject_id", nullable = false, updatable = false)}
-  )
-  private Set<Subject> subjects;
-
-  public Group() {}
+  public Group() {
+  }
 
   private Group(final Builder builder) {
     this.id = builder.id;
@@ -115,25 +109,24 @@ public class Group {
     this.subjects = subjects;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof Group)) return false;
+    if (!(o instanceof Group))
+      return false;
 
-    Group group = (Group) o;
+    Group group = (Group)o;
 
-      return new EqualsBuilder().append(id, group.id).append(name, group.name).isEquals();
+    return new EqualsBuilder().append(id, group.id).append(name, group.name).isEquals();
   }
 
-  @Override
-  public int hashCode() {
-      return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
+  @Override public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
   }
 
-  @Override
-  public String toString() {
-      return new ToStringBuilder(this).append("id", id).append("name", name).toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("name", name).toString();
   }
 
   public static class Builder {

@@ -13,8 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("addressConverter")
-public class AddressConverter implements Function<Address, AddressDto> {
+@Component("addressConverter") public class AddressConverter implements Function<Address, AddressDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AddressConverter.class);
 
@@ -36,19 +35,16 @@ public class AddressConverter implements Function<Address, AddressDto> {
       contactsDtos = contacts.stream().map(customContactConverter).collect(Collectors.toSet());
     }
 
-    return new AddressDto.Builder().setId(address.getId()).setCountry(address.getCountry()).setCity(address.getCity()).setStreet(address.getStreet()).setHome(address.getHome()).setApartmentNumber(address.getApartmentNumber()).setContacts(contactsDtos).build();
+    return new AddressDto.Builder().setId(address.getId()).setCountry(address.getCountry()).setCity(address.getCity()).setStreet(
+        address.getStreet()).setHome(address.getHome()).setApartmentNumber(address.getApartmentNumber()).setContacts(
+        contactsDtos).build();
   }
 
   private class CustomContactConverter implements Function<Contacts, ContactsDto> {
 
-    @Override
-    public ContactsDto apply(Contacts contacts) {
-      return new ContactsDto.Builder()
-          .setId(contacts.getId())
-          .setSkype(contacts.getSkype())
-          .setPhone(contacts.getPhone())
-          .setEmail(contacts.getEmail())
-          .build();
+    @Override public ContactsDto apply(Contacts contacts) {
+      return new ContactsDto.Builder().setId(contacts.getId()).setSkype(contacts.getSkype()).setPhone(contacts.getPhone()).setEmail(
+          contacts.getEmail()).build();
     }
   }
 }

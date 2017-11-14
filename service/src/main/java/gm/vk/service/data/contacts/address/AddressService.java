@@ -1,8 +1,8 @@
 package gm.vk.service.data.contacts.address;
 
-import gm.vk.core.dto.data.contacts.address.AddressDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.data.contacts.address.AddressDto;
 
 public interface AddressService {
 

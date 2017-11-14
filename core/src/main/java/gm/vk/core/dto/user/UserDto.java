@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.person.PersonDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,31 +13,21 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class UserDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class UserDto extends ResourceSupport {
 
   private static final String LOGIN_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
-  private static final String PASSWORD_REGEXP =
-      "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,50})";
+  private static final String PASSWORD_REGEXP = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,50})";
 
-  @JsonProperty("UserId")
-  private Integer id;
+  @JsonProperty("UserId") private Integer id;
 
-  @NotNull(message = "The user should be an any person")
-  private PersonDto person;
+  @NotNull(message = "The user should be an any person") private PersonDto person;
 
-  @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login")
-  @Size(min = 3, max = 31)
-  private String login;
+  @Pattern(regexp = LOGIN_REGEXP, message = "Invalid login") @Size(min = 3, max = 31) private String login;
 
-  @JsonIgnore
-  @Pattern(
-    regexp = PASSWORD_REGEXP,
-    message =
-        "Password should contains at least one upper case literal, one lower case literal, one symbol and number."
-  )
-  private String password;
+  @JsonIgnore @Pattern(regexp = PASSWORD_REGEXP, message = "Password should contains at least one upper case literal, one lower case literal, one symbol and number.") private String password;
 
-  public UserDto() {}
+  public UserDto() {
+  }
 
   public UserDto(Integer id, PersonDto person, String login, String password) {
     this.id = id;
@@ -77,36 +68,25 @@ public class UserDto extends ResourceSupport {
     this.password = password;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof UserDto)) return false;
+    if (!(o instanceof UserDto))
+      return false;
 
-    UserDto userDto = (UserDto) o;
+    UserDto userDto = (UserDto)o;
 
-    return new EqualsBuilder()
-        .append(id, userDto.id)
-        .append(login, userDto.login)
-        .append(password, userDto.password)
-        .isEquals();
+    return new EqualsBuilder().append(id, userDto.id).append(login, userDto.login).append(password,
+        userDto.password).isEquals();
   }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(id)
-        .append(login)
-        .append(password)
-        .toHashCode();
+  @Override public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(id).append(login).append(password).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("login", login)
-        .append("password", password)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("login", login).append("password",
+        password).toString();
   }
 }

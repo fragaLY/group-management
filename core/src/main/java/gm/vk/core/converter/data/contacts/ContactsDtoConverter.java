@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("contactsDtoConverter")
-public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
+@Component("contactsDtoConverter") public class ContactsDtoConverter
+    implements Function<ContactsDto, Contacts> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ContactsDtoConverter.class);
 
@@ -33,29 +33,23 @@ public class ContactsDtoConverter implements Function<ContactsDto, Contacts> {
 
     return new Contacts.Builder().setId(contactsDto.getContactsId()).setEmail(contactsDto.getEmail()).setPhone(
         contactsDto.getPhone()).setSkype(contactsDto.getSkype()).setAddress(new CustomAddressDtoConverter().apply(
-        contactsDto.getAddress())).setPersons(
-        contactsDto.getPersons().stream().map(customPersonDtoConverter).collect(Collectors.toSet())).build();
+        contactsDto.getAddress())).setPersons(contactsDto.getPersons().stream().map(customPersonDtoConverter).collect(
+        Collectors.toSet())).build();
   }
 
   private class CustomAddressDtoConverter implements Function<AddressDto, Address> {
 
-    @Override
-    public Address apply(AddressDto address) {
-      return new Address.Builder().setId(address.getAddressId())
-          .setCountry(address.getCountry())
-          .setCity(address.getCity())
-          .setStreet(address.getStreet())
-          .setHome(address.getHome())
-          .setApartmentNumber(address.getApartmentNumber())
-          .build();
+    @Override public Address apply(AddressDto address) {
+      return new Address.Builder().setId(address.getAddressId()).setCountry(address.getCountry()).setCity(
+          address.getCity()).setStreet(address.getStreet()).setHome(address.getHome()).setApartmentNumber(
+          address.getApartmentNumber()).build();
     }
   }
 
   private class CustomPersonDtoConverter implements Function<PersonDto, Person> {
 
-    @Override
-    public Person apply(PersonDto person) {
-      return new Person.Builder().setId(person.getId()).build();
+    @Override public Person apply(PersonDto person) {
+      return new Person.Builder().setId(person.getPersonId()).build();
     }
   }
 }

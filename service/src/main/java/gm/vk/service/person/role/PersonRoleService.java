@@ -1,8 +1,8 @@
 package gm.vk.service.person.role;
 
-import gm.vk.core.dto.person.role.PersonRoleDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.person.role.PersonRoleDto;
 
 public interface PersonRoleService {
 

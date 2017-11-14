@@ -3,6 +3,7 @@ package gm.vk.core.dto.subject.examination.type;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.domain.subject.examination.type.Type;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
@@ -11,15 +12,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class ExaminationTypeDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class ExaminationTypeDto extends ResourceSupport {
 
-  @JsonProperty("ExaminationTypeId")
-  private Integer id;
+  @JsonProperty("ExaminationTypeId") private Integer id;
 
   @NotNull private Type type;
   private Set<ExaminationDto> examinations;
 
-  public ExaminationTypeDto() {}
+  public ExaminationTypeDto() {
+  }
 
   public ExaminationTypeDto(Integer id, Type type) {
     this.id = id;
@@ -57,30 +58,23 @@ public class ExaminationTypeDto extends ResourceSupport {
     this.examinations = examinations;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof ExaminationTypeDto)) return false;
+    if (!(o instanceof ExaminationTypeDto))
+      return false;
 
-    ExaminationTypeDto that = (ExaminationTypeDto) o;
+    ExaminationTypeDto that = (ExaminationTypeDto)o;
 
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(type, that.type)
-        .isEquals();
+    return new EqualsBuilder().append(id, that.id).append(type, that.type).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(type).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("type", type)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("type", type).toString();
   }
 }

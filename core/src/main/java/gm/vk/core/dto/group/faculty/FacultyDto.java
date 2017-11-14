@@ -3,6 +3,7 @@ package gm.vk.core.dto.group.faculty;
 import java.util.Set;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.group.GroupDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -10,17 +11,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class FacultyDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class FacultyDto extends ResourceSupport {
 
-  @JsonProperty("FacultyId")
-  private Integer id;
+  @JsonProperty("FacultyId") private Integer id;
 
-  @NotNull(message = "Invalid faculty")
-  private String faculty;
+  @NotNull(message = "Invalid faculty") private String faculty;
 
   private Set<GroupDto> groups;
 
-  public FacultyDto() {}
+  public FacultyDto() {
+  }
 
   public FacultyDto(Integer id, String faculty) {
     this.id = id;
@@ -57,30 +57,23 @@ public class FacultyDto extends ResourceSupport {
     this.groups = groups;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof FacultyDto)) return false;
+    if (!(o instanceof FacultyDto))
+      return false;
 
-    FacultyDto faculty1 = (FacultyDto) o;
+    FacultyDto faculty1 = (FacultyDto)o;
 
-    return new EqualsBuilder()
-        .append(id, faculty1.id)
-        .append(faculty, faculty1.faculty)
-        .isEquals();
+    return new EqualsBuilder().append(id, faculty1.id).append(faculty, faculty1.faculty).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(faculty).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("faculty", faculty)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("faculty", faculty).toString();
   }
 }

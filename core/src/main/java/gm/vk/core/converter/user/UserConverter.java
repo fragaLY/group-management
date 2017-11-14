@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("userConverter")
-public class UserConverter implements Function<User, UserDto> {
+@Component("userConverter") public class UserConverter implements Function<User, UserDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(UserConverter.class);
 
@@ -26,7 +25,8 @@ public class UserConverter implements Function<User, UserDto> {
 
     LOG.info("Converts User [{}] to UserDto", user);
 
-    return new UserDto(user.getId(),
+    return new UserDto(
+        user.getId(),
         new CustomPersonConverter().apply(user.getPerson()),
         user.getLogin(),
         user.getPassword());
@@ -34,8 +34,7 @@ public class UserConverter implements Function<User, UserDto> {
 
   private class CustomPersonConverter implements Function<Person, PersonDto> {
 
-    @Override
-    public PersonDto apply(Person person) {
+    @Override public PersonDto apply(Person person) {
       return new PersonDto.Builder().setId(person.getId()).build();
     }
   }

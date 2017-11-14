@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -11,22 +12,20 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-public class GradeDto extends ResourceSupport {
+@JsonInclude(JsonInclude.Include.NON_NULL) public class GradeDto extends ResourceSupport {
 
-  @JsonProperty("GradeId")
-  private Integer id;
+  @JsonProperty("GradeId") private Integer id;
 
-  @Min(value = 0, message = "The grade should be greater or equals to 0 and less or equals to 10")
-  @Max(value = 10, message = "The grade should be greater or equals to 0 and less or equals to 10")
-  private Integer grade;
+  @Min(value = 0, message = "The grade should be greater or equals to 0 and less or equals to 10") @Max(value = 10, message = "The grade should be greater or equals to 0 and less or equals to 10") private Integer grade;
 
   private Set<ExaminationDto> examinations;
 
-  public GradeDto() {}
+  public GradeDto() {
+  }
 
-    public GradeDto(Integer id) {
-        this.id = id;
-    }
+  public GradeDto(Integer id) {
+    this.id = id;
+  }
 
   public GradeDto(Integer id, Integer grade) {
     this.id = id;
@@ -63,30 +62,23 @@ public class GradeDto extends ResourceSupport {
     this.examinations = examinations;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof GradeDto)) return false;
+    if (!(o instanceof GradeDto))
+      return false;
 
-    GradeDto gradeDto = (GradeDto) o;
+    GradeDto gradeDto = (GradeDto)o;
 
-    return new EqualsBuilder()
-        .append(id, gradeDto.id)
-        .append(grade, gradeDto.grade)
-        .isEquals();
+    return new EqualsBuilder().append(id, gradeDto.id).append(grade, gradeDto.grade).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(grade).toHashCode();
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this)
-        .append("id", id)
-        .append("grade", grade)
-        .toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("id", id).append("grade", grade).toString();
   }
 }

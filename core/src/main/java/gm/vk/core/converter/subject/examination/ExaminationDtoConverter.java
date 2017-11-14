@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("examinationDtoConverter")
-public class ExaminationDtoConverter implements Function<ExaminationDto, Examination> {
+@Component("examinationDtoConverter") public class ExaminationDtoConverter
+    implements Function<ExaminationDto, Examination> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationDtoConverter.class);
 
@@ -27,8 +27,9 @@ public class ExaminationDtoConverter implements Function<ExaminationDto, Examina
     LOG.info("Converts ExaminationDto [{}] to Examination", examinationDto);
 
     return new Examination(
-        examinationDto.getId(),
-        new ExaminationType(examinationDto.getType().getId(), examinationDto.getType().getType()),
-        new Grade(examinationDto.getGrade().getId(), examinationDto.getGrade().getGrade()));
+        examinationDto.getExaminationId(),
+        new ExaminationType(examinationDto.getType().getExaminationTypeId(),
+            examinationDto.getType().getType()),
+        new Grade(examinationDto.getGrade().getGradeId(), examinationDto.getGrade().getGrade()));
   }
 }

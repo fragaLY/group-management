@@ -1,28 +1,29 @@
 package gm.vk.core.domain.group;
 
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.*;
-import java.util.Set;
+@Entity @Table(name = "semester", schema = "groupmanagement") public class Semester {
 
-@Entity
-@Table(name = "semester", schema = "groupmanagement")
-public class Semester {
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  private Integer id;
+  @Column(name = "semester") private Integer semester;
 
-  @Column(name = "semester")
-  private Integer semester;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "semester") private Set<Group> groups;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "semester")
-  private Set<Group> groups;
-
-  public Semester() {}
+  public Semester() {
+  }
 
   public Semester(Integer id, Integer semester) {
     this.id = id;
@@ -59,27 +60,23 @@ public class Semester {
     this.groups = groups;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
+  @Override public boolean equals(Object o) {
+    if (this == o)
+      return true;
 
-    if (!(o instanceof Semester)) return false;
+    if (!(o instanceof Semester))
+      return false;
 
-    Semester semester1 = (Semester) o;
+    Semester semester1 = (Semester)o;
 
-    return new EqualsBuilder()
-        .append(id, semester1.id)
-        .append(semester, semester1.semester)
-        .isEquals();
+    return new EqualsBuilder().append(id, semester1.id).append(semester, semester1.semester).isEquals();
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(semester).toHashCode();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return new ToStringBuilder(this).append("id", id).append("semester", semester).toString();
   }
 }

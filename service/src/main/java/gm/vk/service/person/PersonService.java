@@ -1,8 +1,8 @@
 package gm.vk.service.person;
 
-import gm.vk.core.dto.person.PersonDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.person.PersonDto;
 
 public interface PersonService {
 

@@ -1,8 +1,8 @@
 package gm.vk.service.subject.examination.grade;
 
-import gm.vk.core.dto.subject.examination.grade.GradeDto;
-
 import java.util.List;
+
+import gm.vk.core.dto.subject.examination.grade.GradeDto;
 
 public interface GradeService {
 
