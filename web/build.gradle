@@ -4,7 +4,7 @@ version '1.0'
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'idea'
-apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+apply plugin: 'org.akhikhl.gretty'
 
 compileJava {
     sourceCompatibility = 1.8
@@ -19,6 +19,7 @@ repositories {
 ext {
     springVersion = '4.+'
 //    mssqlVersion = '6.2.1.jre8'
+    thymeleafVersion = '3.+'
     h2Version = '1.+'
     jacksonVersion = '2.8.+'
     springFoxVersion = '2.6.+'
@@ -50,5 +51,28 @@ dependencies {
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 
+    //Thymeleaf dependencies
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: thymeleafVersion
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version: thymeleafVersion
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: thymeleafVersion
+
+    //Frontend plugin
+    compile group: 'com.github.eirslett', name: 'frontend-maven-plugin', version: '1.6'
+
     compile project(":service")
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+gretty {
+    httpPort = 8080
+    contextPath = '/'
+    servletContainer = 'jetty9'
 }

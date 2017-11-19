@@ -3,10 +3,10 @@ package gm.vk.configuration.mvc;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +23,13 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Locale;
 
@@ -31,30 +38,23 @@ import java.util.Locale;
 @ComponentScan("gm.vk.controllers")
 public class ServletConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
+  private static final String DEFAULT_ENCODING = "UTF-8";
+
+  private static final String PREFIX = "/WEB-INF/templates/";
+  private static final String SUFFIX = ".html";
+
+  private static final String RESOURCE_HANDLER = ".addResourceHandler";
+  private static final String RESOURCE_LOCATION = "classpath:/META-INF/resources/webjars/";
+
   private ApplicationContext applicationContext;
 
-  /**
-   * Set the ApplicationContext that this object runs in. Normally this call will be used to
-   * initialize the object.
-   *
-   * <p>Invoked after population of normal bean properties but before an init callback such as
-   * {@link InitializingBean#afterPropertiesSet()} or a custom init-method. Invoked after {@link
-   * ResourceLoaderAware#setResourceLoader}, {@link
-   * ApplicationEventPublisherAware#setApplicationEventPublisher} and {@link MessageSourceAware}, if
-   * applicable.
-   *
-   * @param applicationContext the ApplicationContext object to be used by this object
-   * @throws ApplicationContextException in case of context initialization errors
-   * @throws BeansException if thrown by application context methods
-   * @see BeanInitializationException
-   */
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 
-    @Bean
-    public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
+  @Bean
+  public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
 
     ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 
@@ -76,52 +76,52 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
     return view;
   }
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+  @Override
+  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 
     final MediaType json = MediaType.APPLICATION_JSON;
 
-        configurer
-                .favorPathExtension(true)
-                .favorParameter(false)
-                .ignoreAcceptHeader(true)
-                .useJaf(false)
-                .defaultContentType(json)
-                .parameterName("mediaType")
-                .mediaType("json", json);
+    configurer
+            .favorPathExtension(true)
+            .favorParameter(false)
+            .ignoreAcceptHeader(true)
+            .useJaf(false)
+            .defaultContentType(json)
+            .parameterName("mediaType")
+            .mediaType("json", json);
   }
 
-    @Bean
-    public LocalValidatorFactoryBean getValidator() {
+  @Bean
+  public LocalValidatorFactoryBean getValidator() {
     LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
     validator.setParameterNameDiscoverer(new LocalVariableTableParameterNameDiscoverer());
     return validator;
   }
 
-    @Bean
-    @Autowired
-    public MethodValidationPostProcessor getValidationPostProcessor(
+  @Bean
+  @Autowired
+  public MethodValidationPostProcessor getValidationPostProcessor(
       LocalValidatorFactoryBean validator) {
     MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
     processor.setValidator(validator);
     return processor;
   }
 
-    @Bean(name = "messageSource")
-    public MessageSource messageSource() {
+  @Bean(name = "messageSource")
+  public MessageSource messageSource() {
 
-        ReloadableResourceBundleMessageSource messageSource =
-                new ReloadableResourceBundleMessageSource();
+    ReloadableResourceBundleMessageSource messageSource =
+            new ReloadableResourceBundleMessageSource();
 
     messageSource.setBasename("i18n");
-    messageSource.setDefaultEncoding("UTF-8");
+    messageSource.setDefaultEncoding(DEFAULT_ENCODING);
     messageSource.setCacheSeconds(1800);
 
     return messageSource;
   }
 
-    @Bean(name = "localeResolver")
-    public LocaleResolver localeResolver() {
+  @Bean(name = "localeResolver")
+  public LocaleResolver localeResolver() {
 
     CookieLocaleResolver resolver = new CookieLocaleResolver();
 
@@ -132,8 +132,8 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
     return resolver;
   }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
 
     LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
 
@@ -141,10 +141,39 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
     registry.addInterceptor(interceptor);
   }
 
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+  @Override
+  public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    registry
+            .addResourceHandler(RESOURCE_HANDLER)
+            .addResourceLocations(RESOURCE_LOCATION)
+            .setCachePeriod(86400);
   }
+
+  @Bean(name = "viewResolver")
+  public ViewResolver getViewResolver() {
+    ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+    resolver.setTemplateEngine(getTemplateEngine());
+    resolver.setCharacterEncoding(DEFAULT_ENCODING);
+    return resolver;
+  }
+
+  @Bean
+  public TemplateEngine getTemplateEngine() {
+    SpringTemplateEngine engine = new SpringTemplateEngine();
+    engine.setTemplateResolver(getTemplateResolver());
+    engine.addDialect(new SpringSecurityDialect());
+    return engine;
+  }
+
+  @Bean
+  public ITemplateResolver getTemplateResolver() {
+    SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+    resolver.setApplicationContext(applicationContext);
+    resolver.setPrefix(PREFIX);
+    resolver.setSuffix(SUFFIX);
+    resolver.setTemplateMode(TemplateMode.HTML);
+    resolver.setCacheable(true);
+    return resolver;
+  }
+
 }

@@ -8,14 +8,14 @@ Subject: RDBMS
 
 ### What I've used for project:
 * Database: MS SQL.
-* Tools IDE: IntelliJ IDEA;
-* RDBMS: SQL Server 2017.2;
+* Tools IDE: [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+* RDBMS: [SQL Server 2017.2](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
 ### Technologies and APIs: 
 * Java Core(JDK 1.8), JavaMail;
-* Spring Framework v3+(Boot, Core, MVC, OAuth2 Security, Mail, REST, Data, SpringFox);
+* Spring Framework v3+(Core, MVC, OAuth2 Security, Mail, REST, Data, SpringFox, HATEAOS);
 * Hibernate +5;
 * Servlet container: Jetty;
-* Web: HTML, CSS, JS , JQuery, ReactJS;
+* Web: HTML, CSS, Thymeleaf, JS, ReactJS, RestJS, Babel, Webpack;
 * Building tool: Gradle;
 * Test: JUnit 4, Mockito;
 * Database: MS SQL, H2;
@@ -24,6 +24,8 @@ Subject: RDBMS
 * [Travis-CI](https://travis-ci.org/)
 * [Waffle](http://waffle.io/fragaLY/group-management)
 * [Google-Java-Format](https://github.com/google/google-java-format)
+* [Frontend-Maven-Plugin](https://github.com/eirslett/frontend-maven-plugin)
+* [Gretty-Plugin](https://github.com/akhikhl/gretty)
 
 ### The 'Group Management' scheme
 ![Scheme of 'Group Management'](https://github.com/fragaLY/group-management/blob/master/GroupManagement.png?raw=true) 
