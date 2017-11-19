@@ -27,6 +27,6 @@ public class ContactsLinkBuilder implements Consumer<ContactsDto> {
         contacts.add(
                 linkTo(methodOn(AddressController.class).getAddresses())
                         .slash(contacts.getAddress().getAddressId())
-                        .withSelfRel());
+                        .withRel("address"));
     }
 }

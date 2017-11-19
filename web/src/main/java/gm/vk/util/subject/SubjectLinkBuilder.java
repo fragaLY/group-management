@@ -28,6 +28,6 @@ public class SubjectLinkBuilder implements Consumer<SubjectDto> {
         subject.add(
                 linkTo(methodOn(ExaminationController.class).getExaminations())
                         .slash(subject.getExamination().getExaminationId())
-                        .withSelfRel());
+                        .withRel("examination"));
     }
 }

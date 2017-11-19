@@ -31,21 +31,21 @@ public class PersonLinkBuilder implements Consumer<PersonDto> {
         person.add(
                 linkTo(methodOn(ContactsController.class).getContacts())
                         .slash(person.getContacts().getContactsId())
-                        .withSelfRel());
+                        .withRel("contacts"));
 
         person.add(
                 linkTo(methodOn(PersonalDataController.class).getAllPersonalData())
                         .slash(person.getPersonalData().getPersonalDataId())
-                        .withSelfRel());
+                        .withRel("personaldata"));
 
         person.add(
                 linkTo(methodOn(PersonRoleController.class).getPersonRoles())
                         .slash(person.getRole().getPersonRoleId())
-                        .withSelfRel());
+                        .withRel("role"));
 
         person.add(
                 linkTo(methodOn(GroupController.class).getGroups())
                         .slash(person.getGroup().getGroupId())
-                        .withSelfRel());
+                        .withRel("group"));
     }
 }

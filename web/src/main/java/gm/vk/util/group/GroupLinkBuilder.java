@@ -30,16 +30,16 @@ public class GroupLinkBuilder implements Consumer<GroupDto> {
         group.add(
                 linkTo(methodOn(CourseController.class).getCourses())
                         .slash(group.getCourse().getCourseId())
-                        .withSelfRel());
+                        .withRel("course"));
 
         group.add(
                 linkTo(methodOn(SemesterController.class).getSemesters())
                         .slash(group.getSemester().getSemesterId())
-                        .withSelfRel());
+                        .withRel("semester"));
 
         group.add(
                 linkTo(methodOn(FacultyController.class).getFaculties())
                         .slash(group.getFaculty().getFacultyId())
-                        .withSelfRel());
+                        .withRel("faculty"));
     }
 }

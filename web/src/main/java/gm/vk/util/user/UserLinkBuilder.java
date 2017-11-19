@@ -26,6 +26,6 @@ public class UserLinkBuilder implements Consumer<UserDto> {
         user.add(
                 linkTo(methodOn(PersonController.class).getPersons())
                         .slash(user.getPerson().getPersonId())
-                        .withSelfRel());
+                        .withRel("person"));
     }
 }

@@ -29,11 +29,11 @@ public class ExaminationLinkBuilder implements Consumer<ExaminationDto> {
         examination.add(
                 linkTo(methodOn(ExaminationTypeController.class).getExaminationTypes())
                         .slash(examination.getType().getExaminationTypeId())
-                        .withSelfRel());
+                        .withRel("examinationtype"));
 
         examination.add(
                 linkTo(methodOn(GradeController.class).getGrades())
                         .slash(examination.getGrade().getGradeId())
-                        .withSelfRel());
+                        .withRel("grade"));
     }
 }
