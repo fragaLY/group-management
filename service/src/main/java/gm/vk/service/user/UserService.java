@@ -1,8 +1,8 @@
 package gm.vk.service.user;
 
-import java.util.List;
-
 import gm.vk.core.dto.user.UserDto;
+
+import java.util.List;
 
 public interface UserService {
 

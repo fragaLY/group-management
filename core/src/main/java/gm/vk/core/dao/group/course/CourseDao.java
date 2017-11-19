@@ -1,9 +1,9 @@
 package gm.vk.core.dao.group.course;
 
-import java.util.List;
-
 import gm.vk.core.domain.group.course.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface CourseDao extends JpaRepository<Course, Integer> {
 

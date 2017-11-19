@@ -1,7 +1,5 @@
 package gm.vk.core.dto.subject.examination;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,17 +10,22 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class ExaminationDto
-    extends ResourceSupport {
+import javax.validation.constraints.NotNull;
 
-  @JsonProperty("ExaminationId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ExaminationDto extends ResourceSupport {
 
-  @NotNull(message = "Examination type could not be a null") private ExaminationTypeDto type;
+    @JsonProperty("ExaminationId")
+    private Integer id;
+
+    @NotNull(message = "Examination type could not be a null")
+    private ExaminationTypeDto type;
 
   private GradeDto grade;
 
-  public ExaminationDto() {
-  }
+    public ExaminationDto() {
+    }
 
   public ExaminationDto(final Integer id, final ExaminationTypeDto type, final GradeDto grade) {
     this.id = id;
@@ -54,23 +57,24 @@ import org.springframework.hateoas.ResourceSupport;
     this.grade = grade;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof ExaminationDto))
-      return false;
+        if (!(o instanceof ExaminationDto)) return false;
 
-    ExaminationDto that = (ExaminationDto)o;
+        ExaminationDto that = (ExaminationDto) o;
 
     return new EqualsBuilder().append(id, that.id).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).toString();
   }
 }

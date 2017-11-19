@@ -1,9 +1,5 @@
 package gm.vk.core.converter.group.course;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.group.course.Course;
 import gm.vk.core.dto.group.GroupDto;
@@ -12,7 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("courseConverter") public class CourseConverter implements Function<Course, CourseDto> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Component("courseConverter")
+public class CourseConverter implements Function<Course, CourseDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CourseConverter.class);
 
@@ -22,7 +23,8 @@ import org.springframework.stereotype.Component;
    * @param course - the {@link Course}
    * @return {@link CourseDto}
    */
-  @Override public CourseDto apply(@NotNull final Course course) {
+  @Override
+  public CourseDto apply(@NotNull final Course course) {
 
     LOG.info("Converts Course [{}] to CourseDto", course);
 
@@ -36,7 +38,8 @@ import org.springframework.stereotype.Component;
 
   private class CustomGroupConverter implements Function<Group, GroupDto> {
 
-    @Override public GroupDto apply(Group group) {
+      @Override
+      public GroupDto apply(Group group) {
       return new GroupDto.Builder().setId(group.getId()).setName(group.getName()).build();
     }
   }

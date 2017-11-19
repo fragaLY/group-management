@@ -1,11 +1,5 @@
 package gm.vk.service.subject.examination.grade.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.subject.examination.grade.GradeConverter;
 import gm.vk.core.converter.subject.examination.grade.GradeDtoConverter;
 import gm.vk.core.dao.subject.examination.grade.GradeDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("gradeService") public class GradeServiceImpl implements GradeService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("gradeService")
+public class GradeServiceImpl implements GradeService {
 
   private static final Logger LOG = LoggerFactory.getLogger(GradeServiceImpl.class);
 
@@ -30,15 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private GradeDtoConverter gradeDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<GradeDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<GradeDto> findAll() {
 
     LOG.info("Gets all Grades");
 
-    return gradeDao.findAll().stream().filter(Objects::nonNull).map(gradeConverter).collect(Collectors.toList());
+        return gradeDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(gradeConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public GradeDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public GradeDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets Grade by id [{}]", id);
 
@@ -52,21 +61,24 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public GradeDto save(
-      @NotNull final GradeDto grade) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public GradeDto save(@NotNull final GradeDto grade) {
     final Grade savedGrade = gradeDao.save(gradeDtoConverter.apply(grade));
     LOG.info("Grade [{}] had been saved", grade);
     return gradeConverter.apply(savedGrade);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final GradeDto grade) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final GradeDto grade) {
     gradeDao.delete(gradeDtoConverter.apply(grade));
     LOG.info("Grade [{}] had been deleted", grade);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     gradeDao.delete(id);
     LOG.info("Grade with id [{}] had been deleted", id);
   }

@@ -1,38 +1,42 @@
 package gm.vk.core.domain.data.contacts.address;
 
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import gm.vk.core.domain.data.contacts.Contacts;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity @Table(name = "address", schema = "groupmanagement") public class Address {
+import javax.persistence.*;
+import java.util.Set;
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
+@Entity
+@Table(name = "address", schema = "groupmanagement")
+public class Address {
 
-  @Column(name = "country", nullable = false) private String country;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-  @Column(name = "city", nullable = false) private String city;
+    @Column(name = "country", nullable = false)
+    private String country;
 
-  @Column(name = "street", nullable = false) private String street;
+    @Column(name = "city", nullable = false)
+    private String city;
 
-  @Column(name = "home", nullable = false) private String home;
+    @Column(name = "street", nullable = false)
+    private String street;
 
-  @Column(name = "apartmentNumber", nullable = false) private String apartmentNumber;
+    @Column(name = "home", nullable = false)
+    private String home;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "address") private Set<Contacts> contacts;
+    @Column(name = "apartmentNumber", nullable = false)
+    private String apartmentNumber;
 
-  public Address() {
-  }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    private Set<Contacts> contacts;
+
+    public Address() {
+    }
 
   private Address(final Builder builder) {
     this.id = builder.id;
@@ -100,28 +104,46 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.contacts = contacts;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof Address))
-      return false;
+        if (!(o instanceof Address)) return false;
 
-    Address address = (Address)o;
+        Address address = (Address) o;
 
-    return new EqualsBuilder().append(id, address.id).append(country, address.country).append(city,
-        address.city).append(street, address.street).append(home, address.home).append(apartmentNumber,
-        address.apartmentNumber).isEquals();
+        return new EqualsBuilder()
+                .append(id, address.id)
+                .append(country, address.country)
+                .append(city, address.city)
+                .append(street, address.street)
+                .append(home, address.home)
+                .append(apartmentNumber, address.apartmentNumber)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
-    return new HashCodeBuilder(17,
-        37).append(id).append(country).append(city).append(street).append(home).append(apartmentNumber).toHashCode();
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(country)
+                .append(city)
+                .append(street)
+                .append(home)
+                .append(apartmentNumber)
+                .toHashCode();
   }
 
-  @Override public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("country", country).append("city", city).append("street",
-        street).append("home", home).append("apartmentNumber", apartmentNumber).toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("country", country)
+                .append("city", city)
+                .append("street", street)
+                .append("home", home)
+                .append("apartmentNumber", apartmentNumber)
+                .toString();
   }
 
   public static class Builder {

@@ -1,8 +1,8 @@
 package gm.vk.service.subject;
 
-import java.util.List;
-
 import gm.vk.core.dto.subject.SubjectDto;
+
+import java.util.List;
 
 public interface SubjectService {
 

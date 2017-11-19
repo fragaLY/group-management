@@ -1,26 +1,28 @@
 package gm.vk.core.domain.data.personal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity @Table(name = "personalData", schema = "groupmanagement") public class PersonalData {
+import javax.persistence.*;
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
+@Entity
+@Table(name = "personalData", schema = "groupmanagement")
+public class PersonalData {
 
-  @Column(name = "firstName", nullable = false) private String firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-  @Column(name = "secondName", nullable = false) private String secondName;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
 
-  public PersonalData() {
-  }
+    @Column(name = "secondName", nullable = false)
+    private String secondName;
+
+    public PersonalData() {
+    }
 
   public PersonalData(final Integer id, final String firstName, final String secondName) {
     this.id = id;
@@ -52,25 +54,32 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.secondName = secondName;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof PersonalData))
-      return false;
+        if (!(o instanceof PersonalData)) return false;
 
-    PersonalData that = (PersonalData)o;
+        PersonalData that = (PersonalData) o;
 
-    return new EqualsBuilder().append(id, that.id).append(firstName, that.firstName).append(secondName,
-        that.secondName).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(firstName, that.firstName)
+                .append(secondName, that.secondName)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(firstName).append(secondName).toHashCode();
   }
 
-  @Override public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("firstName", firstName).append("secondName",
-        secondName).toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("firstName", firstName)
+                .append("secondName", secondName)
+                .toString();
   }
 }

@@ -1,9 +1,5 @@
 package gm.vk.core.converter.subject.examination.type;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.subject.examination.Examination;
 import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
@@ -13,8 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("examinationTypeDtoConverter") public class ExaminationTypeDtoConverter
-    implements Function<ExaminationTypeDto, ExaminationType> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Component("examinationTypeDtoConverter")
+public class ExaminationTypeDtoConverter implements Function<ExaminationTypeDto, ExaminationType> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationTypeDtoConverter.class);
 
@@ -24,7 +24,8 @@ import org.springframework.stereotype.Component;
    * @param examinationTypeDto - the {@link ExaminationTypeDto}
    * @return {@link ExaminationType}
    */
-  @Override public ExaminationType apply(@NotNull final ExaminationTypeDto examinationTypeDto) {
+  @Override
+  public ExaminationType apply(@NotNull final ExaminationTypeDto examinationTypeDto) {
 
     LOG.info("Converts ExaminationTypeDto [{}] to ExaminationType", examinationTypeDto);
 
@@ -32,15 +33,21 @@ import org.springframework.stereotype.Component;
     return new ExaminationType(
         examinationTypeDto.getExaminationTypeId(),
         examinationTypeDto.getType(),
-        examinationTypeDto.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
+            examinationTypeDto
+                    .getExaminations()
+                    .stream()
+                    .map(customExaminationConverter)
+                    .collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<ExaminationDto, Examination> {
 
-    @Override public Examination apply(ExaminationDto examination) {
+      @Override
+      public Examination apply(ExaminationDto examination) {
       return new Examination(
           examination.getExaminationId(),
-          new ExaminationType(examination.getType().getExaminationTypeId(), examination.getType().getType()),
+              new ExaminationType(
+                      examination.getType().getExaminationTypeId(), examination.getType().getType()),
           new Grade(examination.getGrade().getGradeId(), examination.getGrade().getGrade()));
     }
   }

@@ -1,8 +1,8 @@
 package gm.vk.service.data.personal;
 
-import java.util.List;
-
 import gm.vk.core.dto.data.personal.PersonalDataDto;
+
+import java.util.List;
 
 public interface PersonalDataService {
 

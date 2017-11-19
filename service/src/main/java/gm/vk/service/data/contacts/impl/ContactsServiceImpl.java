@@ -1,11 +1,5 @@
 package gm.vk.service.data.contacts.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.data.contacts.ContactsConverter;
 import gm.vk.core.converter.data.contacts.ContactsDtoConverter;
 import gm.vk.core.dao.data.contacts.ContactsDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("contactsService") public class ContactsServiceImpl implements ContactsService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("contactsService")
+public class ContactsServiceImpl implements ContactsService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ContactsServiceImpl.class);
 
@@ -30,15 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private ContactsConverter contactsConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<ContactsDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<ContactsDto> findAll() {
 
     LOG.info("Gets all Contacts");
 
-    return contactsDao.findAll().stream().filter(Objects::nonNull).map(contactsConverter).collect(Collectors.toList());
+        return contactsDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(contactsConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public ContactsDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public ContactsDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets Contacts by id [{}]", id);
 
@@ -52,8 +61,9 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public ContactsDto save(
-      @NotNull final ContactsDto contacts) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public ContactsDto save(@NotNull final ContactsDto contacts) {
     final Contacts savedContacts = contactsDao.save(contactsDtoConverter.apply(contacts));
 
     LOG.info("Contacts [{}] had been saved", contacts);
@@ -61,14 +71,16 @@ import org.springframework.transaction.annotation.Transactional;
     return contactsConverter.apply(savedContacts);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final ContactsDto contacts) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final ContactsDto contacts) {
     contactsDao.delete(contactsDtoConverter.apply(contacts));
     LOG.info("Contacts [{}] had been deleted", contacts);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     contactsDao.delete(id);
     LOG.info("Contacts with id [{}] had been deleted", id);
   }

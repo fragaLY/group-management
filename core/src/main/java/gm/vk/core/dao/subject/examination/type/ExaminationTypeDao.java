@@ -1,9 +1,9 @@
 package gm.vk.core.dao.subject.examination.type;
 
-import java.util.List;
-
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface ExaminationTypeDao extends JpaRepository<ExaminationType, Integer> {
 

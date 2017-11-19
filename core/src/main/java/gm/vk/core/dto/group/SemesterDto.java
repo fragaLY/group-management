@@ -1,10 +1,5 @@
 package gm.vk.core.dto.group;
 
-import java.util.Set;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,16 +7,27 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class SemesterDto {
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
-  @JsonProperty("SemesterId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SemesterDto {
 
-  @NotNull @Min(value = 1, message = "Semester should be in 1 to 12 range") @Max(value = 12, message = "Semester should be in 1 to 12 range") private Integer semester;
+    @JsonProperty("SemesterId")
+    private Integer id;
+
+    @NotNull
+    @Min(value = 1, message = "Semester should be in 1 to 12 range")
+    @Max(value = 12, message = "Semester should be in 1 to 12 range")
+    private Integer semester;
 
   private Set<GroupDto> groups;
 
-  public SemesterDto() {
-  }
+    public SemesterDto() {
+    }
 
   public SemesterDto(Integer id, Integer semester) {
     this.id = id;
@@ -58,23 +64,27 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.groups = groups;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof SemesterDto))
-      return false;
+        if (!(o instanceof SemesterDto)) return false;
 
-    SemesterDto semester1 = (SemesterDto)o;
+        SemesterDto semester1 = (SemesterDto) o;
 
-    return new EqualsBuilder().append(id, semester1.id).append(semester, semester1.semester).isEquals();
+        return new EqualsBuilder()
+                .append(id, semester1.id)
+                .append(semester, semester1.semester)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(semester).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("semester", semester).toString();
   }
 }

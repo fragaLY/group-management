@@ -1,11 +1,5 @@
 package gm.vk.service.subject.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.subject.SubjectConverter;
 import gm.vk.core.converter.subject.SubjectDtoConverter;
 import gm.vk.core.dao.subject.SubjectDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("subjectService") public class SubjectServiceImpl implements SubjectService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("subjectService")
+public class SubjectServiceImpl implements SubjectService {
 
   private static final Logger LOG = LoggerFactory.getLogger(SubjectServiceImpl.class);
 
@@ -30,15 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private SubjectDtoConverter subjectDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<SubjectDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<SubjectDto> findAll() {
 
     LOG.info("Gets all Subjects");
 
-    return subjectDao.findAll().stream().filter(Objects::nonNull).map(subjectConverter).collect(Collectors.toList());
+        return subjectDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(subjectConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public SubjectDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public SubjectDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets Subject by id [{}]", id);
 
@@ -52,21 +61,24 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public SubjectDto save(
-      @NotNull final SubjectDto subject) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public SubjectDto save(@NotNull final SubjectDto subject) {
     final Subject savedSubject = subjectDao.save(subjectDtoConverter.apply(subject));
     LOG.info("Subject [{}] had been saved", subject);
     return subjectConverter.apply(savedSubject);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final SubjectDto subject) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final SubjectDto subject) {
     subjectDao.delete(subjectDtoConverter.apply(subject));
     LOG.info("Subject [{}] had been deleted", subject);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     subjectDao.delete(id);
     LOG.info("Subject with id [{}] had been deleted", id);
   }

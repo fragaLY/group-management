@@ -1,11 +1,5 @@
 package gm.vk.service.subject.examination.type.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.subject.examination.type.ExaminationTypeConverter;
 import gm.vk.core.converter.subject.examination.type.ExaminationTypeDtoConverter;
 import gm.vk.core.dao.subject.examination.type.ExaminationTypeDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("examinationTypeService") public class ExaminationTypeServiceImpl implements ExaminationTypeService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("examinationTypeService")
+public class ExaminationTypeServiceImpl implements ExaminationTypeService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationTypeServiceImpl.class);
 
@@ -30,20 +31,28 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private ExaminationTypeDtoConverter examinationTypeDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<ExaminationTypeDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<ExaminationTypeDto> findAll() {
 
     LOG.info("Gets all ExaminationTypes");
 
-    return examinationTypeDao.findAll().stream().filter(Objects::nonNull).map(examinationTypeConverter).collect(
-        Collectors.toList());
+        return examinationTypeDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(examinationTypeConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public ExaminationTypeDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public ExaminationTypeDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets ExaminationType by id [{}]", id);
 
-    final Optional<ExaminationType> examinationType = Optional.ofNullable(examinationTypeDao.findOne(id));
+        final Optional<ExaminationType> examinationType =
+                Optional.ofNullable(examinationTypeDao.findOne(id));
 
     if (examinationType.isPresent()) {
       return examinationTypeConverter.apply(examinationType.get());
@@ -53,22 +62,25 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public ExaminationTypeDto save(
-      @NotNull final ExaminationTypeDto examinationTypeDto) {
-    final ExaminationType savedExaminationType = examinationTypeDao.save(examinationTypeDtoConverter.apply(
-        examinationTypeDto));
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public ExaminationTypeDto save(@NotNull final ExaminationTypeDto examinationTypeDto) {
+        final ExaminationType savedExaminationType =
+                examinationTypeDao.save(examinationTypeDtoConverter.apply(examinationTypeDto));
     LOG.info("ExaminationType [{}] had been saved", examinationTypeDto);
     return examinationTypeConverter.apply(savedExaminationType);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final ExaminationTypeDto examinationTypeDto) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final ExaminationTypeDto examinationTypeDto) {
     examinationTypeDao.delete(examinationTypeDtoConverter.apply(examinationTypeDto));
     LOG.info("ExaminationType [{}] had been deleted", examinationTypeDto);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     examinationTypeDao.delete(id);
     LOG.info("ExaminationType with id [{}] had been deleted", id);
   }

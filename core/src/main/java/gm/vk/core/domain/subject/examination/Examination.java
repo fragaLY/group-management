@@ -1,31 +1,32 @@
 package gm.vk.core.domain.subject.examination;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity @Table(name = "examination", schema = "groupmanagement") public class Examination {
+import javax.persistence.*;
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
+@Entity
+@Table(name = "examination", schema = "groupmanagement")
+public class Examination {
 
-  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "examinationtype_id", referencedColumnName = "id") private ExaminationType type;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-  @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "grade_id", referencedColumnName = "id") private Grade grade;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "examinationtype_id", referencedColumnName = "id")
+    private ExaminationType type;
 
-  public Examination() {
-  }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id", referencedColumnName = "id")
+    private Grade grade;
+
+    public Examination() {
+    }
 
   public Examination(final Integer id, final ExaminationType type, final Grade grade) {
     this.id = id;
@@ -57,23 +58,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.type = type;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof Examination))
-      return false;
+        if (!(o instanceof Examination)) return false;
 
-    Examination that = (Examination)o;
+        Examination that = (Examination) o;
 
     return new EqualsBuilder().append(id, that.id).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).toString();
   }
 }

@@ -1,8 +1,5 @@
 package gm.vk.core.converter.user;
 
-import java.util.function.Function;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.domain.user.User;
 import gm.vk.core.dto.person.PersonDto;
@@ -11,7 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("userDtoConverter") public class UserDtoConverter implements Function<UserDto, User> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+
+@Component("userDtoConverter")
+public class UserDtoConverter implements Function<UserDto, User> {
 
   private static final Logger LOG = LoggerFactory.getLogger(UserDtoConverter.class);
 
@@ -21,7 +22,8 @@ import org.springframework.stereotype.Component;
    * @param userDto - the {@link UserDto}
    * @return {@link User}
    */
-  @Override public User apply(@NotNull final UserDto userDto) {
+  @Override
+  public User apply(@NotNull final UserDto userDto) {
 
     LOG.info("Converts UserDto [{}] to User", userDto);
 
@@ -34,7 +36,8 @@ import org.springframework.stereotype.Component;
 
   private class CustomPersonConverter implements Function<PersonDto, Person> {
 
-    @Override public Person apply(PersonDto person) {
+      @Override
+      public Person apply(PersonDto person) {
       return new Person.Builder().setId(person.getPersonId()).build();
     }
   }

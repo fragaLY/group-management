@@ -1,9 +1,5 @@
 package gm.vk.core.converter.subject.examination.type;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.subject.examination.Examination;
 import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
@@ -14,8 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("examinationTypeConverter") public class ExaminationTypeConverter
-    implements Function<ExaminationType, ExaminationTypeDto> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Component("examinationTypeConverter")
+public class ExaminationTypeConverter implements Function<ExaminationType, ExaminationTypeDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationTypeConverter.class);
 
@@ -25,7 +25,8 @@ import org.springframework.stereotype.Component;
    * @param examinationType - the {@link ExaminationType}
    * @return {@link ExaminationTypeDto}
    */
-  @Override public ExaminationTypeDto apply(@NotNull final ExaminationType examinationType) {
+  @Override
+  public ExaminationTypeDto apply(@NotNull final ExaminationType examinationType) {
 
     LOG.info("Converts ExaminationType [{}] to ExaminationTypeDto", examinationType);
 
@@ -34,12 +35,17 @@ import org.springframework.stereotype.Component;
     return new ExaminationTypeDto(
         examinationType.getId(),
         examinationType.getType(),
-        examinationType.getExaminations().stream().map(customExaminationConverter).collect(Collectors.toSet()));
+            examinationType
+                    .getExaminations()
+                    .stream()
+                    .map(customExaminationConverter)
+                    .collect(Collectors.toSet()));
   }
 
   private class CustomExaminationConverter implements Function<Examination, ExaminationDto> {
 
-    @Override public ExaminationDto apply(Examination examination) {
+      @Override
+      public ExaminationDto apply(Examination examination) {
       final Grade grade = examination.getGrade();
 
       Integer id = null;

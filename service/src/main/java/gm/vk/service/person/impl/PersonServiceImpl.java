@@ -1,11 +1,5 @@
 package gm.vk.service.person.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.person.PersonConverter;
 import gm.vk.core.converter.person.PersonDtoConverter;
 import gm.vk.core.dao.person.PersonDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("personService") public class PersonServiceImpl implements PersonService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("personService")
+public class PersonServiceImpl implements PersonService {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonServiceImpl.class);
 
@@ -30,15 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private PersonDtoConverter personDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<PersonDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<PersonDto> findAll() {
 
     LOG.info("Gets all Persons");
 
-    return personDao.findAll().stream().filter(Objects::nonNull).map(personConverter).collect(Collectors.toList());
+        return personDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(personConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public PersonDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public PersonDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets Person with id [{}]", id);
 
@@ -52,21 +61,24 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public PersonDto save(
-      @NotNull final PersonDto person) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public PersonDto save(@NotNull final PersonDto person) {
     final Person savedPerson = personDao.save(personDtoConverter.apply(person));
     LOG.info("Person [{}] had been saved", person);
     return personConverter.apply(savedPerson);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final PersonDto person) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final PersonDto person) {
     personDao.delete(personDtoConverter.apply(person));
     LOG.info("Person [{}] had been deleted", person);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     personDao.delete(id);
     LOG.warn("Person with id [{}] had been deleted", id);
   }

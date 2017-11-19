@@ -1,21 +1,25 @@
 package gm.vk.controllers.exceptions.error;
 
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.http.HttpStatus;
 
+import java.util.Set;
+
 public class ErrorDetails {
 
-  @JsonProperty("status") private HttpStatus status;
-  @JsonProperty("message") private String message;
+    @JsonProperty("status")
+    private HttpStatus status;
+
+    @JsonProperty("message")
+    private String message;
+
   private Set<String> errors;
 
-  public ErrorDetails() {
-  }
+    public ErrorDetails() {
+    }
 
   private ErrorDetails(final Builder builder) {
     this.status = builder.status;
@@ -47,26 +51,33 @@ public class ErrorDetails {
     this.errors = errors;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof ErrorDetails))
-      return false;
+        if (!(o instanceof ErrorDetails)) return false;
 
-    ErrorDetails error = (ErrorDetails)o;
+        ErrorDetails error = (ErrorDetails) o;
 
-    return new EqualsBuilder().append(status, error.status).append(message, error.message).append(errors,
-        error.errors).isEquals();
+        return new EqualsBuilder()
+                .append(status, error.status)
+                .append(message, error.message)
+                .append(errors, error.errors)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(status).append(message).append(errors).toHashCode();
   }
 
-  @Override public String toString() {
-    return new ToStringBuilder(this).append("status", status).append("message", message).append("errors",
-        errors).toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("status", status)
+                .append("message", message)
+                .append("errors", errors)
+                .toString();
   }
 
   public static final class Builder {

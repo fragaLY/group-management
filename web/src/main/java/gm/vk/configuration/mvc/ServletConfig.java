@@ -1,20 +1,12 @@
 package gm.vk.configuration.mvc;
 
-import java.util.Locale;
-
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationContextException;
-import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceAware;
-import org.springframework.context.ResourceLoaderAware;
+import org.springframework.context.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,18 +18,18 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-@Configuration @EnableWebMvc @ComponentScan("gm.vk.controllers") public class ServletConfig
-    extends WebMvcConfigurerAdapter implements ApplicationContextAware {
+import java.util.Locale;
+
+@Configuration
+@EnableWebMvc
+@ComponentScan("gm.vk.controllers")
+public class ServletConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
   private ApplicationContext applicationContext;
 
@@ -56,11 +48,13 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
    * @throws BeansException if thrown by application context methods
    * @see BeanInitializationException
    */
-  @Override public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 
-  @Bean public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
+    @Bean
+    public ViewResolver contentNegotiationResolver(ContentNegotiationManager cnm) {
 
     ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 
@@ -82,30 +76,42 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
     return view;
   }
 
-  @Override public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 
     final MediaType json = MediaType.APPLICATION_JSON;
 
-    configurer.favorPathExtension(true).favorParameter(false).ignoreAcceptHeader(true).useJaf(false).defaultContentType(
-        json).parameterName("mediaType").mediaType("json", json);
+        configurer
+                .favorPathExtension(true)
+                .favorParameter(false)
+                .ignoreAcceptHeader(true)
+                .useJaf(false)
+                .defaultContentType(json)
+                .parameterName("mediaType")
+                .mediaType("json", json);
   }
 
-  @Bean public LocalValidatorFactoryBean getValidator() {
+    @Bean
+    public LocalValidatorFactoryBean getValidator() {
     LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
     validator.setParameterNameDiscoverer(new LocalVariableTableParameterNameDiscoverer());
     return validator;
   }
 
-  @Bean @Autowired public MethodValidationPostProcessor getValidationPostProcessor(
+    @Bean
+    @Autowired
+    public MethodValidationPostProcessor getValidationPostProcessor(
       LocalValidatorFactoryBean validator) {
     MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
     processor.setValidator(validator);
     return processor;
   }
 
-  @Bean(name = "messageSource") public MessageSource messageSource() {
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
 
-    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource =
+                new ReloadableResourceBundleMessageSource();
 
     messageSource.setBasename("i18n");
     messageSource.setDefaultEncoding("UTF-8");
@@ -114,7 +120,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
     return messageSource;
   }
 
-  @Bean(name = "localeResolver") public LocaleResolver localeResolver() {
+    @Bean(name = "localeResolver")
+    public LocaleResolver localeResolver() {
 
     CookieLocaleResolver resolver = new CookieLocaleResolver();
 
@@ -125,7 +132,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
     return resolver;
   }
 
-  @Override public void addInterceptors(InterceptorRegistry registry) {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
 
     LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
 
@@ -133,7 +141,10 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
     registry.addInterceptor(interceptor);
   }
 
-  @Override public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
   }
 }

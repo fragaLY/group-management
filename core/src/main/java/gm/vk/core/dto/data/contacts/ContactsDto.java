@@ -1,9 +1,5 @@
 package gm.vk.core.dto.data.contacts;
 
-import java.util.Set;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,27 +10,40 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class ContactsDto
-    extends ResourceSupport {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.Set;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ContactsDto extends ResourceSupport {
 
   private static final String PHONE_REGEXP = "[+]\\d{3}[(]\\d{2}[)]\\d{3}[\\-]\\d{4}";
   private static final String EMAIL_REGEXP = "\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}";
   private static final String SKYPE_REGEXP = "^[a-zA-Z][a-zA-Z0-9_.,-]{5,31}$";
 
-  @JsonProperty("ContactsId") private Integer id;
+    @JsonProperty("ContactsId")
+    private Integer id;
 
-  @Pattern(regexp = PHONE_REGEXP, message = "Enter the phone in international format (e.g. +111(22)333-4444)") private String phone;
+    @Pattern(
+            regexp = PHONE_REGEXP,
+            message = "Enter the phone in international format (e.g. +111(22)333-4444)"
+    )
+    private String phone;
 
-  @Pattern(regexp = SKYPE_REGEXP, message = "Invalid skype account") private String skype;
+    @Pattern(regexp = SKYPE_REGEXP, message = "Invalid skype account")
+    private String skype;
 
-  @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email") private String email;
+    @Pattern(regexp = EMAIL_REGEXP, message = "Invalid email")
+    private String email;
 
   private AddressDto address;
 
-  @NotNull(message = "Contacts has no any person") private Set<PersonDto> persons;
+    @NotNull(message = "Contacts has no any person")
+    private Set<PersonDto> persons;
 
-  public ContactsDto() {
-  }
+    public ContactsDto() {
+    }
 
   private ContactsDto(final Builder builder) {
     this.id = builder.id;
@@ -93,26 +102,40 @@ import org.springframework.hateoas.ResourceSupport;
     this.persons = persons;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof ContactsDto))
-      return false;
+        if (!(o instanceof ContactsDto)) return false;
 
-    ContactsDto that = (ContactsDto)o;
+        ContactsDto that = (ContactsDto) o;
 
-    return new EqualsBuilder().append(id, that.id).append(phone, that.phone).append(skype, that.skype).append(email,
-        that.email).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(phone, that.phone)
+                .append(skype, that.skype)
+                .append(email, that.email)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(id).append(phone).append(skype).append(email).toHashCode();
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(phone)
+                .append(skype)
+                .append(email)
+                .toHashCode();
   }
 
-  @Override public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("phone", phone).append("skype", skype).append("email",
-        email).toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("phone", phone)
+                .append("skype", skype)
+                .append("email", email)
+                .toString();
   }
 
   public static class Builder {

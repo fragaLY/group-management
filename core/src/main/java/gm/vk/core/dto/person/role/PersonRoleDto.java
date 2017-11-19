@@ -1,8 +1,5 @@
 package gm.vk.core.dto.person.role;
 
-import java.util.Set;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,17 +10,23 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class PersonRoleDto
-    extends ResourceSupport {
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
-  @JsonProperty("PersonRoleId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PersonRoleDto extends ResourceSupport {
 
-  @NotNull(message = "Invalid role") private Role role;
+    @JsonProperty("PersonRoleId")
+    private Integer id;
+
+    @NotNull(message = "Invalid role")
+    private Role role;
 
   private Set<PersonDto> persons;
 
-  public PersonRoleDto() {
-  }
+    public PersonRoleDto() {
+    }
 
   public PersonRoleDto(Integer id, Role role) {
     this.id = id;
@@ -60,23 +63,24 @@ import org.springframework.hateoas.ResourceSupport;
     this.persons = persons;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof PersonRoleDto))
-      return false;
+        if (!(o instanceof PersonRoleDto)) return false;
 
-    PersonRoleDto that = (PersonRoleDto)o;
+        PersonRoleDto that = (PersonRoleDto) o;
 
     return new EqualsBuilder().append(id, that.id).append(role, that.role).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(role).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("role", role).toString();
   }
 }

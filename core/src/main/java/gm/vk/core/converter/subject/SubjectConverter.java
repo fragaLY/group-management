@@ -1,9 +1,5 @@
 package gm.vk.core.converter.subject;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.domain.subject.Subject;
@@ -20,7 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("subjectConverter") public class SubjectConverter implements Function<Subject, SubjectDto> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Component("subjectConverter")
+public class SubjectConverter implements Function<Subject, SubjectDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SubjectConverter.class);
 
@@ -30,7 +31,8 @@ import org.springframework.stereotype.Component;
    * @param subject - the {@link Subject}
    * @return {@link SubjectDto}
    */
-  @Override public SubjectDto apply(@NotNull final Subject subject) {
+  @Override
+  public SubjectDto apply(@NotNull final Subject subject) {
 
     LOG.info("Converts Subject [{}] to SubjectDto", subject);
 
@@ -47,7 +49,8 @@ import org.springframework.stereotype.Component;
 
   private class CustomExaminationConverter implements Function<Examination, ExaminationDto> {
 
-    @Override public ExaminationDto apply(Examination examination) {
+      @Override
+      public ExaminationDto apply(Examination examination) {
 
       final ExaminationType type = examination.getType();
       final Grade grade = examination.getGrade();
@@ -69,14 +72,16 @@ import org.springframework.stereotype.Component;
 
   private class CustomPersonConverter implements Function<Person, PersonDto> {
 
-    @Override public PersonDto apply(Person person) {
+      @Override
+      public PersonDto apply(Person person) {
       return new PersonDto.Builder().setId(person.getId()).build();
     }
   }
 
   private class CustomGroupConverter implements Function<Group, GroupDto> {
 
-    @Override public GroupDto apply(Group group) {
+      @Override
+      public GroupDto apply(Group group) {
       return new GroupDto.Builder().setId(group.getId()).setName(group.getName()).build();
     }
   }

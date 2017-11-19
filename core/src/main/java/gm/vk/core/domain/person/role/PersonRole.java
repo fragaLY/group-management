@@ -1,32 +1,31 @@
 package gm.vk.core.domain.person.role;
 
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import gm.vk.core.domain.person.Person;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity @Table(name = "personRole", schema = "groupmanagement") public class PersonRole {
+import javax.persistence.*;
+import java.util.Set;
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
+@Entity
+@Table(name = "personRole", schema = "groupmanagement")
+public class PersonRole {
 
-  @Enumerated(value = EnumType.STRING) @Column(name = "role", unique = true, nullable = false) private Role role;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "role") private Set<Person> persons;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role", unique = true, nullable = false)
+    private Role role;
 
-  public PersonRole() {
-  }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+    private Set<Person> persons;
+
+    public PersonRole() {
+    }
 
   public PersonRole(Integer id, Role role) {
     this.id = id;
@@ -63,23 +62,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.persons = persons;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof PersonRole))
-      return false;
+        if (!(o instanceof PersonRole)) return false;
 
-    PersonRole that = (PersonRole)o;
+        PersonRole that = (PersonRole) o;
 
     return new EqualsBuilder().append(id, that.id).append(role, that.role).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(role).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("role", role).toString();
   }
 }

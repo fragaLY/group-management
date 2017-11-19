@@ -1,9 +1,5 @@
 package gm.vk.controllers.subject.examination;
 
-import java.net.URI;
-import java.util.List;
-import javax.validation.Valid;
-
 import gm.vk.core.dto.subject.examination.ExaminationDto;
 import gm.vk.core.dto.user.UserDto;
 import gm.vk.service.subject.examination.ExaminationService;
@@ -14,38 +10,45 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RestController @RequestMapping("/examinations") @Validated public class ExaminationController {
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/examinations")
+@Validated
+public class ExaminationController {
 
   @Autowired private ExaminationService examinationService;
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody public ResponseEntity<List<ExaminationDto>> getExaminations() {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<List<ExaminationDto>> getExaminations() {
     final List<ExaminationDto> examinations = examinationService.findAll();
     return new ResponseEntity<>(examinations, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) @ResponseBody public ResponseEntity<ExaminationDto> getExamination(
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<ExaminationDto> getExamination(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final ExaminationDto examination = examinationService.findOne(id);
     return new ResponseEntity<>(examination, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<?> createExamination(@Valid @RequestBody final ExaminationDto examination) {
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createExamination(@Valid @RequestBody final ExaminationDto examination) {
 
     final ExaminationDto createdExamination = examinationService.save(examination);
 
-    final URI createdExaminationUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
-        createdExamination.getId()).toUri();
+        final URI createdExaminationUri =
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(createdExamination.getId())
+                        .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(createdExaminationUri);
@@ -53,12 +56,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<?> editExamination(@Valid @RequestBody final ExaminationDto examination) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> editExamination(@Valid @RequestBody final ExaminationDto examination) {
 
     final ExaminationDto savedExamination = examinationService.save(examination);
 
-    final URI editedExaminationUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
-        savedExamination.getId()).toUri();
+        final URI editedExaminationUri =
+                ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(savedExamination.getId())
+                        .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(editedExaminationUri);
@@ -66,13 +73,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
   }
 
-  @DeleteMapping public ResponseEntity<UserDto> deleteExamination(
+    @DeleteMapping
+    public ResponseEntity<UserDto> deleteExamination(
       @Valid @RequestBody final ExaminationDto examination) {
     examinationService.delete(examination);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
   }
 
-  @DeleteMapping(value = "/{id}") public ResponseEntity<UserDto> deleteExamination(
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<UserDto> deleteExamination(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     examinationService.delete(id);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);

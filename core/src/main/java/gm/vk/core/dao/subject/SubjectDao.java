@@ -1,9 +1,9 @@
 package gm.vk.core.dao.subject;
 
-import java.util.List;
-
 import gm.vk.core.domain.subject.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface SubjectDao extends JpaRepository<Subject, Integer> {
 
@@ -36,7 +36,6 @@ public interface SubjectDao extends JpaRepository<Subject, Integer> {
    * @param subject - the subject
    */
   void delete(final Subject subject);
-
 
   /**
    * Deletes the subject by id

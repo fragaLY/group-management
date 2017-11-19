@@ -1,9 +1,9 @@
 package gm.vk.core.dao.person.role;
 
-import java.util.List;
-
 import gm.vk.core.domain.person.role.PersonRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface PersonRoleDao extends JpaRepository<PersonRole, Integer> {
 

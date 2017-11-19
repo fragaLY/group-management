@@ -1,30 +1,30 @@
 package gm.vk.core.domain.group.faculty;
 
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import gm.vk.core.domain.group.Group;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Entity @Table(name = "Faculty", schema = "groupmanagement") public class Faculty {
+import javax.persistence.*;
+import java.util.Set;
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id", unique = true, nullable = false) private Integer id;
+@Entity
+@Table(name = "Faculty", schema = "groupmanagement")
+public class Faculty {
 
-  @Column(name = "name") private String faculty;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty") private Set<Group> groups;
+    @Column(name = "name")
+    private String faculty;
 
-  public Faculty() {
-  }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "faculty")
+    private Set<Group> groups;
+
+    public Faculty() {
+    }
 
   public Faculty(Integer id, String faculty) {
     this.id = id;
@@ -61,23 +61,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     this.groups = groups;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof Faculty))
-      return false;
+        if (!(o instanceof Faculty)) return false;
 
-    Faculty faculty1 = (Faculty)o;
+        Faculty faculty1 = (Faculty) o;
 
     return new EqualsBuilder().append(id, faculty1.id).append(faculty, faculty1.faculty).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(faculty).append(groups).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("faculty", faculty).toString();
   }
 }

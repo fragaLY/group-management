@@ -1,9 +1,5 @@
 package gm.vk.core.dto.data.contacts.address;
 
-import java.util.Set;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,25 +9,41 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class AddressDto
-    extends ResourceSupport {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
-  @JsonProperty("AddressId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AddressDto extends ResourceSupport {
 
-  @Size(max = 50, message = "The name of country could not be greater than 50 literals") @NotNull(message = "Please chose country") private String country;
+    @JsonProperty("AddressId")
+    private Integer id;
 
-  @Size(max = 50, message = "The name of city could not be greater than 50 literals") @NotNull(message = "Please add city") private String city;
+    @Size(max = 50, message = "The name of country could not be greater than 50 literals")
+    @NotNull(message = "Please chose country")
+    private String country;
 
-  @Size(max = 50, message = "The name of street could not be greater than 50 literals") @NotNull(message = "Please add street") private String street;
+    @Size(max = 50, message = "The name of city could not be greater than 50 literals")
+    @NotNull(message = "Please add city")
+    private String city;
 
-  @Size(max = 10, message = "The home could not be greater than 10 literals") @NotNull(message = "Please add home number") private String home;
+    @Size(max = 50, message = "The name of street could not be greater than 50 literals")
+    @NotNull(message = "Please add street")
+    private String street;
 
-  @Size(max = 10, message = "The apartments could not be greater than 50 literals") @NotNull(message = "Please add apartment number") private String apartmentNumber;
+    @Size(max = 10, message = "The home could not be greater than 10 literals")
+    @NotNull(message = "Please add home number")
+    private String home;
+
+    @Size(max = 10, message = "The apartments could not be greater than 50 literals")
+    @NotNull(message = "Please add apartment number")
+    private String apartmentNumber;
 
   private Set<ContactsDto> contacts;
 
-  public AddressDto() {
-  }
+    public AddressDto() {
+    }
 
   private AddressDto(final Builder builder) {
     this.id = builder.id;
@@ -99,28 +111,46 @@ import org.springframework.hateoas.ResourceSupport;
     this.contacts = contacts;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof AddressDto))
-      return false;
+        if (!(o instanceof AddressDto)) return false;
 
-    AddressDto that = (AddressDto)o;
+        AddressDto that = (AddressDto) o;
 
-    return new EqualsBuilder().append(id, that.id).append(country, that.country).append(city,
-        that.city).append(street, that.street).append(home, that.home).append(apartmentNumber,
-        that.apartmentNumber).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(country, that.country)
+                .append(city, that.city)
+                .append(street, that.street)
+                .append(home, that.home)
+                .append(apartmentNumber, that.apartmentNumber)
+                .isEquals();
   }
 
-  @Override public int hashCode() {
-    return new HashCodeBuilder(17,
-        37).append(id).append(country).append(city).append(street).append(home).append(apartmentNumber).toHashCode();
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(country)
+                .append(city)
+                .append(street)
+                .append(home)
+                .append(apartmentNumber)
+                .toHashCode();
   }
 
-  @Override public String toString() {
-    return new ToStringBuilder(this).append("id", id).append("country", country).append("city", city).append("street",
-        street).append("home", home).append("apartmentNumber", apartmentNumber).toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("country", country)
+                .append("city", city)
+                .append("street", street)
+                .append("home", home)
+                .append("apartmentNumber", apartmentNumber)
+                .toString();
   }
 
   public static class Builder {

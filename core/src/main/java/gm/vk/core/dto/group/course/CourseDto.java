@@ -1,10 +1,5 @@
 package gm.vk.core.dto.group.course;
 
-import java.util.Set;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,17 +9,27 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class CourseDto
-    extends ResourceSupport {
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
-  @JsonProperty("CourseId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CourseDto extends ResourceSupport {
 
-  @NotNull @Min(value = 1, message = "Course should be in 1 to 6 range") @Max(value = 6, message = "Course should be in 1 to 6 range") private Integer course;
+    @JsonProperty("CourseId")
+    private Integer id;
+
+    @NotNull
+    @Min(value = 1, message = "Course should be in 1 to 6 range")
+    @Max(value = 6, message = "Course should be in 1 to 6 range")
+    private Integer course;
 
   private Set<GroupDto> groups;
 
-  public CourseDto() {
-  }
+    public CourseDto() {
+    }
 
   public CourseDto(Integer id, Integer course) {
     this.id = id;
@@ -61,23 +66,24 @@ import org.springframework.hateoas.ResourceSupport;
     this.groups = groups;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof CourseDto))
-      return false;
+        if (!(o instanceof CourseDto)) return false;
 
-    CourseDto c = (CourseDto)o;
+        CourseDto c = (CourseDto) o;
 
     return new EqualsBuilder().append(id, c.id).append(course, c.course).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(course).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("course", course).toString();
   }
 }

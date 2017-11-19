@@ -1,8 +1,8 @@
 package gm.vk.service.group;
 
-import java.util.List;
-
 import gm.vk.core.dto.group.SemesterDto;
+
+import java.util.List;
 
 public interface SemesterService {
 

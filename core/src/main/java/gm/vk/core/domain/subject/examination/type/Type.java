@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum Type {
-  EXAM("EXAM"), CREDIT("CREDIT"), NOTHING("NOTHING");
+    EXAM("EXAM"),
+    CREDIT("CREDIT"),
+    NOTHING("NOTHING");
 
   private String type;
 
@@ -13,7 +15,10 @@ public enum Type {
   }
 
   public static Optional<Type> getExaminationTypeByType(final String _type) {
-    return Arrays.stream(values()).parallel().filter(type -> type.getType().equals(_type)).findFirst();
+      return Arrays.stream(values())
+              .parallel()
+              .filter(type -> type.getType().equals(_type))
+              .findFirst();
   }
 
   public String getType() {

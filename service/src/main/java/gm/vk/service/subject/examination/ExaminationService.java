@@ -1,8 +1,8 @@
 package gm.vk.service.subject.examination;
 
-import java.util.List;
-
 import gm.vk.core.dto.subject.examination.ExaminationDto;
+
+import java.util.List;
 
 public interface ExaminationService {
 

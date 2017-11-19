@@ -1,11 +1,5 @@
 package gm.vk.service.user.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.user.UserConverter;
 import gm.vk.core.converter.user.UserDtoConverter;
 import gm.vk.core.dao.user.UserDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("userService") public class UserServiceImpl implements UserService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("userService")
+public class UserServiceImpl implements UserService {
 
   private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -30,15 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private UserDtoConverter userDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<UserDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<UserDto> findAll() {
 
     LOG.info("Gets all Users");
 
-    return userDao.findAll().stream().filter(Objects::nonNull).map(userConverter).collect(Collectors.toList());
+        return userDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(userConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public UserDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public UserDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets User by id [{}]", id);
 
@@ -52,21 +61,24 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public UserDto save(
-      @NotNull final UserDto userDto) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public UserDto save(@NotNull final UserDto userDto) {
     final User savedUser = userDao.save(userDtoConverter.apply(userDto));
     LOG.info("User [{}] had been saved", userDto);
     return userConverter.apply(savedUser);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final UserDto userDto) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final UserDto userDto) {
     userDao.delete(userDtoConverter.apply(userDto));
     LOG.info("User [{}] had been deleted", userDto);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     userDao.delete(id);
     LOG.info("User with id [{}] had been deleted", id);
   }

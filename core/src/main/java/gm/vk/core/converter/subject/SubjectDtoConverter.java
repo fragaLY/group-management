@@ -1,9 +1,5 @@
 package gm.vk.core.converter.subject;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.group.Group;
 import gm.vk.core.domain.person.Person;
 import gm.vk.core.domain.subject.Subject;
@@ -18,7 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("subjectDtoConverter") public class SubjectDtoConverter implements Function<SubjectDto, Subject> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+@Component("subjectDtoConverter")
+public class SubjectDtoConverter implements Function<SubjectDto, Subject> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SubjectDtoConverter.class);
 
@@ -28,7 +29,8 @@ import org.springframework.stereotype.Component;
    * @param subjectDto - the {@link SubjectDto}
    * @return {@link Subject}
    */
-  @Override public Subject apply(@NotNull final SubjectDto subjectDto) {
+  @Override
+  public Subject apply(@NotNull final SubjectDto subjectDto) {
 
     LOG.info("Converts SubjectDto [{}] to Subject", subjectDto);
 
@@ -45,24 +47,28 @@ import org.springframework.stereotype.Component;
 
   private class CustomExaminationConverter implements Function<ExaminationDto, Examination> {
 
-    @Override public Examination apply(ExaminationDto examination) {
+      @Override
+      public Examination apply(ExaminationDto examination) {
       return new Examination(
           examination.getExaminationId(),
-          new ExaminationType(examination.getType().getExaminationTypeId(), examination.getType().getType()),
+              new ExaminationType(
+                      examination.getType().getExaminationTypeId(), examination.getType().getType()),
           new Grade(examination.getGrade().getGradeId(), examination.getGrade().getGrade()));
     }
   }
 
   private class CustomPersonConverter implements Function<PersonDto, Person> {
 
-    @Override public Person apply(PersonDto person) {
+      @Override
+      public Person apply(PersonDto person) {
       return new Person.Builder().setId(person.getPersonId()).build();
     }
   }
 
   private class CustomGroupConverter implements Function<GroupDto, Group> {
 
-    @Override public Group apply(GroupDto group) {
+      @Override
+      public Group apply(GroupDto group) {
       return new Group.Builder().setId(group.getGroupId()).setName(group.getName()).build();
     }
   }

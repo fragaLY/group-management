@@ -1,11 +1,5 @@
 package gm.vk.service.data.personal.impl;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.converter.data.personal.PersonalDataConverter;
 import gm.vk.core.converter.data.personal.PersonalDataDtoConverter;
 import gm.vk.core.dao.data.personal.PersonalDataDao;
@@ -20,7 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("personalDataService") public class PersonalDataServiceImpl implements PersonalDataService {
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service("personalDataService")
+public class PersonalDataServiceImpl implements PersonalDataService {
 
   private static final Logger LOG = LoggerFactory.getLogger(PersonalDataServiceImpl.class);
 
@@ -30,16 +31,23 @@ import org.springframework.transaction.annotation.Transactional;
 
   @Autowired private PersonalDataDtoConverter personalDataDtoConverter;
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public List<PersonalDataDto> findAll() {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public List<PersonalDataDto> findAll() {
 
     LOG.info("Gets all PersonalData");
 
-    return personalDataDao.findAll().stream().filter(Objects::nonNull).map(personalDataConverter).collect(
-        Collectors.toList());
+        return personalDataDao
+                .findAll()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(personalDataConverter)
+                .collect(Collectors.toList());
   }
 
-  @Override @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public PersonalDataDto findOne(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public PersonalDataDto findOne(@NotNull final Integer id) {
 
     LOG.info("Gets PersonalData by id [{}]", id);
 
@@ -53,23 +61,27 @@ import org.springframework.transaction.annotation.Transactional;
     }
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public PersonalDataDto save(
-      @NotNull final PersonalDataDto personalData) {
-    final PersonalData savedPersonalData = personalDataDao.save(personalDataDtoConverter.apply(personalData));
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public PersonalDataDto save(@NotNull final PersonalDataDto personalData) {
+        final PersonalData savedPersonalData =
+                personalDataDao.save(personalDataDtoConverter.apply(personalData));
 
     LOG.info("PersonalData [{}] had been saved", personalData);
 
     return personalDataConverter.apply(savedPersonalData);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final PersonalDataDto personalData) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final PersonalDataDto personalData) {
     personalDataDao.delete(personalDataDtoConverter.apply(personalData));
     LOG.info("PersonalData [{}] had been deleted", personalData);
   }
 
-  @Override @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class) public void delete(
-      @NotNull final Integer id) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void delete(@NotNull final Integer id) {
     personalDataDao.delete(id);
     LOG.info("PersonalData with id [{}] had been deleted", id);
   }

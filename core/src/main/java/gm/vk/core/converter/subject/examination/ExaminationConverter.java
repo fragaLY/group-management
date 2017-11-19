@@ -1,8 +1,5 @@
 package gm.vk.core.converter.subject.examination;
 
-import java.util.function.Function;
-import javax.validation.constraints.NotNull;
-
 import gm.vk.core.domain.subject.examination.Examination;
 import gm.vk.core.domain.subject.examination.grade.Grade;
 import gm.vk.core.domain.subject.examination.type.ExaminationType;
@@ -13,8 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component("examinationConverter") public class ExaminationConverter
-    implements Function<Examination, ExaminationDto> {
+import javax.validation.constraints.NotNull;
+import java.util.function.Function;
+
+@Component("examinationConverter")
+public class ExaminationConverter implements Function<Examination, ExaminationDto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ExaminationConverter.class);
 
@@ -24,7 +24,8 @@ import org.springframework.stereotype.Component;
    * @param examination - the {@link Examination}
    * @return {@link ExaminationDto}
    */
-  @Override public ExaminationDto apply(@NotNull final Examination examination) {
+  @Override
+  public ExaminationDto apply(@NotNull final Examination examination) {
 
     LOG.info("Converts Examination [{}] to ExaminationDto", examination);
 

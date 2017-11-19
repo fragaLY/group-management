@@ -1,9 +1,9 @@
 package gm.vk.core.dao.group;
 
-import java.util.List;
-
 import gm.vk.core.domain.group.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface GroupDao extends JpaRepository<Group, Integer> {
 

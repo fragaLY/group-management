@@ -1,8 +1,5 @@
 package gm.vk.core.dto.group.faculty;
 
-import java.util.Set;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,17 +9,23 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_NULL) @JsonIgnoreProperties(ignoreUnknown = true) public class FacultyDto
-    extends ResourceSupport {
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
-  @JsonProperty("FacultyId") private Integer id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class FacultyDto extends ResourceSupport {
 
-  @NotNull(message = "Invalid faculty") private String faculty;
+    @JsonProperty("FacultyId")
+    private Integer id;
+
+    @NotNull(message = "Invalid faculty")
+    private String faculty;
 
   private Set<GroupDto> groups;
 
-  public FacultyDto() {
-  }
+    public FacultyDto() {
+    }
 
   public FacultyDto(Integer id, String faculty) {
     this.id = id;
@@ -59,23 +62,24 @@ import org.springframework.hateoas.ResourceSupport;
     this.groups = groups;
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-    if (!(o instanceof FacultyDto))
-      return false;
+        if (!(o instanceof FacultyDto)) return false;
 
-    FacultyDto faculty1 = (FacultyDto)o;
+        FacultyDto faculty1 = (FacultyDto) o;
 
     return new EqualsBuilder().append(id, faculty1.id).append(faculty, faculty1.faculty).isEquals();
   }
 
-  @Override public int hashCode() {
+    @Override
+    public int hashCode() {
     return new HashCodeBuilder(17, 37).append(id).append(faculty).toHashCode();
   }
 
-  @Override public String toString() {
+    @Override
+    public String toString() {
     return new ToStringBuilder(this).append("id", id).append("faculty", faculty).toString();
   }
 }
