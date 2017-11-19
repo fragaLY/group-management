@@ -2,6 +2,7 @@ package gm.vk.controllers.subject;
 
 import gm.vk.core.dto.subject.SubjectDto;
 import gm.vk.service.subject.SubjectService;
+import gm.vk.util.subject.SubjectLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class SubjectController {
     @ResponseBody
     public ResponseEntity<List<SubjectDto>> getSubjects() {
     final List<SubjectDto> subjects = subjectService.findAll();
+
+        final SubjectLinkBuilder linkBuilder = new SubjectLinkBuilder();
+        subjects.forEach(linkBuilder);
+
     return new ResponseEntity<>(subjects, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -35,6 +40,10 @@ public class SubjectController {
     public ResponseEntity<SubjectDto> getSubject(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final SubjectDto subject = subjectService.findOne(id);
+
+        final SubjectLinkBuilder linkBuilder = new SubjectLinkBuilder();
+        linkBuilder.accept(subject);
+
     return new ResponseEntity<>(subject, new HttpHeaders(), HttpStatus.FOUND);
   }
 

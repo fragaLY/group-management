@@ -2,6 +2,7 @@ package gm.vk.controllers.person;
 
 import gm.vk.core.dto.person.PersonDto;
 import gm.vk.service.person.PersonService;
+import gm.vk.util.person.PersonLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class PersonController {
     @ResponseBody
     public ResponseEntity<List<PersonDto>> getPersons() {
     final List<PersonDto> persons = personService.findAll();
+
+        final PersonLinkBuilder linkBuilder = new PersonLinkBuilder();
+        persons.forEach(linkBuilder);
+
     return new ResponseEntity<>(persons, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -34,6 +39,10 @@ public class PersonController {
     @ResponseBody
     public ResponseEntity<PersonDto> getPerson(@Range(min = 1) @PathVariable("id") final Integer id) {
     final PersonDto person = personService.findOne(id);
+
+        final PersonLinkBuilder linkBuilder = new PersonLinkBuilder();
+        linkBuilder.accept(person);
+
     return new ResponseEntity<>(person, new HttpHeaders(), HttpStatus.FOUND);
   }
 

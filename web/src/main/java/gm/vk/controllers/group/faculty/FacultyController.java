@@ -2,6 +2,7 @@ package gm.vk.controllers.group.faculty;
 
 import gm.vk.core.dto.group.faculty.FacultyDto;
 import gm.vk.service.group.faculty.FacultyService;
+import gm.vk.util.group.faculty.FacultyLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class FacultyController {
     @ResponseBody
     public ResponseEntity<List<FacultyDto>> getFaculties() {
     final List<FacultyDto> faculties = facultyService.findAll();
+
+        final FacultyLinkBuilder linkBuilder = new FacultyLinkBuilder();
+        faculties.forEach(linkBuilder);
+
     return new ResponseEntity<>(faculties, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -35,6 +40,10 @@ public class FacultyController {
     public ResponseEntity<FacultyDto> getFaculty(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final FacultyDto faculty = facultyService.findOne(id);
+
+        final FacultyLinkBuilder linkBuilder = new FacultyLinkBuilder();
+        linkBuilder.accept(faculty);
+
     return new ResponseEntity<>(faculty, new HttpHeaders(), HttpStatus.FOUND);
   }
 

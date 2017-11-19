@@ -2,6 +2,7 @@ package gm.vk.controllers.person.role;
 
 import gm.vk.core.dto.person.role.PersonRoleDto;
 import gm.vk.service.person.role.PersonRoleService;
+import gm.vk.util.person.role.PersonRoleLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,31 +24,39 @@ public class PersonRoleController {
 
   @Autowired private PersonRoleService personRoleService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<List<PersonRoleDto>> getPersonRoles() {
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public ResponseEntity<List<PersonRoleDto>> getPersonRoles() {
     final List<PersonRoleDto> personRoles = personRoleService.findAll();
+
+    final PersonRoleLinkBuilder linkBuilder = new PersonRoleLinkBuilder();
+    personRoles.forEach(linkBuilder);
+
     return new ResponseEntity<>(personRoles, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<PersonRoleDto> getPersonRole(
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public ResponseEntity<PersonRoleDto> getPersonRole(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final PersonRoleDto personRole = personRoleService.findOne(id);
+
+    final PersonRoleLinkBuilder linkBuilder = new PersonRoleLinkBuilder();
+    linkBuilder.accept(personRole);
+
     return new ResponseEntity<>(personRole, new HttpHeaders(), HttpStatus.FOUND);
   }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createPersonRole(@Valid @RequestBody final PersonRoleDto personRole) {
+  @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> createPersonRole(@Valid @RequestBody final PersonRoleDto personRole) {
 
     final PersonRoleDto createdPersonRole = personRoleService.save(personRole);
 
-        final URI createdPersonRoleUri =
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(createdPersonRole.getId())
-                        .toUri();
+    final URI createdPersonRoleUri =
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(createdPersonRole.getId())
+                    .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(createdPersonRoleUri);
@@ -55,16 +64,16 @@ public class PersonRoleController {
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
   }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> editPersonRole(@Valid @RequestBody final PersonRoleDto personRole) {
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> editPersonRole(@Valid @RequestBody final PersonRoleDto personRole) {
 
     final PersonRoleDto savedPersonRole = personRoleService.save(personRole);
 
-        final URI editedPersonRoleUri =
-                ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(savedPersonRole.getId())
-                        .toUri();
+    final URI editedPersonRoleUri =
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(savedPersonRole.getId())
+                    .toUri();
 
     final HttpHeaders responseHeaders = new HttpHeaders();
     responseHeaders.setLocation(editedPersonRoleUri);
@@ -72,15 +81,15 @@ public class PersonRoleController {
     return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
   }
 
-    @DeleteMapping
-    public ResponseEntity<PersonRoleDto> deletePersonRole(
+  @DeleteMapping
+  public ResponseEntity<PersonRoleDto> deletePersonRole(
       @Valid @RequestBody final PersonRoleDto personRole) {
     personRoleService.delete(personRole);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);
   }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<PersonRoleDto> deletePersonRole(
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<PersonRoleDto> deletePersonRole(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     personRoleService.delete(id);
     return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.OK);

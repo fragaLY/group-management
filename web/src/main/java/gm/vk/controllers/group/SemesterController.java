@@ -2,6 +2,7 @@ package gm.vk.controllers.group;
 
 import gm.vk.core.dto.group.SemesterDto;
 import gm.vk.service.group.SemesterService;
+import gm.vk.util.group.SemesterLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class SemesterController {
     @ResponseBody
     public ResponseEntity<List<SemesterDto>> getSemesters() {
     final List<SemesterDto> semesters = semesterService.findAll();
+
+        final SemesterLinkBuilder linkBuilder = new SemesterLinkBuilder();
+        semesters.forEach(linkBuilder);
+
     return new ResponseEntity<>(semesters, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -35,6 +40,10 @@ public class SemesterController {
     public ResponseEntity<SemesterDto> getSemester(
       @Range(min = 1) @PathVariable("id") final Integer id) {
     final SemesterDto semester = semesterService.findOne(id);
+
+        final SemesterLinkBuilder linkBuilder = new SemesterLinkBuilder();
+        linkBuilder.accept(semester);
+
     return new ResponseEntity<>(semester, new HttpHeaders(), HttpStatus.FOUND);
   }
 

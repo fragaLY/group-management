@@ -2,6 +2,7 @@ package gm.vk.controllers.group;
 
 import gm.vk.core.dto.group.GroupDto;
 import gm.vk.service.group.GroupService;
+import gm.vk.util.group.GroupLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class GroupController {
     @ResponseBody
     public ResponseEntity<List<GroupDto>> getGroups() {
     final List<GroupDto> groups = groupService.findAll();
+
+        final GroupLinkBuilder linkBuilder = new GroupLinkBuilder();
+        groups.forEach(linkBuilder);
+
     return new ResponseEntity<>(groups, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -34,6 +39,10 @@ public class GroupController {
     @ResponseBody
     public ResponseEntity<GroupDto> getGroup(@Range(min = 1) @PathVariable("id") final Integer id) {
     final GroupDto group = groupService.findOne(id);
+
+        final GroupLinkBuilder linkBuilder = new GroupLinkBuilder();
+        linkBuilder.accept(group);
+
     return new ResponseEntity<>(group, new HttpHeaders(), HttpStatus.FOUND);
   }
 

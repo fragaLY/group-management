@@ -2,6 +2,7 @@ package gm.vk.controllers.group.course;
 
 import gm.vk.core.dto.group.course.CourseDto;
 import gm.vk.service.group.course.CourseService;
+import gm.vk.util.group.course.CourseLinkBuilder;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,10 @@ public class CourseController {
     @ResponseBody
     public ResponseEntity<List<CourseDto>> getCourses() {
     final List<CourseDto> courses = courseService.findAll();
+
+        final CourseLinkBuilder linkBuilder = new CourseLinkBuilder();
+        courses.forEach(linkBuilder);
+
     return new ResponseEntity<>(courses, new HttpHeaders(), HttpStatus.FOUND);
   }
 
@@ -34,6 +39,10 @@ public class CourseController {
     @ResponseBody
     public ResponseEntity<CourseDto> getCourse(@Range(min = 1) @PathVariable("id") final Integer id) {
     final CourseDto course = courseService.findOne(id);
+
+        final CourseLinkBuilder linkBuilder = new CourseLinkBuilder();
+        linkBuilder.accept(course);
+
     return new ResponseEntity<>(course, new HttpHeaders(), HttpStatus.FOUND);
   }
 
