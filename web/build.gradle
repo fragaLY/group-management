@@ -65,10 +65,14 @@ dependencies {
 
 buildscript {
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         jcenter()
     }
     dependencies {
         classpath 'org.akhikhl.gretty:gretty:+'
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
     }
 }
 
@@ -79,19 +83,19 @@ gretty {
 }
 
 node {
-    version = '9.0.0'
-    npmVersion = '5.5.1'
+    version = '8.8.1'
+    npmVersion = '5.4.2'
     download = true
     workDir = file("${project.buildDir}/node")
     nodeModulesDir = file("${project.projectDir}")
 }
 
-task build(type: NpmTask) {
+task buildNpm(type: NpmTask) {
     args = ['run', 'build']
 }
 
-task clean(type: Delete){
-    delete "dist"
+task cleanDist(type: Delete){
+    delete 'dist'
 }
 
 task cleanAll(type: Delete){
@@ -100,6 +104,6 @@ task cleanAll(type: Delete){
     delete ".gradle"
 }
 
-cleanAll.dependsOn(clean)
+clean.dependsOn(cleanAll)
 
 build.dependsOn(npm_install)

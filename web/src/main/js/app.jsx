@@ -11,7 +11,7 @@ class App extends React.Component {
         this.state = {addresses: []};
     }
 
-    componentDidMount() {
+    componentWillMount() {
         client({method: 'GET', path: '/address'}).done(response => {
             this.setState({addresses: response.entity._embedded.addresses});
         });
@@ -26,7 +26,7 @@ class App extends React.Component {
 
 class AddressList extends React.Component {
     render() {
-        var addresses = this.props.addresses.map(address =>
+        let addresses = this.props.addresses.map(address =>
             <Address key={address.links.href} address={address}/>
         );
         return (

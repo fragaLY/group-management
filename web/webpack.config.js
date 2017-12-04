@@ -30,7 +30,14 @@ module.exports = {
                 loader: "babel-loader",
                 options: {
                     cacheDirectory: true,
-                    presets: ["es2015", "react"]
+                    presets: [
+                        ["env", {
+                            "targets": {
+                                "browsers": ["last 2 versions"]
+                            },
+                            "debug": true
+                        }]
+                    ]
                 }
             },
             {
