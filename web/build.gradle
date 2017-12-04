@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'org.akhikhl.gretty'
+apply plugin: 'com.moowork.node'
 
 compileJava {
     sourceCompatibility = 1.8
@@ -76,3 +77,29 @@ gretty {
     contextPath = '/'
     servletContainer = 'jetty9'
 }
+
+node {
+    version = '9.0.0'
+    npmVersion = '5.5.1'
+    download = true
+    workDir = file("${project.buildDir}/node")
+    nodeModulesDir = file("${project.projectDir}")
+}
+
+task build(type: NpmTask) {
+    args = ['run', 'build']
+}
+
+task clean(type: Delete){
+    delete "dist"
+}
+
+task cleanAll(type: Delete){
+    delete "build"
+    delete "node_modules"
+    delete ".gradle"
+}
+
+cleanAll.dependsOn(clean)
+
+build.dependsOn(npm_install)

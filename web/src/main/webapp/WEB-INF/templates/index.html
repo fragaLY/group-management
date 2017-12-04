@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head lang="en">
     <meta charset="UTF-8">
     <title>Group Management</title>
-    <link rel="stylesheet" href="../../resources/css/main.css"/>
-
+    <link rel="stylesheet" th:href="@{/resources/css/main.css}" href="../../resources/css/main.css"/>
 </head>
+
 <body>
 
 <div id="container"></div>
-<script src="../../resources/js/bundle.js"></script>
+<script th:src="@{/resources/js/bundle.js}" src="../../resources/js/bundle.js"></script>
 
+<p>Created by: Vadzim Kavalkou</p>
+<p>Contact information: <a href="mailto:fragalymlg@gmail.com">
+    fragalymlg@gmail.com</a>.</p>
 </body>
 </html>
