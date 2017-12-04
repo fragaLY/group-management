@@ -16,7 +16,7 @@ Subject: RDBMS
 * Hibernate +5;
 * Servlet container: Jetty;
 * Web: HTML, CSS, Thymeleaf, JS, ReactJS, RestJS, Babel, Webpack;
-* Building tool: Gradle;
+* Building tool: Maven, Gradle;
 * Test: JUnit 4, Mockito;
 * Database: MS SQL, H2;
 * Logging: log4j (logback, slf4j);

@@ -24,7 +24,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -161,7 +160,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
   public TemplateEngine getTemplateEngine() {
     SpringTemplateEngine engine = new SpringTemplateEngine();
     engine.setTemplateResolver(getTemplateResolver());
-    engine.addDialect(new SpringSecurityDialect());
     return engine;
   }
 
