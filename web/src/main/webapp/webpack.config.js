@@ -2,15 +2,14 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
-    entry: "./src/main/js/app.jsx",
+    entry: "./app/index.jsx",
     devtool: "eval",
     cache: true,
     debug: true,
     watch: true,
     output: {
-        path: __dirname + "/js",
-        filename: "./bundle.js",
-        library: "index"
+        path: path.join(__dirname, './resources/js'),
+        filename: 'bundle.js',
     },
     module: {
         rules: [
@@ -26,7 +25,7 @@ module.exports = {
             },
             {
                 test: /\.jsx$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|bower_components|public)/,
                 loader: "babel-loader",
                 options: {
                     cacheDirectory: true,
@@ -72,7 +71,25 @@ module.exports = {
                 }, {
                     loader: "less-loader"
                 }]
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             }
         ]
-    }
+    },
+    resolve: {
+        modulesDirectories: ['node_modules'],
+        root: path.resolve('./app'),
+        extensions: ['', '.js', '.jsx'],
+    },
+    plugins: [
+        // Avoid publishing files when compilation fails
+        new webpack.NoErrorsPlugin(),
+        new webpack.ProvidePlugin({
+            '$': 'jquery',
+            'jQuery': 'jquery',
+            'window.jQuery': 'jquery',
+        })
+    ],
 };

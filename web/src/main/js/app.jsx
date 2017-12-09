@@ -12,7 +12,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        client({method: 'GET', path: '/address'}).done(response => {
+        client({method: 'GET', path: '/addresses'}).done(response => {
             this.setState({addresses: response.entity._embedded.addresses});
         });
     }

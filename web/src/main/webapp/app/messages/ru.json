@@ -1,0 +1,11 @@
+{
+  "Hello": "Здраствуйте",
+  "The list of addresses": "Список адресов",
+  "Addresses": "Адреса",
+  //Common actions
+  "Add": "Добавить",
+  "Update": "Обновить",
+  "Delete": "Удалить",
+  //Footer
+  "Created by Vadzim Kavalkou": "Создал Вадим Ковальков"
+}
