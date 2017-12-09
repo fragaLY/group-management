@@ -1,6 +1,6 @@
 const React = require('react');
 const Link = require('react-router');
-const i18n = require('internationalization');
+const i18n = require('localizify');
 
 import LanguageSwitcher from '../utils/language-switcher';
 

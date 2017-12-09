@@ -1,6 +1,6 @@
 const React = require('react');
 const DocumentTitle = require('react-document-title');
-const i18n = require('internationalization');
+const i18n = require('localizify');
 
 import {withRouter} from 'react-router';
 

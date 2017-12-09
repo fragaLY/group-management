@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const createHistory = require('history');
-const i18n = require('internationalization');
+const i18n = require('localizify');
 let {Router, useRouterHistory} = require('react-router');
 
 import en from './messages/en.json';

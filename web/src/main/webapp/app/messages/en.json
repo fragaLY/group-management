@@ -2,10 +2,8 @@
   "Hello": "Hello",
   "The list of addresses": "The list of addresses",
   "Addresses": "Addresses",
-  //Common actions
   "Add": "Add",
   "Update": "Update",
   "Delete": "Delete",
-  //Footer
   "Created by Vadzim Kavalkou": "Created by Vadzim Kavalkou"
 }

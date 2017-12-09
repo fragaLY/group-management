@@ -1,12 +1,11 @@
 const React = require('react');
 const $ = require('jquery');
-import {Link} from 'react-router';
-import internationalization, {i18n} from 'internationalization';
+import localizify, {i18n} from 'localizify';
 
 const LanguageSwitcher = React.createClass({
 
     getClass(locale) {
-        return internationalization.getLocale() === locale ? 'active' : '';
+        return localizify.getLocale() === locale ? 'active' : '';
     },
 
     onChangeLocale(event) {

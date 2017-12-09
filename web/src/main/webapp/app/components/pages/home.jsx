@@ -1,5 +1,5 @@
 const React = require('react');
-const i18n = require('internationalization');
+const i18n = require('localizify');
 
 const HomePage = React.createClass({
     render() {
