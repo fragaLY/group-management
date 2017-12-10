@@ -43,8 +43,11 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
   private static final String PREFIX = "/WEB-INF/templates/";
   private static final String SUFFIX = ".html";
 
-  private static final String RESOURCE_HANDLER = ".addResourceHandler";
-  private static final String RESOURCE_LOCATION = "classpath:/META-INF/resources/webjars/";
+//  private static final String RESOURCE_HANDLER = ".addResourceHandler";
+//  private static final String RESOURCE_LOCATION = "classpath:/META-INF/resources/webjars/";
+
+  private static final String RESOURCE_HANDLER = "/resources/**";
+  private static final String RESOURCE_LOCATION = "/resources/";
 
   private ApplicationContext applicationContext;
 

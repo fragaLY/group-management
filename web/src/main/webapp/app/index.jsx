@@ -1,15 +1,15 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const createHistory = require('history');
-const i18n = require('localizify');
-let {Router, useRouterHistory} = require('react-router');
-
+import {t} from 'localizify';
 import en from './messages/en.json';
 import ru from './messages/ru.json';
 
 import routes from 'routers/routers.jsx';
 
-i18n
+let {Router, useRouterHistory} = require('react-router');
+
+t
     .add('en', en)
     .add('ru', ru)
     .setLocale(localStorage.locale || 'en');

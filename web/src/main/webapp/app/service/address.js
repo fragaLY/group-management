@@ -31,7 +31,6 @@ class AddressService {
         const request = new Request();
         return request.delete('addresses/{id}', {id: _id});
     }
-
 }
 
 export {AddressService};
