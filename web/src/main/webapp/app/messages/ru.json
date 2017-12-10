@@ -1,7 +1,13 @@
 {
   "Hello": "Здраствуйте",
   "The list of addresses": "Список адресов",
+  "Address": "Адрес",
   "Addresses": "Адреса",
+  "Country": "Страна",
+  "City": "Город",
+  "Street": "Улица",
+  "Home": "Дом",
+  "Apartment Number": "Квартира",
   "Add": "Добавить",
   "Update": "Обновить",
   "Delete": "Удалить",

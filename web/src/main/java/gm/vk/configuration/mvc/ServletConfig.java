@@ -60,7 +60,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
 
     resolver.setContentNegotiationManager(cnm);
     resolver.setApplicationContext(applicationContext);
-    resolver.setOrder(1);
+    resolver.setOrder(3);
     resolver.setDefaultViews(Lists.newArrayList(getJsonView()));
 
     return resolver;
@@ -154,6 +154,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
     ThymeleafViewResolver resolver = new ThymeleafViewResolver();
     resolver.setTemplateEngine(getTemplateEngine());
     resolver.setCharacterEncoding(DEFAULT_ENCODING);
+    resolver.setOrder(1);
     return resolver;
   }
 
@@ -173,6 +174,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter implements Applicatio
     resolver.setSuffix(SUFFIX);
     resolver.setTemplateMode(TemplateMode.HTML);
     resolver.setCacheable(true);
+    resolver.setOrder(2);
     return resolver;
   }
 

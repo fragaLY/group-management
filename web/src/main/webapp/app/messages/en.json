@@ -1,7 +1,13 @@
 {
   "Hello": "Hello",
   "The list of addresses": "The list of addresses",
+  "Address": "Address",
   "Addresses": "Addresses",
+  "Country": "Country",
+  "City": "City",
+  "Street": "Street",
+  "Home": "Home",
+  "Apartment Number": "Apartment Number",
   "Add": "Add",
   "Update": "Update",
   "Delete": "Delete",

@@ -19,7 +19,6 @@ repositories {
 
 ext {
     springVersion = '4.+'
-//    mssqlVersion = '6.2.1.jre8'
     thymeleafVersion = '3.+'
     h2Version = '1.+'
     jacksonVersion = '2.8.+'
@@ -41,7 +40,6 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-bean-validators', version: springFoxVersion
 
     //H2 database
-    //runtime group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: mssqlVersion
     runtime group: 'com.h2database', name: 'h2', version: h2Version
 
     //Jackson
@@ -56,9 +54,6 @@ dependencies {
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: thymeleafVersion
     compile group: 'org.thymeleaf', name: 'thymeleaf', version: thymeleafVersion
     compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: thymeleafVersion
-
-    //Frontend plugin
-    compile group: 'com.github.eirslett', name: 'frontend-maven-plugin', version: '1.6'
 
     compile project(":service")
 }
@@ -85,17 +80,13 @@ gretty {
 node {
     version = '8.8.1'
     npmVersion = '5.4.2'
-    download = true
-    workDir = file("${project.buildDir}/node")
-    nodeModulesDir = file("${project.projectDir}")
+    download = false
+    workDir = file("${project.projectDir}/src/main/webapp")
+    nodeModulesDir = file("${project.projectDir}/src/main/webapp/node_modules")
 }
 
 task buildNpm(type: NpmTask) {
     args = ['run', 'build']
-}
-
-task cleanDist(type: Delete){
-    delete 'dist'
 }
 
 task cleanAll(type: Delete){
@@ -104,6 +95,4 @@ task cleanAll(type: Delete){
     delete ".gradle"
 }
 
-clean.dependsOn(cleanAll)
-
-build.dependsOn(npm_install)
+build.dependsOn(buildNpm)
