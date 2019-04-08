@@ -2,7 +2,7 @@
 _'Student group management'_
 
 [![Build Status](https://travis-ci.org/fragaLY/group-management.svg?branch=master)](https://travis-ci.org/fragaLY/group-management)
-[![Waffle.io - Issues in progress](https://badge.waffle.io/fragaLY/group-management.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/fragaLY/group-management)
+
 ### Belarusian-Russian University.
 Subject: RDBMS
 
